@@ -13,16 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 // Route::get('/', function () {
 //     return 'Somthing went wrong';
 // });
 
-Route::get('/{any}', function () {
-    return 'Somthing went wrong';
-})->where('any','.*');
+// TODO:не смог нормально настроить xdebug
+
+// Route::get('/{any}', function () {
+//     return 'Somthing went wrong';
+// })->where('any','.*');
 

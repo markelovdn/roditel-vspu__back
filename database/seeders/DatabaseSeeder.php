@@ -3,8 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
+use App\Models\Contract;
+use App\Models\Profession;
+use Illuminate\Database\Seeder;
+use App\Models\Role;
+use App\Models\Specialization;
+use App\Models\User;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -12,11 +17,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        Role::insert([
+            ['code' => 'admin', 'title' => 'Администратор'],
+            ['code' => 'consultant', 'title' => 'Консультант'],
+            ['code' => 'parented', 'name' => 'Родитель']
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Specialization::insert([
+            ['title' => 'Школьники'],
+            ['title' => 'Дошкольники'],
+            ['title' => 'ОВЗ'],
+            ['title' => 'ИТД'],
+            ['title' => 'ИТП'],
+        ]);
+
+        Profession::insert([
+            ['title' => 'Преподаватель ВУЗа'],
+            ['title' => 'Электрик'],
+            ['title' => 'Сантехник'],
+        ]);
+
+
+        \App\Models\User::factory(10)->create();
+        \App\Models\Consultant::factory(10)->create();
+
     }
 }
