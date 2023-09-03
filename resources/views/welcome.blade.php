@@ -8,16 +8,10 @@
 
     </head>
     <body class="antialiased">
-        <form action="/api/register" method="POST">
+        <form action="/api/login" method="POST">
             @csrf
-            <input style="border: 1px solid black" name="secondname">
-            <input style="border: 1px solid black" name="firstname">
-            <input style="border: 1px solid black" name="patronymic">
             <input style="border: 1px solid black" name="email">
-            <input style="border: 1px solid black" name="phone">
             <input style="border: 1px solid black" name="password">
-            <input style="border: 1px solid black" name="password_confirmation">
-            <input style="border: 1px solid black" name="role_id">
             <input style="border: 1px solid black" type="submit">
         </form>
     </body>

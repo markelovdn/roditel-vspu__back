@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Role;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,8 +21,8 @@ class AuthController extends Controller
 
         try {
 
-            $user->firstname = $request->firstname;
-            $user->secondname = $request->secondname;
+            $user->first_name = $request->first_name;
+            $user->second_name = $request->second_name;
             $user->patronymic = $request->patronymic;
             $user->email = $request->email;
             $user->phone = $request->phone;
@@ -45,32 +47,47 @@ class AuthController extends Controller
         }
     }
 
-    public function login(Request $request)
+    /**
+     * @param LoginRequest $request
+     * @return JsonResponse
+     */
+    public function login(LoginRequest $request): JsonResponse
     {
-        // С бэка нужно, чтобы приходило на фронт firstName, secondName, surName и fullName как раз, как комбинация всех сразу
+        $data = $request->validated();
 
-        try {
-            $user = User::where('email', '=', $request->input('email'))->firstOrFail();
+        if(!Auth::attempt($data)) {
+            return response()->json('Cridentials not match', 401);
+        };
 
-            if (Hash::check($request->input('password'), $user->password)) {
-                $token = $user->createToken('user_token')->plainTextToken;
+        /** @var User $user */
+        $user = $request->user();
 
-                return response()->json([ 'user' => $user, 'access_token' => $token ], 200);
-            }
+        $token = $user->createToken('api')->plainTextToken;
 
-            return response()->json([
-                'error' => [
-                    'type' => 'password',
-                    'message' => 'Не верный пароль']
-                ], 400);
+        return response()->json(['token' => $token]);
 
-        } catch (\Exception $e) {
-            return response()->json([
-                // 'error' => $e->getMessage(),
-                'error' => [
-                    'type' => 'phone',
-                    'message' => 'Не верный номер телефона']
-            ], 400);
-        }
+        // try {
+        //     $user = User::where('email', '=', $request->input('email'))->firstOrFail();
+
+        //     if (Hash::check($request->input('password'), $user->password)) {
+        //         $token = $user->createToken('user_token')->plainTextToken;
+
+        //         return response()->json([ 'user' => $user, 'access_token' => $token ], 200);
+        //     }
+
+        //     return response()->json([
+        //         'error' => [
+        //             'type' => 'password',
+        //             'message' => 'Не верный пароль']
+        //         ], 400);
+
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         // 'error' => $e->getMessage(),
+        //         'error' => [
+        //             'type' => 'phone',
+        //             'message' => 'Не верный номер телефона']
+        //     ], 400);
+        // }
     }
 }

@@ -20,8 +20,8 @@ class UserTest extends TestCase
         $role = Role::where('code', 'consultant')->first();
 
         $response = $this->post('/api/register', [
-            'secondname' => 'Иван',
-            'firstname' => 'Иванов',
+            'second_name' => 'Иван',
+            'first_name' => 'Иванов',
             'patronymic' => 'Иванович',
             'email' => 'test@test.ru',
             'phone' => '+7 (000) 000-00-00',
@@ -31,8 +31,8 @@ class UserTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('users', [
-            'secondname' => 'Иван',
-            'firstname' => 'Иванов',
+            'second_name' => 'Иван',
+            'first_name' => 'Иванов',
             'patronymic' => 'Иванович',
         ]);
 
