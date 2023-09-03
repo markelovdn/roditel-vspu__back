@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function consultant(): HasOne
     {
-        return $this->hasOne(Consultant::class);
+        return $this->hasOne(Consultant::class)->with('contract');
     }
 
 }

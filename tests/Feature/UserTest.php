@@ -23,7 +23,7 @@ class UserTest extends TestCase
             'second_name' => 'Иван',
             'first_name' => 'Иванов',
             'patronymic' => 'Иванович',
-            'email' => 'test@test.ru',
+            'email' => 'ivan@test.ru',
             'phone' => '+7 (000) 000-00-00',
             'role_id' => $role->id,
             'password' => '123123',

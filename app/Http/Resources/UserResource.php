@@ -34,7 +34,12 @@ class UserResource extends JsonResource
                 'photo' => $this->consultant->id,
                 'specializationId' => $this->consultant->specialization_id,
                 'professionId' => $this->consultant->profession_id,
-                'contractId' => $this->consultant->contract_id,
+                'contract' => [
+                    'id' => $this->consultant->contract->id,
+                    'number' => $this->consultant->contract->number,
+                    'createdAt' => $this->consultant->contract->created_at,
+                    'updatedAt' => $this->consultant->contract->updated_at
+                ]
                 ]
         ];
     }

@@ -12,9 +12,10 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Object
+    public function index()
     {
         return UserResource::collection(User::with('role', 'parented', 'consultant')->get());
+        // return User::with('role', 'parented', 'consultant')->get();
     }
 
     /**

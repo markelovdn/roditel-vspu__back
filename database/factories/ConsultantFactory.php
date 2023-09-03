@@ -20,7 +20,6 @@ class ConsultantFactory extends Factory
         return [
             'photo' => fake()->imageUrl(354, 472, 'people', true),
             'user_id' => fake()->unique()->numberBetween(1,10),
-            'contract_id' => Contract::factory(),
             'specialization_id' => fake()->numberBetween(1,5),
             'profession_id' => fake()->numberBetween(1,3),
         ];

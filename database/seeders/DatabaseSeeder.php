@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Consultant;
 use App\Models\Contract;
+use App\Models\Parented;
 use App\Models\Profession;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
@@ -39,7 +41,7 @@ class DatabaseSeeder extends Seeder
 
 
         \App\Models\User::factory(10)->create();
-        \App\Models\Consultant::factory(10)->create();
+        \App\Models\Contract::factory(10)->create();
 
         User::create([
             'first_name' => 'test',
@@ -49,6 +51,18 @@ class DatabaseSeeder extends Seeder
             'phone' => '+7 (111) 111 1111',
             'role_id' => '2',
             'password' => '123123',
+        ]);
+
+        Consultant::create([
+            'user_id' => '11',
+            'photo' => 'https://via.placeholder.com/354x472.png/0033aa?text=people+accusantium',
+            'specialization_id' => '1',
+            'profession_id' => '1',
+        ]);
+
+        Contract::create([
+            'consultant_id' => '11',
+            'number' => '585',
         ]);
 
     }

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('photo', 400)->nullable();
             $table->foreignId('specialization_id')->constrained('specializations', 'id');
             $table->foreignId('profession_id')->constrained('professions', 'id');
-            $table->foreignId('contract_id')->constrained('contracts', 'id');
             $table->timestamps();
         });
     }
