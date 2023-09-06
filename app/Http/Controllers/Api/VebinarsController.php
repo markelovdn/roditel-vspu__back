@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Http\Resources\VebinarsResource;
+use App\Models\Vebinar;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class VebinarsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return UserResource::collection(User::with('role', 'parented', 'consultant')->get());
-        // return User::with('role', 'parented', 'consultant')->get();
+        $a = Vebinar::with('vebinarCategory')->get();
+        return VebinarsResource::collection(Vebinar::with('vebinarCategory')->get());
     }
 
     /**

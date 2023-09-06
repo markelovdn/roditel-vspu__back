@@ -27,8 +27,8 @@ class Consultant extends Model
         return $this->belongsTo(Specialization::class);
     }
 
-    public function proffession(): BelongsTo {
-        return $this->belongsTo(Proffesion::class);
+    public function profession(): BelongsTo {
+        return $this->belongsTo(Profession::class);
     }
 
 

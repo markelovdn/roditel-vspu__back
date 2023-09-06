@@ -12,6 +12,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\Specialization;
 use App\Models\User;
+use App\Models\VebinarCategory;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -39,9 +41,22 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Сантехник'],
         ]);
 
+        Profession::insert([
+            ['title' => 'Преподаватель ВУЗа'],
+            ['title' => 'Электрик'],
+            ['title' => 'Сантехник'],
+        ]);
+
+        VebinarCategory::insert([
+            ['title' => 'Основная школа'],
+            ['title' => 'Не основная школа'],
+            ['title' => 'Вечерняя школа'],
+        ]);
+
 
         \App\Models\User::factory(10)->create();
         \App\Models\Contract::factory(10)->create();
+        \App\Models\Vebinar::factory(10)->create();
 
         User::create([
             'first_name' => 'test',

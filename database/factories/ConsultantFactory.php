@@ -19,6 +19,7 @@ class ConsultantFactory extends Factory
     {
         return [
             'photo' => fake()->imageUrl(354, 472, 'people', true),
+            'description' => fake()->text(),
             'user_id' => fake()->unique()->numberBetween(1,10),
             'specialization_id' => fake()->numberBetween(1,5),
             'profession_id' => fake()->numberBetween(1,3),

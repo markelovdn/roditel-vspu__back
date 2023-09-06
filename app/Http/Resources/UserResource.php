@@ -14,7 +14,6 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // С бэка нужно, чтобы приходило на фронт firstName, secondName, surName и fullName как раз, как комбинация всех сразу
         return [
             'id' => $this->id,
             'firstName' => $this->first_name,
