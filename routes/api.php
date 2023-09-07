@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\ConsultantsController;
+use App\Http\Controllers\Api\ProfessionsController;
+use App\Http\Controllers\Api\SpecizlizationsController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\VebinarsController;
 use App\Models\Vebinar;
@@ -13,10 +15,11 @@ Route::get('/test', function() {
 
 Route::post('/login', [\App\Http\Controllers\Api\Auth\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\Api\Auth\AuthController::class, 'register']);
+Route::apiResource("/specializations", SpecizlizationsController::class);
+Route::apiResource("/professions", ProfessionsController::class);
 Route::apiResource("/consultants", ConsultantsController::class);
 Route::apiResource("/vebinars", VebinarsController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource("/users", UsersController::class);
     Route::apiResource("/users", UsersController::class);
   });
