@@ -20,13 +20,13 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/', function () {
-    return 'Somthing went wrong';
-});
+// Route::get('/', function () {
+//     return 'Somthing went wrong';
+// });
 
 // TODO:не смог нормально настроить xdebug
 
-// Route::get('/{any}', function () {
-//     return 'Somthing went wrong';
-// })->where('any','.*');
+Route::get('/{any}', function () {
+    return 'Somthing went wrong';
+})->where('any','.*');
 
