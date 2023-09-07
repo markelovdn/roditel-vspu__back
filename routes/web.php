@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 // Route::get('/', function () {
-//     return 'Somthing went wrong';
+//     return view('welcome');
 // });
+
+
+Route::get('/', function () {
+    return 'Somthing went wrong';
+});
 
 // TODO:не смог нормально настроить xdebug
 
