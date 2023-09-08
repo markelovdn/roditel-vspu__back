@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class VebinarCategory extends Model
+class VebinarProgram extends Model
 {
     use HasFactory;
 
-    public function vebinar(): HasOne {
-        return $this->hasOne(Vebinar::class);
+    public function vebinarProgram(): BelongsTo {
+        return $this->belongsTo(Vebinar::class);
     }
 }

@@ -53,10 +53,18 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Вечерняя школа'],
         ]);
 
-
         \App\Models\User::factory(10)->create();
         \App\Models\Contract::factory(10)->create();
+        \App\Models\Parented::factory(10)->create();
+        \App\Models\Children::factory(10)->create();
         \App\Models\Vebinar::factory(10)->create();
+        \App\Models\VebinarQuestion::factory(10)->create();
+        \App\Models\VebinarProgram::factory(10)->create();
+        \App\Models\ConsultantReport::factory(10)->create();
+        \App\Models\Consultation::factory(10)->create();
+        \App\Models\ParentedQuestion::factory(10)->create();
+        \App\Models\ConsultantAnswer::factory(10)->create();
+        \App\Models\Questionnaire::factory(10)->create();
 
         User::create([
             'first_name' => 'test',

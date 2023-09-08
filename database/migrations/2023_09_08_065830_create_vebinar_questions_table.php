@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('childrens', function (Blueprint $table) {
+        Schema::create('vebinar_questions', function (Blueprint $table) {
             $table->id();
-            $table->integer('age')->nullable();
-            $table->foreignId('parented_id')->constrained('parenteds', 'id');
+            $table->string('question_text', 400)->nullable();
+            $table->foreignId('vebinar_id')->constrained('vebinars', 'id')->require();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('childrens');
+        Schema::dropIfExists('vebinar_questions');
     }
 };

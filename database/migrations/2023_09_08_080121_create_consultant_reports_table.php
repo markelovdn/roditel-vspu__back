@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('consultant_reports', function (Blueprint $table) {
             $table->id();
             $table->string('file_url')->require();
             $table->string('upload_status')->nullable();
-            $table->foreignId('consultant_id')->require();
+            $table->foreignId('consultant_id')->constrained('consultants', 'id')->require();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('consultant_reports');
     }
 };

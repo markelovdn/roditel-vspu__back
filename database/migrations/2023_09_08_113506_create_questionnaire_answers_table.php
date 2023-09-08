@@ -6,24 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
-        Schema::create('childrens', function (Blueprint $table) {
+        Schema::create('questionnaire_answers', function (Blueprint $table) {
             $table->id();
-            $table->integer('age')->nullable();
-            $table->foreignId('parented_id')->constrained('parenteds', 'id');
+            $table->string('text', 400);
+            $table->foreignId('questionnaire_id')->constrained('questionnaires', 'id');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('childrens');
+        Schema::dropIfExists('questionnaire_answers');
     }
 };

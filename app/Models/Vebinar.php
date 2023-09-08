@@ -14,4 +14,12 @@ class Vebinar extends Model
     public function vebinarCategory(): BelongsTo {
         return $this->belongsTo(VebinarCategory::class);
     }
+
+    public function program(): HasOne {
+        return $this->hasOne(VebinarProgram::class);
+    }
+
+    public function question(): HasOne {
+        return $this->hasOne(VebinarQuestion::class);
+    }
 }

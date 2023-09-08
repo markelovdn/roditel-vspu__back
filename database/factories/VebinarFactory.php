@@ -23,6 +23,7 @@ class VebinarFactory extends Factory
             'time_end' => fake()->time(),
             'lector_name' => fake()->name(),
             'logo' => fake()->imageUrl(354, 472, 'people', true),
+            'video_link' =>fake()->url(),
             'vebinar_category_id' => fake()->randomElement([1,3]),
         ];
     }

@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('childrens', function (Blueprint $table) {
+        Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->integer('age')->nullable();
-            $table->foreignId('parented_id')->constrained('parenteds', 'id');
+            $table->foreignId('parented_id')->constrained('parenteds', 'id')->require();
+            $table->foreignId('consultant_id')->constrained('consultants', 'id')->require();
+            $table->boolean('status')->require()->default(1);
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('childrens');
+        Schema::dropIfExists('consultations');
     }
 };

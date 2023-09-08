@@ -18,8 +18,9 @@ return new class extends Migration
             $table->time('time_start')->nullable();
             $table->time('time_end')->nullable();
             $table->string('lector_name')->nullable();
-            $table->string('logo')->nullable();
+            $table->string('logo', 400)->nullable();
             $table->string('cost')->default('Бесплатно');
+            $table->string('video_link', 400)->nullable();
             $table->foreignId('vebinar_category_id')->constrained('vebinar_categories', 'id');
             $table->timestamps();
         });

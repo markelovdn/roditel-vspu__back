@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Consultant extends Model
@@ -21,6 +22,10 @@ class Consultant extends Model
 
     public function contract(): HasOne {
         return $this->hasOne(Contract::class);
+    }
+
+    public function reports(): HasMany {
+        return $this->hasMany(ConsultantReport::class);
     }
 
     public function specialization(): BelongsTo {
