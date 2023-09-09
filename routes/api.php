@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\ConsultantAnswersController;
+use App\Http\Controllers\Api\ConsultantReportsController;
 use App\Http\Controllers\Api\ConsultantsController;
+use App\Http\Controllers\Api\ParentedQuestionsController;
 use App\Http\Controllers\Api\ProfessionsController;
 use App\Http\Controllers\Api\SpecizlizationsController;
 use App\Http\Controllers\Api\UsersController;
@@ -20,6 +23,11 @@ Route::apiResource("/professions", ProfessionsController::class);
 Route::apiResource("/consultants", ConsultantsController::class);
 Route::apiResource("/vebinars", VebinarsController::class);
 
+Route::apiResource("/parentedQuestions", ParentedQuestionsController::class);
+Route::apiResource("/consultantAnswers", ConsultantAnswersController::class);
+Route::apiResource("/consultantReports", ConsultantReportsController::class);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/users", UsersController::class);
+    Route::apiResource("/consultantReports", ConsultantReportsController::class);
   });
