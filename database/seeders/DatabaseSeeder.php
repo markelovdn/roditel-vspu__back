@@ -65,6 +65,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\ParentedQuestion::factory(10)->create();
         \App\Models\ConsultantAnswer::factory(10)->create();
         \App\Models\Questionnaire::factory(10)->create();
+        \App\Models\QuestionnaireQuestion::factory(10)->create();
+        \App\Models\QuestionnaireAnswer::factory(10)->create();
 
         User::create([
             'first_name' => 'test',
