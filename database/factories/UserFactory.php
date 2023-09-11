@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'patronymic' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->unique()->phoneNumber(),
-            'role_id' => fake()->randomElement([1,2]),
+            'role_id' => fake()->randomElement([2,3]),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ];
     }

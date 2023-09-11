@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('consultant_reports', function (Blueprint $table) {
             $table->id();
             $table->string('file_url')->require();
-            $table->string('upload_status')->nullable();
+            $table->string('upload_status', 45)->nullable();
             $table->foreignId('consultant_id')->constrained('consultants', 'id')->require();
             $table->timestamps();
         });

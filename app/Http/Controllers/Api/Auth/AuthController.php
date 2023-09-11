@@ -17,6 +17,7 @@ class AuthController extends Controller
 
     public function register(StoreUserRequest $request)
     {
+        
         $user = new User();
 
         try {

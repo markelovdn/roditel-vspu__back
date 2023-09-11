@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('text')->require();
             $table->foreignId('questionnaire_id')->constrained('questionnaires', 'id');
-            $table->foreignId('question_id')->constrained('questionnaire_questions', 'id');
+            $table->foreignId('questionnaire_question_id')->constrained('questionnaire_questions', 'id');
             $table->timestamps();
         });
     }

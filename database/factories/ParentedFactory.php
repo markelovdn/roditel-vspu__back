@@ -18,7 +18,8 @@ class ParentedFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory()
+            'user_id' => User::factory(),
+            'region' => fake()->randomElement(['Москва', 'Санкт-Петербург', 'Волгоград'])
         ];
     }
 }

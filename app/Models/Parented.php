@@ -23,4 +23,14 @@ class Parented extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function consultations(): HasMany {
+        return $this->hasMany(Consultation::class)->with('parentedQuestion');
+    }
+
+    public function parentedQuestions(): HasMany {
+        return $this->hasMany(ParentedQuestion::class);
+    }
+
+
 }

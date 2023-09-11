@@ -16,8 +16,8 @@ return new class extends Migration
             $table->text('question_text')->require();
             $table->foreignId('parented_id')->constrained('parenteds', 'id')->require();
             $table->foreignId('specialization_id')->constrained('specializations', 'id')->require();
-            $table->foreignId('consultant_id')->constrained('consultants', 'id')->nullable();
-            $table->foreignId('consultation_id')->constrained('consultations', 'id')->require();
+            $table->foreignId('consultant_id')->constrained('consultants', 'id')->nullable()->default(0);
+            $table->foreignId('consultation_id')->constrained('consultations', 'id')->nullable()->default(0);
             $table->timestamps();
         });
     }

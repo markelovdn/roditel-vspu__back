@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('parenteds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users', 'id');
+            $table->string('region')->require();
+            $table->foreignId('user_id')->constrained('users', 'id')->require();
             $table->timestamps();
         });
     }

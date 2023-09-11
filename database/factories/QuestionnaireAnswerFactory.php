@@ -21,7 +21,7 @@ class QuestionnaireAnswerFactory extends Factory
         return [
             'text' => fake()->text(),
             'questionnaire_id' => Questionnaire::factory(),
-            'question_id' => QuestionnaireQuestion::factory()
+            'questionnaire_question_id' => QuestionnaireQuestion::factory()
         ];
     }
 }

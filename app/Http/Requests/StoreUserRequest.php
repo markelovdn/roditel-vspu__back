@@ -27,7 +27,7 @@ class StoreUserRequest extends FormRequest
             'patronymic' => ['required', 'string', 'max:45'],
             'email' => ['required', 'unique:users', 'max:50'],
             'phone' => ['unique:users', 'max:20'],
-            'password' => ['required', 'string', 'min:6'],
+            'password' => ['required', 'string'],
             'role_id' => ['required'],
         ];
     }

@@ -13,4 +13,10 @@ class ConsultantAnswer extends Model
     public function parentedQuestion(): BelongsTo {
         return $this->belongsTo(ParentedQuestion::class);
     }
+
+    public function consultant(): BelongsTo {
+        return $this->belongsTo(Consultant::class);
+    }
+
+
 }

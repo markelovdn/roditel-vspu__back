@@ -25,20 +25,6 @@ class UserResource extends JsonResource
                 'id' => $this->role->id,
                 'code' => $this->role->code,
                 'title' => $this->role->title,
-            ],
-            'parented' => [$this->parented],
-            'consultant' => [
-                'id' => $this->consultant->id,
-                'userId' => $this->consultant->user_id,
-                'photo' => $this->consultant->id,
-                'specializationId' => $this->consultant->specialization_id,
-                'professionId' => $this->consultant->profession_id,
-                'contract' => [
-                    'id' => $this->consultant->contract->id,
-                    'number' => $this->consultant->contract->number,
-                    'createdAt' => $this->consultant->contract->created_at,
-                    'updatedAt' => $this->consultant->contract->updated_at
-                ]
                 ]
         ];
     }

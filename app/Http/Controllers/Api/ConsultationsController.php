@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Models\Consultation;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class ConsultationsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return UserResource::collection(User::with('role')->get());
+        return Consultation::with('parented', 'consultant')->get();
     }
 
     /**

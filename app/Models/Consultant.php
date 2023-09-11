@@ -36,5 +36,17 @@ class Consultant extends Model
         return $this->belongsTo(Profession::class);
     }
 
+    public function consultantAnsweres(): HasMany {
+        return $this->hasMany(ConsultantAnswer::class)->with('consultation');
+    }
+
+    public function consultations(): HasMany {
+        return $this->hasMany(Consultation::class);
+    }
+
+    public function consultantAnswers(): HasMany {
+        return $this->hasMany(ConsultantAnswer::class);
+    }
+
 
 }
