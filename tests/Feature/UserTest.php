@@ -26,8 +26,7 @@ class UserTest extends TestCase
             'email' => 'ivan@test.ru',
             'phone' => '+7 (000) 000-00-00',
             'role_id' => $role->id,
-            'password' => '123123',
-            'password_confirmation' => '123123',
+            'password' => '123123'
         ]);
 
         $this->assertDatabaseHas('users', [

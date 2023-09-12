@@ -11,7 +11,7 @@ class ParentedQuestionsController extends Controller
 
     public function index(): Object
     {
-        return ParentedQuestion::with('consultantAnswer')->where('consultant_id', $id)->get();
+        return ParentedQuestion::get();
     }
 
     public function store(Request $request)
