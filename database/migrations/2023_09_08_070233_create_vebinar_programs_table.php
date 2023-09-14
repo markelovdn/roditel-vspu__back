@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('vebinar_programs', function (Blueprint $table) {
             $table->id();
             $table->time('time_start')->nullable();
-            $table->string('subject', 400)->nullable();
-            $table->string('lector_description', 200)->nullable();
-            $table->string('lector_department', 200)->nullable();
-            $table->string('lector_photo', 400)->nullable();
+            $table->string('subject')->nullable();
+            $table->string('lector_description')->nullable();
+            $table->string('lector_department')->nullable();
+            $table->string('lector_photo')->nullable();
             $table->foreignId('vebinar_id')->constrained('vebinars', 'id')->require();
             $table->timestamps();
         });

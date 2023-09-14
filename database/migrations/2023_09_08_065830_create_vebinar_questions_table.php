@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('vebinar_questions', function (Blueprint $table) {
             $table->id();
-            $table->string('question_text', 400)->nullable();
+            $table->string('question_text')->nullable();
             $table->foreignId('vebinar_id')->constrained('vebinars', 'id')->require();
             $table->timestamps();
         });

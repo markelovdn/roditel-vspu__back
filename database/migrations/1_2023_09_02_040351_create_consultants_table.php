@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('consultants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id');
-            $table->string('photo', 400)->nullable();
+            $table->string('photo')->nullable();
             $table->text('description')->nullable();
             $table->foreignId('specialization_id')->constrained('specializations', 'id');
             $table->foreignId('profession_id')->constrained('professions', 'id');

@@ -13,6 +13,7 @@ use App\Models\Role;
 use App\Models\Specialization;
 use App\Models\User;
 use App\Models\VebinarCategory;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -61,12 +62,13 @@ class DatabaseSeeder extends Seeder
         \App\Models\VebinarQuestion::factory(10)->create();
         \App\Models\VebinarProgram::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
-        \App\Models\Consultation::factory(10)->create();
-        \App\Models\ParentedQuestion::factory(10)->create();
-        \App\Models\ConsultantAnswer::factory(10)->create();
         \App\Models\Questionnaire::factory(10)->create();
         \App\Models\QuestionnaireQuestion::factory(10)->create();
         \App\Models\QuestionnaireAnswer::factory(10)->create();
+        \App\Models\QuestionnaireParentedAnswer::factory(10)->create();
+        \App\Models\QuestionnaireAnswerCount::factory(10)->create();
+        \App\Models\Consultation::factory(10)->create();
+        \App\Models\ConsultationMessage::factory(10)->create();
 
         User::create([
             'first_name' => 'test',
@@ -88,6 +90,11 @@ class DatabaseSeeder extends Seeder
         Contract::create([
             'consultant_id' => '11',
             'number' => '585',
+        ]);
+
+        DB::table('consultation_user')->insert([
+            "consultation_id" => 1,
+            "user_id" => 1
         ]);
 
     }

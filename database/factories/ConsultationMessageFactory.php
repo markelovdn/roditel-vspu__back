@@ -3,13 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\Consultation;
-use App\Models\ParentedQuestion;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ConsultantAnswer>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ConsultationMessage>
  */
-class ConsultantAnswerFactory extends Factory
+class ConsultationMessageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,11 +19,10 @@ class ConsultantAnswerFactory extends Factory
     public function definition(): array
     {
         return [
-            'answer_text'=> fake()->text(),
-            'consultant_id' => fake()->numberBetween(1,5),
             'consultation_id' => Consultation::factory(),
-            'parented_question_id'=> ParentedQuestion::factory()
-
+            'user_id' => User::factory(),
+            'text' => fake()->text(),
+            'is_answered' => fake()->numberBetween(1,2)
         ];
     }
 }

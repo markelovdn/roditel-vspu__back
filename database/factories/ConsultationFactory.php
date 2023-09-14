@@ -2,8 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Consultant;
-use App\Models\Parented;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,9 +18,8 @@ class ConsultationFactory extends Factory
     public function definition(): array
     {
         return [
-            'parented_id' => fake()->numberBetween(1,5),
-            'consultant_id' => fake()->numberBetween(1,5),
-            'status' => fake()->numberBetween(1,2),
+            'title' => fake()->title(),
+            'user_id' => User::factory()
         ];
     }
 }

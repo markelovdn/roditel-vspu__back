@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('consultations', function (Blueprint $table) {
+        Schema::create('consultation_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parented_id')->constrained('parenteds', 'id')->require();
-            $table->foreignId('consultant_id')->constrained('consultants', 'id')->require();
-            $table->boolean('status')->require()->default(1);
+            $table->foreignId('consultation_id')->constrained('consultations', 'id');
+            $table->foreignId('user_id')->constrained('users', 'id');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('consultations');
+        Schema::dropIfExists('consultation_chat_users');
     }
 };

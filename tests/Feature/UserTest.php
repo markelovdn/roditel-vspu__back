@@ -18,8 +18,8 @@ class UserTest extends TestCase
     public function test_register_user_as_consultant(): void
     {
         $role = Role::where('code', 'consultant')->first();
-
-        $response = $this->post('/api/register', [
+        //codeception
+        $response = $this->post('/api/register?XDEBUG_SESSION=VSCODE', [
             'second_name' => 'Иван',
             'first_name' => 'Иванов',
             'patronymic' => 'Иванович',

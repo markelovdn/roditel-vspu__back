@@ -15,13 +15,11 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
-    public function register(StoreUserRequest $request)
+    public function register(Request $request)
     {
-        
         $user = new User();
 
         try {
-
             $user->first_name = $request->first_name;
             $user->second_name = $request->second_name;
             $user->patronymic = $request->patronymic;
@@ -56,9 +54,9 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
-        if(!Auth::attempt($data)) {
+        if (!Auth::attempt($data)) {
             return response()->json('Cridentials not match', 401);
-        };
+        }
 
         /** @var User $user */
         $user = $request->user();
@@ -66,29 +64,5 @@ class AuthController extends Controller
         $token = $user->createToken('api')->plainTextToken;
 
         return response()->json(['token' => $token]);
-
-        // try {
-        //     $user = User::where('email', '=', $request->input('email'))->firstOrFail();
-
-        //     if (Hash::check($request->input('password'), $user->password)) {
-        //         $token = $user->createToken('user_token')->plainTextToken;
-
-        //         return response()->json([ 'user' => $user, 'access_token' => $token ], 200);
-        //     }
-
-        //     return response()->json([
-        //         'error' => [
-        //             'type' => 'password',
-        //             'message' => 'Не верный пароль']
-        //         ], 400);
-
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         // 'error' => $e->getMessage(),
-        //         'error' => [
-        //             'type' => 'phone',
-        //             'message' => 'Не верный номер телефона']
-        //     ], 400);
-        // }
     }
 }

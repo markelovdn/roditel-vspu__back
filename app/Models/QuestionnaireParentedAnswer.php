@@ -7,20 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class QuestionnaireQuestion extends Model
+class QuestionnaireParentedAnswer extends Model
 {
     use HasFactory;
 
-    public function questionnaire(): BelongsTo {
+    public function questionnaire (): BelongsTo {
         return $this->belongsTo(Questionnaire::class);
     }
 
-    public function questionnaireAnswers (): HasMany {
-        return $this->hasMany(QuestionnaireAnswer::class);
-    }
-
-    public function questionnaireParentedAnswer (): HasMany {
-        return $this->hasMany(QuestionnaireParentedAnswer::class);
+    public function questionnaireQuestions (): BelongsTo {
+        return $this->belongsTo(QuestionnaireQuestion::class);
     }
 
     public function questionnaireAnswerCount (): HasMany {

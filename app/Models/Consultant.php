@@ -28,11 +28,13 @@ class Consultant extends Model
         return $this->hasMany(ConsultantReport::class);
     }
 
-    public function specialization(): BelongsTo {
+    public function specialization(): BelongsTo
+    {
         return $this->belongsTo(Specialization::class);
     }
 
-    public function profession(): BelongsTo {
+    public function profession(): BelongsTo
+    {
         return $this->belongsTo(Profession::class);
     }
 

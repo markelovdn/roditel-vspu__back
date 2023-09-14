@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('questionnaire_parented_answers', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->string('title');
+            $table->string('text')->require();
+            $table->foreignId('questionnaire_id')->constrained('questionnaires', 'id');
+            $table->foreignId('questionnaire_question_id')->constrained('questionnaire_questions', 'id');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('role');
+        Schema::dropIfExists('questionnaire_parented_answers');
     }
 };

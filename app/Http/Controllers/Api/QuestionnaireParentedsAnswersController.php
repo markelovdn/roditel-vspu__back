@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\ConsultantAnswer;
+use App\Models\QuestionnaireParentedAnswer;
 use Illuminate\Http\Request;
 
-class ConsultantAnswersController extends Controller
+class QuestionnaireParentedsAnswersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Object
+    public function index()
     {
-        return ConsultantAnswer::with('parentedQuestion')->get();
+        return QuestionnaireParentedAnswer::with('questionnaire', 'questionnaireQuestions')->get();
     }
 
     /**
