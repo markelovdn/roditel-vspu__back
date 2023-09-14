@@ -15,7 +15,8 @@ class Contract extends Model
         'title',
     ];
 
-    public function consultant(): HasOne {
+    public function consultant(): HasOne
+    {
         return $this->hasOne(Consultant::class);
     }
 }

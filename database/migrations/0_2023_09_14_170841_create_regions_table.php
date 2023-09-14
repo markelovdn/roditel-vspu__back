@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('parenteds', function (Blueprint $table) {
+        Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('region_id')->constrained('regions', 'id')->require();
-            $table->foreignId('user_id')->constrained('users', 'id')->require();
+            $table->string('code');
+            $table->string('title');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('parentss');
+        Schema::dropIfExists('regions');
     }
 };

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ConsultantAnswersController;
 use App\Http\Controllers\Api\ConsultantReportsController;
 use App\Http\Controllers\Api\ConsultantsController;
+use App\Http\Controllers\Api\ConsultationMessagesController;
 use App\Http\Controllers\Api\ConsultationsController;
 use App\Http\Controllers\Api\ParentedQuestionsController;
 use App\Http\Controllers\Api\ProfessionsController;
@@ -12,7 +13,6 @@ use App\Http\Controllers\Api\QuestionnairesController;
 use App\Http\Controllers\Api\SpecizlizationsController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\VebinarsController;
-use App\Models\QuestionnaireParentedAnswer;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/test', function() {
@@ -29,15 +29,11 @@ Route::apiResource("/vebinars", VebinarsController::class);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/users", UsersController::class);
     Route::apiResource("/consultations", ConsultationsController::class);
-    Route::apiResource("/consultantAnswers", ConsultantAnswersController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
 
     Route::middleware('consultant')->group(function () {
         Route::apiResource("/consultantReports", ConsultantReportsController::class);
         Route::apiResource("/questionnaires", QuestionnairesController::class);
+        Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
     });
-
-    Route::middleware('parented')->group(function () {
-        Route::apiResource("/parentedQuestions", ParentedQuestionsController::class);
-    });
-  });
+});

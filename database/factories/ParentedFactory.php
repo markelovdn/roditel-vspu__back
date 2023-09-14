@@ -19,7 +19,7 @@ class ParentedFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'region' => fake()->randomElement(['Москва', 'Санкт-Петербург', 'Волгоград'])
+            'region_id' => fake()->numberBetween(1,19)
         ];
     }
 }

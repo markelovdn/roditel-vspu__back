@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->time('time_start')->nullable();
             $table->string('subject')->nullable();
-            $table->string('lector_description')->nullable();
-            $table->string('lector_department')->nullable();
+            $table->text('lector_description')->nullable();
+            $table->text('lector_department')->nullable();
             $table->string('lector_photo')->nullable();
             $table->foreignId('vebinar_id')->constrained('vebinars', 'id')->require();
             $table->timestamps();
