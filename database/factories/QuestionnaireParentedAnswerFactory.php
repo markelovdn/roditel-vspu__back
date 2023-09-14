@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Parented;
 use App\Models\Questionnaire;
 use App\Models\QuestionnaireQuestion;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,6 +22,7 @@ class QuestionnaireParentedAnswerFactory extends Factory
         return [
             'text' => fake()->text(),
             'questionnaire_id' => Questionnaire::factory(),
+            'parented_id' => Parented::factory(),
             'questionnaire_question_id' => QuestionnaireQuestion::factory()
         ];
     }
