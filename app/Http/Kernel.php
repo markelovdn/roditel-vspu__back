@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminRole;
 use App\Http\Middleware\ConsultantRole;
 use App\Http\Middleware\ParentedRole;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -68,5 +69,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'consultant' => ConsultantRole::class,
         'parented' => ParentedRole::class,
+        'admin' => AdminRole::class,
     ];
 }

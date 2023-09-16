@@ -35,19 +35,19 @@ class UsersController extends Controller
 
             $role = Role::where('id', $request->role_id)->first();
 
-            return response()->json([ 'user' => $user, 'role' => $role ], 200);
+            return UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
-                'message' => 'Something went wrong in AuthController.register'
+                'message' => 'Something went wrong in UserController.store'
             ], 400);
         }
     }
 
     public function show(string $id)
     {
-        //
+        return UserResource::collection(User::with('role')->where('id', $id)->get());
     }
 
     /**

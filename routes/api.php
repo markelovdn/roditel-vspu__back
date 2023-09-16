@@ -27,7 +27,6 @@ Route::apiResource("/consultants", ConsultantsController::class);
 Route::apiResource("/vebinars", VebinarsController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource("/users", UsersController::class);
     Route::apiResource("/consultations", ConsultationsController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
 
@@ -35,5 +34,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/consultantReports", ConsultantReportsController::class);
         Route::apiResource("/questionnaires", QuestionnairesController::class);
         Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
+    });
+
+    Route::middleware('admin')->group(function () {
+        Route::apiResource("/users", UsersController::class);
     });
 });

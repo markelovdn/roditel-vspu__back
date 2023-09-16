@@ -18,6 +18,7 @@ class User extends Authenticatable
 
     public const CONSULTANT = 'consultant';
     public const PARENTED = 'parented';
+    public const ADMIN = 'admin';
 
     /**
      * The attributes that are mass assignable.
