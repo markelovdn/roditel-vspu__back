@@ -14,8 +14,7 @@ class VebinarsController extends Controller
      */
     public function index()
     {
-        $a = Vebinar::with('vebinarCategory')->get();
-        return VebinarsResource::collection(Vebinar::with('vebinarCategory')->get());
+        return VebinarsResource::collection(Vebinar::with('vebinarCategory')->paginate(9));
     }
 
     /**
