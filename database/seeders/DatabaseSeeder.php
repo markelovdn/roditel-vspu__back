@@ -113,7 +113,7 @@ class DatabaseSeeder extends Seeder
             ['code' => '92', 'title' => 'Севастополь  '],
             ['code' => '95', 'title' => 'Чеченская республика '],
         ]);
-        
+
         Role::insert([
             ['code' => 'admin', 'title' => 'Администратор'],
             ['code' => 'consultant', 'title' => 'Консультант'],
@@ -162,7 +162,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Consultation::factory(10)->create();
         \App\Models\ConsultationMessage::factory(10)->create();
 
-        User::create([
+        User::insert([
             'first_name' => 'test',
             'second_name' => 'test',
             'patronymic' => 'test',
@@ -170,7 +170,19 @@ class DatabaseSeeder extends Seeder
             'phone' => '+7 (111) 111 1111',
             'role_id' => '2',
             'password' => '123123',
-        ]);
+        ]
+    );
+
+    User::insert([
+        'first_name' => 'admin',
+        'second_name' => 'admin',
+        'patronymic' => 'admin',
+        'email' => 'admin@admin.ru',
+        'phone' => '+7 (000) 000 0000',
+        'role_id' => '1',
+        'password' => '123123',
+    ]
+    );
 
         Consultant::create([
             'user_id' => '11',
