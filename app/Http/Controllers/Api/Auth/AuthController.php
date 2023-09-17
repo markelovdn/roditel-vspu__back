@@ -58,6 +58,8 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
+        $a = Auth::attempt($data);
+
         if (!Auth::attempt($data)) {
             return response()->json('Cridentials not match', 401);
         }
