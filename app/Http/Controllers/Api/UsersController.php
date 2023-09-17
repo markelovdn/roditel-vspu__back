@@ -33,8 +33,6 @@ class UsersController extends Controller
 
             $user->save();
 
-            $role = Role::where('id', $request->role_id)->first();
-
             return UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
         } catch (\Exception $e) {
@@ -55,7 +53,27 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::where('id', $id)->first();
+
+        try {
+            $user->first_name = $request->first_name;
+            $user->second_name = $request->second_name;
+            $user->patronymic = $request->patronymic;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->role_id = $request->role_id;
+            $user->password = Hash::make($request->password);
+
+            $user->save();
+
+            return UserResource::collection(User::where('id', $user->id)->with('role')->get());
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong in UserController.update'
+            ], 400);
+        }
     }
 
     /**
@@ -63,6 +81,17 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            User::destroy($id);
+            return response()->json([
+                'message' => 'Record successfully deleted'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong in UserController.destroy'
+            ], 400);
+        }
     }
 }

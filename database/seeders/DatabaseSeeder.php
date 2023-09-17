@@ -169,7 +169,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@test.ru',
             'phone' => '+7 (111) 111 1111',
             'role_id' => '2',
-            'password' => '123123',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
         ]
     );
 
@@ -180,7 +180,7 @@ class DatabaseSeeder extends Seeder
         'email' => 'admin@admin.ru',
         'phone' => '+7 (000) 000 0000',
         'role_id' => '1',
-        'password' => '123123',
+        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
     ]
     );
 

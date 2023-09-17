@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('parenteds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('region_id')->constrained('regions', 'id')->require();
-            $table->foreignId('user_id')->constrained('users', 'id')->require();
+            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade')->require();
             $table->timestamps();
         });
     }
