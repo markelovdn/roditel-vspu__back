@@ -140,14 +140,12 @@ class UserTest extends TestCase
 
         $response = $this->delete('/api/users/'.$user->id);
 
-        $this->assertDatabaseMissing('users', [
-            'id' => $user->id
-        ]);
+        $this->assertModelMissing($user);
 
         $response
             ->assertStatus(200)
             ->assertJson(fn (AssertableJson $json) =>
-            $json->has('data'));
+            $json->has('message'));;
     }
 
 }
