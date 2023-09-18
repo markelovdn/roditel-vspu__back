@@ -161,6 +161,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\QuestionnaireAnswerCount::factory(10)->create();
         \App\Models\Consultation::factory(10)->create();
         \App\Models\ConsultationMessage::factory(10)->create();
+        \App\Models\VebinarPartisipant::factory(10)->create();
 
         User::insert([
             'first_name' => 'test',

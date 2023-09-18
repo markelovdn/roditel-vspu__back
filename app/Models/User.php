@@ -75,6 +75,11 @@ class User extends Authenticatable
         return $this->hasMany(ConsultationMessage::class);
     }
 
+    public function vebinar(): HasMany
+    {
+        return $this->hasMany(VebinarPartisipant::class);
+    }
+
 
 
 }

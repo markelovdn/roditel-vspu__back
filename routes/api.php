@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\QuestionnaireParentedsAnswersController;
 use App\Http\Controllers\Api\QuestionnairesController;
 use App\Http\Controllers\Api\SpecizlizationsController;
 use App\Http\Controllers\Api\UsersController;
+use App\Http\Controllers\Api\VebinarPartisipantController;
 use App\Http\Controllers\Api\VebinarsController;
 use App\Http\Controllers\Api\VebinarsQuestionsController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/consultations", ConsultationsController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
+    Route::apiResource("/vebinarPartisipants", VebinarPartisipantController::class);
 
 
     Route::middleware('consultant')->group(function () {
