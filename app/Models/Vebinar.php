@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Vebinar extends Model
@@ -19,7 +20,7 @@ class Vebinar extends Model
         return $this->hasOne(VebinarProgram::class);
     }
 
-    public function question(): HasOne {
-        return $this->hasOne(VebinarQuestion::class);
+    public function questions(): HasMany {
+        return $this->hasMany(VebinarQuestion::class);
     }
 }

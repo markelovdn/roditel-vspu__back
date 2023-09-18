@@ -10,7 +10,7 @@ class VebinarQuestion extends Model
 {
     use HasFactory;
 
-    public function vebinarQuestion(): BelongsTo {
+    public function vebinar(): BelongsTo {
         return $this->belongsTo(Vebinar::class);
     }
 }
