@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SpecializationsResource;
-use App\Models\Specialization;
+use App\Http\Resources\RegionsResource;
+use App\Models\Region;
 use Illuminate\Http\Request;
 
-class SpecizlizationsController extends Controller
+class RegionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return SpecializationsResource::collection(Specialization::get());
+        return RegionsResource::collection(Region::get());
     }
 
     /**

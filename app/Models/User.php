@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,10 +17,6 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
-    public const CONSULTANT = 'consultant';
-    public const PARENTED = 'parented';
-    public const ADMIN = 'admin';
 
     /**
      * The attributes that are mass assignable.
@@ -80,6 +78,23 @@ class User extends Authenticatable
         return $this->hasMany(WebinarPartisipant::class);
     }
 
+    public function registrationAs(object $user, $request): void {
 
+        $role = new Role();
 
+        $role->isConsultant($user->id) ?
+         Consultant::insert([
+            'user_id' => $user->id,
+            'specialization_id' => $request->specialization_id,
+            'profession_id' => $request->profession_id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]) :
+        Parented::insert([
+            'user_id' => $user->id,
+            'region_id' => $request->region_id,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+    }
 }

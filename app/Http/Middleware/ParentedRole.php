@@ -17,7 +17,7 @@ class ParentedRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $role = Role::where('code', User::PARENTED)->first();
+        $role = Role::where('code', Role::PARENTED)->first();
         $consultant = User::where('id', auth()->user()->id)->first();
 
         if($consultant->role_id != $role->id) {

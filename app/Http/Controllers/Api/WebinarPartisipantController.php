@@ -7,86 +7,68 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWebinarPartisipantRequest;
 use App\Http\Requests\UpdateWebinarPartisipantRequest;
 use App\Models\WebinarPartisipant;
+use App\Http\Resources\WebinarPartisipantsResourse;
+use App\Models\Role;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class WebinarPartisipantController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @param RegistrationRequest $request
+     * @return JsonResource
      */
-    public function index()
+
+    public function index(): JsonResource
     {
-        //
+        $role = new Role();
+        $isAdmin = $role->isAdmin(Auth()->user()->id);
+
+        $result = $isAdmin ?
+                    WebinarPartisipantsResourse::collection(WebinarPartisipant::get()) :
+                    response()->json(['error' => 'Access is denied'], 400);
+
+        return $result;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreWebinarPartisipantRequest $request, WebinarParticipants $checkPartisipant)
     {
-        return '123';
+        $webinarPartisipant = new WebinarPartisipant();
 
+        if(!$checkPartisipant->isUnique($request->webinar_id, $request->user_id)) {
+            return response()->json([
+                'warning' => 'The participant is already registered'
+            ], 300);
+        }
 
-        // $webinarPartisipant = new WebinarPartisipant();
+        try {
+            $webinarPartisipant->webinar_id = $request->webinar_id;
+            $webinarPartisipant->user_id = $request->user_id;
 
-        // if(!$checkPartisipant->isUnique($request->webinar_id, $request->user_id)) {
-        //     return response()->json([
-        //         'warning' => 'The participant is already registered'
-        //     ], 300);
-        // }
+            $webinarPartisipant->save();
 
-        // try {
-        //     $webinarPartisipant->webinar_id = $request->webinar_id;
-        //     $webinarPartisipant->user_id = $request->user_id;
+            return response()->json([
+                'message' => 'User successfully added for webinar'
+            ], 200);
 
-        //     $webinarPartisipant->save();
-
-        //     return response()->json([
-        //         'message' => 'User successfully added for webinar'
-        //     ], 200);
-
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         'error' => $e->getMessage(),
-        //         'message' => 'Something went wrong in UserController.store'
-        //     ], 400);
-        // }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong in UserController.store'
+            ], 400);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(WebinarPartisipant $webinarPartisipant)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(WebinarPartisipant $webinarPartisipant)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateWebinarPartisipantRequest $request, WebinarPartisipant $webinarPartisipant)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(WebinarPartisipant $webinarPartisipant)
     {
         //

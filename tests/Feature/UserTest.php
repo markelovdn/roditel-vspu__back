@@ -18,7 +18,7 @@ class UserTest extends TestCase
 
     public function test_index_users(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -32,7 +32,7 @@ class UserTest extends TestCase
 
     public function test_store_user_as_consultant(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -62,7 +62,7 @@ class UserTest extends TestCase
 
     public function test_store_user_as_parented(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -89,7 +89,7 @@ class UserTest extends TestCase
 
     public function test_show_user(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -102,7 +102,7 @@ class UserTest extends TestCase
 
     public function test_update_user(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -132,7 +132,7 @@ class UserTest extends TestCase
 
     public function test_destroy_user(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 

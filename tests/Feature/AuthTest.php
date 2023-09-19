@@ -14,7 +14,7 @@ class AuthTest extends TestCase
 
     public function test_register_user_as_consultant(): void
     {
-        $role = Role::where('code', 'consultant')->first();
+        $role = Role::where('code', Role::CONSULTANT)->first();
         //codeception
         $response = $this->post('/api/register', [
             'second_name' => 'Иван',
@@ -22,7 +22,9 @@ class AuthTest extends TestCase
             'patronymic' => 'Иванович',
             'email' => 'ivan@test.ru',
             'phone' => '+7 (000) 000-00-00',
-            'role_id' => $role->id,
+            'specialization_id' => 1,
+            'profession_id' => 1,
+            'role_code' => $role->code,
             'password' => '123123'
         ]);
 

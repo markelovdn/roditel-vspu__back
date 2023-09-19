@@ -8,7 +8,8 @@ use App\Http\Controllers\Api\ConsultationsController;
 use App\Http\Controllers\Api\ProfessionsController;
 use App\Http\Controllers\Api\QuestionnaireParentedsAnswersController;
 use App\Http\Controllers\Api\QuestionnairesController;
-use App\Http\Controllers\Api\SpecizlizationsController;
+use App\Http\Controllers\Api\RegionsController;
+use App\Http\Controllers\Api\SpecializationsController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\WebinarPartisipantController;
 use App\Http\Controllers\Api\WebinarsController;
@@ -21,8 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::apiResource("/specializations", SpecizlizationsController::class);
+Route::apiResource("/specializations", SpecializationsController::class);
 Route::apiResource("/professions", ProfessionsController::class);
+Route::apiResource("/regions", RegionsController::class);
 Route::apiResource("/consultants", ConsultantsController::class);
 Route::apiResource("/webinars", WebinarsController::class);
 Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class);
@@ -30,9 +32,7 @@ Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/consultations", ConsultationsController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
-    Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
     Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class);
-
 
     Route::middleware('consultant')->group(function () {
         Route::apiResource("/consultantReports", ConsultantReportsController::class);
