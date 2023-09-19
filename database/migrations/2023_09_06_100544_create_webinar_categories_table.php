@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vebinar_partisipants', function (Blueprint $table) {
+        Schema::create('webinar_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vebinar_id')->constrained('vebinars', 'id');
-            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->string('title');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vebinar_partisipants');
+        Schema::dropIfExists('webinar_categories');
     }
 };

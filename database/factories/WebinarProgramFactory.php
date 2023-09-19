@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Vebinar;
+use App\Models\Webinar;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\VebinarProgram>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WebinarProgram>
  */
-class VebinarProgramFactory extends Factory
+class WebinarProgramFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,7 +23,7 @@ class VebinarProgramFactory extends Factory
             'lector_description' => fake()->name(),
             'lector_department' => fake()->text(),
             'lector_photo' => fake()->imageUrl(354, 472, 'people', true),
-            'vebinar_id' => Vebinar::factory(),
+            'webinar_id' => Webinar::factory(),
         ];
     }
 }

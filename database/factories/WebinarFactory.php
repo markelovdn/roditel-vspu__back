@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Vebinar>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Webinar>
  */
-class VebinarFactory extends Factory
+class WebinarFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -24,7 +24,7 @@ class VebinarFactory extends Factory
             'lector_name' => fake()->name(),
             'logo' => fake()->imageUrl(354, 472, 'people', true),
             'video_link' =>fake()->url(),
-            'vebinar_category_id' => fake()->randomElement([1,3]),
+            'webinar_category_id' => fake()->randomElement([1,3]),
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VebinarsResource extends JsonResource
+class WebinarsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,8 +22,8 @@ class VebinarsResource extends JsonResource
             'lectorName' => $this->lector_name,
             'logo' => $this->logo,
             'cost' => $this->cost,
-            'vebinarCategory' => [
-                'tite' => $this->vebinarCategory->title
+            'webinarCategory' => [
+                'tite' => $this->webinarCategory->title
             ],
         ];
     }

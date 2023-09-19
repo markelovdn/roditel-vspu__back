@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vebinar_programs', function (Blueprint $table) {
+        Schema::create('webinar_programs', function (Blueprint $table) {
             $table->id();
             $table->time('time_start')->nullable();
             $table->string('subject')->nullable();
             $table->text('lector_description')->nullable();
             $table->text('lector_department')->nullable();
             $table->string('lector_photo')->nullable();
-            $table->foreignId('vebinar_id')->constrained('vebinars', 'id')->require();
+            $table->foreignId('webinar_id')->constrained('webinars', 'id')->require();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vebinar_programs');
+        Schema::dropIfExists('webinar_programs');
     }
 };

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\VebinarsQuestionsResource;
-use App\Models\Vebinar;
-use App\Models\VebinarQuestion;
+use App\Http\Resources\WebinarsQuestionsResource;
+use App\Models\Webinar;
+use App\Models\WebinarQuestion;
 use Illuminate\Http\Request;
 
-class VebinarsQuestionsController extends Controller
+class WebinarsQuestionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class VebinarsQuestionsController extends Controller
      */
     public function show(string $id)
     {
-        return VebinarsQuestionsResource::collection(Vebinar::with('questions')->where('id', $id)->get());
+        return WebinarsQuestionsResource::collection(Webinar::with('questions')->where('id', $id)->get());
     }
 
     /**

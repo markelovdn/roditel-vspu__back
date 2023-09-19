@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\VebinarsResource;
-use App\Models\Vebinar;
+use App\Http\Resources\WebinarsResource;
+use App\Models\Webinar;
 use Illuminate\Http\Request;
 
-class VebinarsController extends Controller
+class WebinarsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return VebinarsResource::collection(Vebinar::with('vebinarCategory')->paginate(9));
+        return WebinarsResource::collection(Webinar::with('webinarCategory')->paginate(9));
     }
 
     /**

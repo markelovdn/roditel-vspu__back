@@ -75,9 +75,9 @@ class User extends Authenticatable
         return $this->hasMany(ConsultationMessage::class);
     }
 
-    public function vebinar(): HasMany
+    public function webinar(): HasMany
     {
-        return $this->hasMany(VebinarPartisipant::class);
+        return $this->hasMany(WebinarPartisipant::class);
     }
 
 

@@ -10,9 +10,9 @@ use App\Http\Controllers\Api\QuestionnaireParentedsAnswersController;
 use App\Http\Controllers\Api\QuestionnairesController;
 use App\Http\Controllers\Api\SpecizlizationsController;
 use App\Http\Controllers\Api\UsersController;
-use App\Http\Controllers\Api\VebinarPartisipantController;
-use App\Http\Controllers\Api\VebinarsController;
-use App\Http\Controllers\Api\VebinarsQuestionsController;
+use App\Http\Controllers\Api\WebinarPartisipantController;
+use App\Http\Controllers\Api\WebinarsController;
+use App\Http\Controllers\Api\WebinarsQuestionsController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/test', function() {
@@ -24,14 +24,14 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::apiResource("/specializations", SpecizlizationsController::class);
 Route::apiResource("/professions", ProfessionsController::class);
 Route::apiResource("/consultants", ConsultantsController::class);
-Route::apiResource("/vebinars", VebinarsController::class);
-Route::apiResource("/vebinarsQuestions", VebinarsQuestionsController::class);
+Route::apiResource("/webinars", WebinarsController::class);
+Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/consultations", ConsultationsController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
-    Route::apiResource("/vebinarPartisipants", VebinarPartisipantController::class);
+    Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class);
 
 
     Route::middleware('consultant')->group(function () {

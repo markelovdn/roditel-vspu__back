@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vebinars', function (Blueprint $table) {
+        Schema::create('webinars', function (Blueprint $table) {
             $table->id();
             $table->string('title')->require();
             $table->date('date')->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->decimal('cost', 19,2)->default(0);
             $table->string('video_link')->nullable();
-            $table->foreignId('vebinar_category_id')->constrained('vebinar_categories', 'id');
+            $table->foreignId('webinar_category_id')->constrained('webinar_categories', 'id');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vebinars');
+        Schema::dropIfExists('webinars');
     }
 };

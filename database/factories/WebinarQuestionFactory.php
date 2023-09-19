@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Vebinar;
+use App\Models\Webinar;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\VebinarQuestion>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WebinarQuestion>
  */
-class VebinarQuestionFactory extends Factory
+class WebinarQuestionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,7 @@ class VebinarQuestionFactory extends Factory
     {
         return [
             'question_text' => fake()->text(),
-            'vebinar_id' => Vebinar::factory(),
+            'webinar_id' => Webinar::factory(),
         ];
     }
 }

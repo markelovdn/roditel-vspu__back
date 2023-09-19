@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vebinar_questions', function (Blueprint $table) {
+        Schema::create('webinar_questions', function (Blueprint $table) {
             $table->id();
             $table->string('question_text')->nullable();
-            $table->foreignId('vebinar_id')->constrained('vebinars', 'id')->require();
+            $table->foreignId('webinar_id')->constrained('webinars', 'id')->require();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vebinar_questions');
+        Schema::dropIfExists('webinar_questions');
     }
 };

@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Vebinar extends Model
+class Webinar extends Model
 {
     use HasFactory;
 
-    public function vebinarCategory(): BelongsTo {
-        return $this->belongsTo(VebinarCategory::class);
+    public function webinarCategory(): BelongsTo {
+        return $this->belongsTo(WebinarCategory::class);
     }
 
     public function program(): HasOne {
-        return $this->hasOne(VebinarProgram::class);
+        return $this->hasOne(WebinarProgram::class);
     }
 
     public function questions(): HasMany {
-        return $this->hasMany(VebinarQuestion::class);
+        return $this->hasMany(WebinarQuestion::class);
     }
 }

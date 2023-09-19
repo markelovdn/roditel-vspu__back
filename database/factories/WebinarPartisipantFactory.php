@@ -3,13 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use App\Models\Vebinar;
+use App\Models\Webinar;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\VebinarPartisipant>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WebinarPartisipant>
  */
-class VebinarPartisipantFactory extends Factory
+class WebinarPartisipantFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,7 @@ class VebinarPartisipantFactory extends Factory
     public function definition(): array
     {
         return [
-            'vebinar_id' => Vebinar::factory(),
+            'webinar_id' => Webinar::factory(),
             'user_id' => User::factory(),
         ];
     }

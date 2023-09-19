@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class VebinarCategory extends Model
+class WebinarProgram extends Model
 {
     use HasFactory;
 
-    public function vebinar(): HasOne {
-        return $this->hasOne(Vebinar::class);
+    public function webinarProgram(): BelongsTo {
+        return $this->belongsTo(Webinar::class);
     }
 }
