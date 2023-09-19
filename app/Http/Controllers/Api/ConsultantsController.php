@@ -37,7 +37,7 @@ class ConsultantsController extends Controller
         $consultant = Consultant::where('user_id', $request->user_id)->first();
 
         try {
-            $consultant->photo = $filesHandler->uploadFile($consultant->user_id, $request->photo);
+            $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
             $consultant->description = $request->description;
 
             $consultant->save();

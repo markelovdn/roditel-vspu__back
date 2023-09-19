@@ -4,17 +4,18 @@ namespace Tests\Feature;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ConsultantTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
+    use DatabaseTransactions;
+
     public function test_index_consultants(): void
     {
         $response = $this->get('/api/consultants');
@@ -31,7 +32,9 @@ class ConsultantTest extends TestCase
         Auth::login($user);
 
         $response = $this->post('api/consultants', [
- 
+            'user_id' => $user->id,
+            'photo' => UploadedFile::fake()->image('photo.jpg'),
+            'description' => 'описание консультанта',
         ]);
 
         $response->assertStatus(200)
