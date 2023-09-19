@@ -31,30 +31,33 @@ class WebinarPartisipantController extends Controller
      */
     public function store(StoreWebinarPartisipantRequest $request, WebinarParticipants $checkPartisipant)
     {
-        $webinarPartisipant = new WebinarPartisipant();
+        return '123';
 
-        if(!$checkPartisipant->isUnique($request->webinar_id, $request->user_id)) {
-            return response()->json([
-                'warning' => 'The participant is already registered'
-            ], 300);
-        }
 
-        try {
-            $webinarPartisipant->webinar_id = $request->webinar_id;
-            $webinarPartisipant->user_id = $request->user_id;
+        // $webinarPartisipant = new WebinarPartisipant();
 
-            $webinarPartisipant->save();
+        // if(!$checkPartisipant->isUnique($request->webinar_id, $request->user_id)) {
+        //     return response()->json([
+        //         'warning' => 'The participant is already registered'
+        //     ], 300);
+        // }
 
-            return response()->json([
-                'message' => 'User successfully added for webinar'
-            ], 200);
+        // try {
+        //     $webinarPartisipant->webinar_id = $request->webinar_id;
+        //     $webinarPartisipant->user_id = $request->user_id;
 
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage(),
-                'message' => 'Something went wrong in UserController.store'
-            ], 400);
-        }
+        //     $webinarPartisipant->save();
+
+        //     return response()->json([
+        //         'message' => 'User successfully added for webinar'
+        //     ], 200);
+
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'error' => $e->getMessage(),
+        //         'message' => 'Something went wrong in UserController.store'
+        //     ], 400);
+        // }
     }
 
     /**
