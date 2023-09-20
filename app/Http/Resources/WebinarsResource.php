@@ -14,6 +14,7 @@ class WebinarsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             'title' => $this->title,
             'date' => $this->date,
@@ -25,6 +26,7 @@ class WebinarsResource extends JsonResource
             'webinarCategory' => [
                 'tite' => $this->webinarCategory->title
             ],
+            'questions' => WebinarQuestionsResource::collection($this->questions)
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\WebinarQuestionsResource;
 use App\Http\Resources\WebinarsResource;
 use App\Models\Webinar;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class WebinarsController extends Controller
      */
     public function index()
     {
-        return WebinarsResource::collection(Webinar::with('webinarCategory')->paginate(9));
+        // return Webinar::with('webinarCategory', 'questions')->get();
+        return WebinarsResource::collection(Webinar::with('webinarCategory')->paginate(19));
     }
 
     /**
@@ -30,7 +32,7 @@ class WebinarsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return WebinarsResource::collection(Webinar::where('id', $id)->with('webinarCategory', 'questions')->get());;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Consultant;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -130,7 +131,7 @@ class UserTest extends TestCase
             $json->has('data'));
     }
 
-    public function test_destroy_user(): void
+    public function test_destroy_consultant(): void
     {
         $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
@@ -145,7 +146,7 @@ class UserTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson(fn (AssertableJson $json) =>
-            $json->has('message'));;
+            $json->has('message'));
     }
 
 }

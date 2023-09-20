@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\ChildrensController;
 use App\Http\Controllers\Api\ConsultantReportsController;
 use App\Http\Controllers\Api\ConsultantsController;
 use App\Http\Controllers\Api\ConsultationMessagesController;
 use App\Http\Controllers\Api\ConsultationsController;
+use App\Http\Controllers\Api\ParentedsController;
 use App\Http\Controllers\Api\ProfessionsController;
 use App\Http\Controllers\Api\QuestionnaireParentedsAnswersController;
 use App\Http\Controllers\Api\QuestionnairesController;
@@ -36,6 +38,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('consultant')->group(function () {
         Route::apiResource("/consultantReports", ConsultantReportsController::class);
+        Route::apiResource("/questionnaires", QuestionnairesController::class);
+        Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
+    });
+
+    Route::middleware('parented', 'admin')->group(function () {
+        Route::apiResource("/parenteds", ParentedsController::class);
+        Route::apiResource("/parented.children", ChildrensController::class);
         Route::apiResource("/questionnaires", QuestionnairesController::class);
         Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
     });
