@@ -17,7 +17,7 @@ class ConsultantsController extends Controller
 {
     public function index()
     {
-        return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->get());
+        return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->paginate(9));
     }
 
     public function store(StoreConsultantRequest $request, FilesHandler $filesHandler)
