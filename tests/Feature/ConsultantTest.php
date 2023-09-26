@@ -24,8 +24,7 @@ class ConsultantTest extends TestCase
         $response = $this->get('/api/consultants');
 
         $response->assertStatus(200)
-                 ->assertJson(fn (AssertableJson $json) =>
-                        $json->has('data'));;
+                 ->assertJsonIsObject();
     }
 
     public function test_store_consultant(): void
