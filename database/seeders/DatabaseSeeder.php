@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Children;
 use App\Models\Consultant;
 use App\Models\Contract;
 use App\Models\Parented;
