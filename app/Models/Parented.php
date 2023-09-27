@@ -15,7 +15,7 @@ class Parented extends Model
         'title',
     ];
 
-    public function children(): HasMany {
+    public function childrens(): HasMany {
         return $this->hasMany(Children::class);
     }
 

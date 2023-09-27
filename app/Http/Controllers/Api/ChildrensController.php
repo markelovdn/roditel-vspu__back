@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ParentedsResource;
+use App\Models\Parented;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChildrensController extends Controller
 {
@@ -12,7 +15,7 @@ class ChildrensController extends Controller
      */
     public function index()
     {
-        //
+        return ParentedsResource::collection(Parented::with('childrens')->where('user_id', Auth::user()->id)->get());
     }
 
     /**

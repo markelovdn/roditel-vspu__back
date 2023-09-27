@@ -42,8 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
     });
 
-    Route::middleware('parented', 'admin')->group(function () {
-        Route::apiResource("/parenteds", ParentedsController::class);
+    Route::middleware('parented')->group(function () {
+        Route::apiResource("/parenteds", ParentedsController::class)->except(['index']);
         Route::apiResource("/parented.children", ChildrensController::class);
         Route::apiResource("/questionnaires", QuestionnairesController::class);
         Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
@@ -51,5 +51,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('admin')->group(function () {
         Route::apiResource("/users", UsersController::class);
+        Route::apiResource("/parenteds", ParentedsController::class)->except(['store', 'update']);
     });
 });
