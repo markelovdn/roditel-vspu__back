@@ -211,5 +211,15 @@ class DatabaseSeeder extends Seeder
         ->whereIn('id', DB::table('consultants')->select('user_id'))
         ->update(['role_id' => Role::where('code', Role::CONSULTANT)->first()->id]);
 
+        DB::table('parenteds')->insert([
+            'user_id' => User::where('email', 'test@test.ru')->first()->id,
+            'region_id' => 2
+        ]);
+
+        DB::table('childrens')->insert([
+            'age'=>6,
+            'parented_id'=>41
+        ]);
+
     }
 }
