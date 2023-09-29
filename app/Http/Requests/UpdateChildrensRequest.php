@@ -11,7 +11,7 @@ class UpdateChildrensRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateChildrensRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'age' => ['required', 'numeric'],
+            'parented_id' => ['required', 'numeric'],
         ];
     }
 }

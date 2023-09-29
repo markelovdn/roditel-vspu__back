@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('file_url')->require();
             $table->string('upload_status')->nullable();
-            $table->foreignId('consultant_id')->constrained('consultants', 'id')->require();
+            $table->foreignId('consultant_id')->constrained('consultants', 'id')->onDelete('cascade')->require();
             $table->timestamps();
         });
     }

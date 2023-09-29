@@ -203,9 +203,13 @@ class DatabaseSeeder extends Seeder
             "user_id" => 1
         ]);
 
+        DB::table('users')
+        ->whereIn('id', DB::table('parenteds')->select('user_id'))
+        ->update(['role_id' => Role::where('code', Role::PARENTED)->first()->id]);
 
-
-
+        DB::table('users')
+        ->whereIn('id', DB::table('consultants')->select('user_id'))
+        ->update(['role_id' => Role::where('code', Role::CONSULTANT)->first()->id]);
 
     }
 }

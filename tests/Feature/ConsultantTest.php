@@ -84,7 +84,7 @@ class ConsultantTest extends TestCase
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
-        $consultant = Consultant::where('user_id', 10)->first();
+        $consultant = Consultant::first();
 
         $response = $this->delete('/api/consultants/'.$consultant->id);
 

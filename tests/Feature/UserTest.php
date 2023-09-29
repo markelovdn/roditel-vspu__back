@@ -131,17 +131,17 @@ class UserTest extends TestCase
             $json->has('data'));
     }
 
-    public function test_destroy_consultant(): void
+    public function test_destroy_user(): void
     {
         $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
-        $user = User::where('id', 10)->first();
+        $user = User::first();
 
         $response = $this->delete('/api/users/'.$user->id);
 
-        $this->assertModelMissing($user);
+        $this->assertSoftDeleted($user);
 
         $response
             ->assertStatus(200)
