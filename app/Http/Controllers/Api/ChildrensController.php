@@ -67,9 +67,9 @@ class ChildrensController extends Controller
      */
     public function show(string $id)
     {
-        $children = Children::where('id', $id)->first();
+        $children = Children::where('parented_id', $id)->get();
 
-        if ($children < 1)
+        if (count($children) < 1)
         {
             return response()->json([
                 'message' => 'You don\'t have any children added'
