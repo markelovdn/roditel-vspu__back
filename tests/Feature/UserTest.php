@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Consultant;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -18,7 +19,7 @@ class UserTest extends TestCase
 
     public function test_index_users(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -32,7 +33,7 @@ class UserTest extends TestCase
 
     public function test_store_user_as_consultant(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -62,7 +63,7 @@ class UserTest extends TestCase
 
     public function test_store_user_as_parented(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -89,7 +90,7 @@ class UserTest extends TestCase
 
     public function test_show_user(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -102,7 +103,7 @@ class UserTest extends TestCase
 
     public function test_update_user(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
@@ -132,20 +133,20 @@ class UserTest extends TestCase
 
     public function test_destroy_user(): void
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
-        $user = User::where('id', 10)->first();
+        $user = User::first();
 
         $response = $this->delete('/api/users/'.$user->id);
 
-        $this->assertModelMissing($user);
+        $this->assertSoftDeleted($user);
 
         $response
             ->assertStatus(200)
             ->assertJson(fn (AssertableJson $json) =>
-            $json->has('message'));;
+            $json->has('message'));
     }
 
 }

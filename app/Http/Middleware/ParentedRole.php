@@ -17,11 +17,11 @@ class ParentedRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $role = Role::where('code', User::PARENTED)->first();
-        $consultant = User::where('id', auth()->user()->id)->first();
+        $role = Role::where('code', Role::PARENTED)->first();
+        $parented = User::where('id', auth()->user()->id)->first();
 
-        if($consultant->role_id != $role->id) {
-            return response()->json([ 'message' => 'У вас нет доступа к данному ресурсу' ], 401);
+        if($parented->role_id != $role->id) {
+            return response()->json([ 'message' => 'У вас нет доступа (P) к данному ресурсу' ], 401);
         }
 
         return $next($request);

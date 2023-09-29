@@ -19,11 +19,11 @@ class ConsultantRole
     public function handle(Request $request, Closure $next): Response
     {
 
-        $role = Role::where('code', User::CONSULTANT)->first();
+        $role = Role::where('code', Role::CONSULTANT)->first();
         $consultant = User::where('id', auth()->user()->id)->first();
 
         if($consultant->role_id != $role->id) {
-            return response()->json([ 'message' => 'У вас нет доступа к данному ресурсу' ], 401);
+            return response()->json([ 'message' => 'У вас нет доступа (C) к данному ресурсу' ], 401);
         }
 
         return $next($request);

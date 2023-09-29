@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Route;
 // TODO:не смог нормально настроить xdebug
 
 Route::get('/{any}', function () {
-    return 'Somthing went wrong';
+    return response()->json([
+        'message' => 'Something went wrong'
+    ], 400);
 })->where('any','.*');
 

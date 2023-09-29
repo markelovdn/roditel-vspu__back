@@ -17,11 +17,11 @@ class AdminRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $role = Role::where('code', User::ADMIN)->first();
+        $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('id', auth()->user()->id)->first();
 
         if($admin->role_id != $role->id) {
-            return response()->json([ 'message' => 'У вас нет доступа к данному ресурсу' ], 401);
+            return response()->json([ 'message' => 'У вас нет доступа (A) к данному ресурсу' ], 401);
         }
 
         return $next($request);

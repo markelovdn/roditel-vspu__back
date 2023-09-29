@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Children;
 use App\Models\Consultant;
 use App\Models\Contract;
 use App\Models\Parented;
@@ -12,7 +13,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\Specialization;
 use App\Models\User;
-use App\Models\VebinarCategory;
+use App\Models\WebinarCategory;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -140,7 +141,7 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Сантехник'],
         ]);
 
-        VebinarCategory::insert([
+        WebinarCategory::insert([
             ['title' => 'Основная школа'],
             ['title' => 'Не основная школа'],
             ['title' => 'Вечерняя школа'],
@@ -150,9 +151,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\Contract::factory(10)->create();
         \App\Models\Parented::factory(10)->create();
         \App\Models\Children::factory(10)->create();
-        \App\Models\Vebinar::factory(10)->create();
-        \App\Models\VebinarQuestion::factory(10)->create();
-        \App\Models\VebinarProgram::factory(10)->create();
+        \App\Models\Webinar::factory(10)->create();
+        \App\Models\WebinarQuestion::factory(10)->create();
+        \App\Models\WebinarProgram::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
         \App\Models\Questionnaire::factory(10)->create();
         \App\Models\QuestionnaireQuestion::factory(10)->create();
@@ -161,6 +162,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\QuestionnaireAnswerCount::factory(10)->create();
         \App\Models\Consultation::factory(10)->create();
         \App\Models\ConsultationMessage::factory(10)->create();
+        \App\Models\WebinarPartisipant::factory(10)->create();
 
         User::insert([
             'first_name' => 'test',
@@ -201,9 +203,13 @@ class DatabaseSeeder extends Seeder
             "user_id" => 1
         ]);
 
+        DB::table('users')
+        ->whereIn('id', DB::table('parenteds')->select('user_id'))
+        ->update(['role_id' => Role::where('code', Role::PARENTED)->first()->id]);
 
-
-
+        DB::table('users')
+        ->whereIn('id', DB::table('consultants')->select('user_id'))
+        ->update(['role_id' => Role::where('code', Role::CONSULTANT)->first()->id]);
 
     }
 }

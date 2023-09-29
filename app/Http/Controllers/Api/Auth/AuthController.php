@@ -19,9 +19,10 @@ class AuthController extends Controller
      * @param RegistrationRequest $request
      * @return JsonResponse
      */
-    public function register(Request $request): JsonResponse
+    public function register(RegistrationRequest $request): JsonResponse
     {
         $user = new User();
+        $role = Role::where('code', $request->role_code)->first();
 
         try {
             $user->first_name = $request->first_name;
@@ -29,14 +30,14 @@ class AuthController extends Controller
             $user->patronymic = $request->patronymic;
             $user->email = $request->email;
             $user->phone = $request->phone;
-            $user->role_id = $request->role_id;
+            $user->role_id = $role->id;
             $user->password = Hash::make($request->password);
 
             $user->save();
 
-            $role = Role::where('id', $request->role_id)->first();
-
             Auth::login($user);
+
+            $user->registrationAs(Auth::user(), $request);
 
             $token = $user->createToken('user_token')->plainTextToken;
 

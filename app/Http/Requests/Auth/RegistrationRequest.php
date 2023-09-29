@@ -28,7 +28,7 @@ class RegistrationRequest extends FormRequest
             'email' => ['required', 'unique:users', 'max:50'],
             'phone' => ['unique:users', 'max:20'],
             'password' => ['required', 'string'],
-            'role_id' => ['required'],
+            'role_code' => ['required', 'string'],
         ];
     }
 }

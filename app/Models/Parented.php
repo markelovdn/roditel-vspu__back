@@ -11,11 +11,13 @@ class Parented extends Model
 {
     use HasFactory;
 
+    public const MAX_QUANTITY_CHILDRENS = 6;
+
     protected $fillable = [
         'title',
     ];
 
-    public function children(): HasMany {
+    public function childrens(): HasMany {
         return $this->hasMany(Children::class);
     }
 
