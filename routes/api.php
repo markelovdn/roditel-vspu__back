@@ -54,3 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/parenteds", ParentedsController::class)->except(['store', 'update']);
     });
 });
+
+Route::get('/api/documentation', function() {
+    return view('vendor.l5-swagger.index');
+});
