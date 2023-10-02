@@ -8,19 +8,20 @@ use App\Http\Resources\UserResource;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
-
     public function index()
     {
         return UserResource::collection(User::with('role')->get());
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): JsonResource
     {
         $user = new User();
+        $role = Role::where('code', $request->role_code)->first();
 
         try {
             $user->first_name = $request->first_name;
@@ -28,7 +29,7 @@ class UsersController extends Controller
             $user->patronymic = $request->patronymic;
             $user->email = $request->email;
             $user->phone = $request->phone;
-            $user->role_id = $request->role_id;
+            $user->role_id = $role->id;
             $user->password = Hash::make($request->password);
 
             $user->save();
@@ -48,12 +49,10 @@ class UsersController extends Controller
         return UserResource::collection(User::with('role')->where('id', $id)->get());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $user = User::where('id', $id)->first();
+        $role = Role::where('code', $request->role_code)->first();
 
         try {
             $user->first_name = $request->first_name;
@@ -61,7 +60,7 @@ class UsersController extends Controller
             $user->patronymic = $request->patronymic;
             $user->email = $request->email;
             $user->phone = $request->phone;
-            $user->role_id = $request->role_id;
+            $user->role_id = $role->id;
             $user->password = Hash::make($request->password);
 
             $user->save();
@@ -76,9 +75,6 @@ class UsersController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {

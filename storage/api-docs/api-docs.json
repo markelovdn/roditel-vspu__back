@@ -6,39 +6,87 @@
     },
     "paths": {
         "/api/": {},
-        "/users": {
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "USERS"
+                ],
+                "summary": "Get list of users",
+                "description": "Returns list of users",
+                "operationId": "getUsersList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
             "post": {
                 "tags": [
-                    "users"
+                    "USERS"
                 ],
-                "summary": "Adds a new user - with oneOf examples",
+                "summary": "Adds a new user",
+                "operationId": "7bbd79520a62d14e957129d2d9745f14",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "first_name",
+                                    "second_name",
+                                    "patronymic",
+                                    "email",
+                                    "phone",
+                                    "password",
+                                    "role_id"
+                                ],
                                 "properties": {
-                                    "id": {
-                                        "type": "string"
+                                    "first_name": {
+                                        "type": "string",
+                                        "maxLength": 255
                                     },
-                                    "name": {
-                                        "type": "string"
+                                    "second_name": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "patronymic": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "uniqueItems": true
                                     },
                                     "phone": {
-                                        "oneOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "integer"
-                                            }
-                                        ]
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "uniqueItems": true
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "minLength": 6
+                                    },
+                                    "role_id": {
+                                        "type": "integer",
+                                        "maxLength": 1
                                     }
                                 },
                                 "type": "object",
                                 "example": {
-                                    "id": "a3fb6",
-                                    "name": "Jessica Smith",
-                                    "phone": 12345678
+                                    "first_name": "Иван",
+                                    "second_name": "Иванов",
+                                    "patronymic": "Иванович",
+                                    "email": "ivan@gmail.ru",
+                                    "phone": "+7 (999) 999 9999",
+                                    "password": "834jhvasdf&",
+                                    "role_code": "consultant"
                                 }
                             }
                         }
@@ -46,7 +94,65 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "schema": "User response",
+                                            "title": "Sample schema users list",
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "firstName": {
+                                                                "type": "string"
+                                                            },
+                                                            "secondName": {
+                                                                "type": "string"
+                                                            },
+                                                            "patronymic": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string"
+                                                            },
+                                                            "phone": {
+                                                                "type": "string"
+                                                            },
+                                                            "password": {
+                                                                "type": "string"
+                                                            },
+                                                            "role": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "code": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "title": {
+                                                                        "type": "string"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Something went wrong in UserController.store"
                     }
                 }
             }

@@ -45,7 +45,7 @@ class UserTest extends TestCase
             'patronymic' => 'Иванович',
             'email' => 'ivan@test.ru',
             'phone' => '+7 (000) 000-00-00',
-            'role_id' => $role->id,
+            'role_code' => $role->code,
             'password' => '123123'
         ]);
 
@@ -75,7 +75,7 @@ class UserTest extends TestCase
             'patronymic' => 'Иванович',
             'email' => 'ivan@test.ru',
             'phone' => '+7 (000) 000-00-00',
-            'role_id' => $role->id,
+            'role_code' => $role->code,
             'password' => '123123'
         ]);
 
@@ -115,7 +115,7 @@ class UserTest extends TestCase
             'patronymic' => 'Иванович',
             'email' => 'ivan@test.ru',
             'phone' => '+7 (000) 000-00-00',
-            'role_id' => $role->id,
+            'role_code' => $role->code,
             'password' => '123123'
         ]);
 

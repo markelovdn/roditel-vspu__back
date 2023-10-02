@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Swagger;
+namespace App\Swagger\Controllers;
 
 use App\Http\Controllers\Controller;
+
 
  /**
  * @OA\Info(
@@ -14,7 +15,6 @@ use App\Http\Controllers\Controller;
  *    path="/api/"
  * )
  */
-
 class MainController extends Controller
 {
     //
