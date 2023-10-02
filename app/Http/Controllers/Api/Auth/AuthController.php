@@ -41,8 +41,9 @@ class AuthController extends Controller
             $user->registrationAs(Auth::user(), $request);
 
             $token = $user->createToken('user_token')->plainTextToken;
+            $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
-            return response()->json([ 'user' => $user, 'role' => $role, 'token' => $token ], 200);
+            return response()->json([ 'userData' => $userData, 'token' => $token ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
