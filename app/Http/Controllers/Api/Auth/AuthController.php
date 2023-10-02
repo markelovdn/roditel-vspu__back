@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\JsonResponse;
@@ -59,8 +60,6 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
-        $a = Auth::attempt($data);
-
         if (!Auth::attempt($data)) {
             return response()->json('Cridentials not match', 401);
         }
@@ -68,8 +67,10 @@ class AuthController extends Controller
         /** @var User $user */
         $user = $request->user();
 
+        $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
+
         $token = $user->createToken('api')->plainTextToken;
 
-        return response()->json(['token' => $token]);
+        return response()->json(['userData' => $userData,'token' => $token]);
     }
 }
