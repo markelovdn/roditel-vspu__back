@@ -13,9 +13,9 @@ class UserResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): Object
+    public function toArray(Request $request): Array
     {
-        return (object) [
+        return [
             'id' => $this->id,
             'firstName' => $this->first_name,
             'secondName' => $this->second_name,
@@ -27,6 +27,6 @@ class UserResource extends JsonResource
                 'code' => $this->role->code,
                 'title' => $this->role->title,
                 ]
-        ];
+            ];
     }
 }

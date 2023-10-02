@@ -43,7 +43,7 @@ class AuthController extends Controller
             $token = $user->createToken('user_token')->plainTextToken;
             $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
-            return response()->json([ 'userData' => $userData, 'token' => $token ], 200);
+            return response()->json([ 'userData' => json_decode(json_encode((object) $userData[0]), FALSE), 'token' => $token ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
@@ -67,11 +67,10 @@ class AuthController extends Controller
 
         /** @var User $user */
         $user = $request->user();
-
         $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
         $token = $user->createToken('api')->plainTextToken;
 
-        return response()->json(['userData' => $userData,'token' => $token]);
+        return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), FALSE),'token' => $token]);
     }
 }

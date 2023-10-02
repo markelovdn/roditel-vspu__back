@@ -22,8 +22,6 @@ class ConsultantsResource extends JsonResource
                 'secondName' => $this->user->second_name,
                 'surName' => $this->user->patronymic,
             ],
-
-
         ];
     }
 }
