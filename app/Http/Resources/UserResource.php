@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use SebastianBergmann\Type\ObjectType;
 
 class UserResource extends JsonResource
 {
@@ -12,9 +13,9 @@ class UserResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request): Object
     {
-        return [
+        return (object) [
             'id' => $this->id,
             'firstName' => $this->first_name,
             'secondName' => $this->second_name,
