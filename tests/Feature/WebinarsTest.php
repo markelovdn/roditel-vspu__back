@@ -19,8 +19,7 @@ class WebinarsTest extends TestCase
      */
     public function test_index_webinars(): void
     {
-        $response = $this->get('api/webinars');
-
+        $response = $this->get('api/webinars?dateBetween=2023-10-04,2023-10-07');
         $response
             ->assertStatus(200)
             ->assertJsonIsObject();
