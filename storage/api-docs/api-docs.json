@@ -6,6 +6,318 @@
     },
     "paths": {
         "/api/": {},
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "Registration new user",
+                "operationId": "b5c21cd46c71c3bac1d8941aa9c6afc3",
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    },
+                    {
+                        "name": "patronymic",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    },
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "string, maxLength=255, uniqueItems=true",
+                        "required": true
+                    },
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "description": "string, maxLength=255, uniqueItems=true",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    },
+                    {
+                        "name": "role_code",
+                        "in": "path",
+                        "description": "consultant or parented",
+                        "required": true
+                    },
+                    {
+                        "name": "specialization_id",
+                        "in": "path",
+                        "description": "integer, only for consultant role",
+                        "required": true
+                    },
+                    {
+                        "name": "profession_id",
+                        "in": "path",
+                        "description": "integer, only for consultant role",
+                        "required": true
+                    },
+                    {
+                        "name": "region_id",
+                        "in": "path",
+                        "description": "integer, only for parented role",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "second_name",
+                                    "patronymic",
+                                    "email",
+                                    "phone",
+                                    "password",
+                                    "role_code",
+                                    "specialization_id",
+                                    "profession_id"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "second_name": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "patronymic": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "uniqueItems": true
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "uniqueItems": true
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "minLength": 6
+                                    },
+                                    "role_code": {
+                                        "type": "string"
+                                    },
+                                    "specialization_id": {
+                                        "type": "integer"
+                                    },
+                                    "profession_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "schema": "User response",
+                                            "title": "Sample schema users list",
+                                            "properties": {
+                                                "userData": {
+                                                    "properties": {
+                                                        "firstName": {
+                                                            "type": "string"
+                                                        },
+                                                        "secondName": {
+                                                            "type": "string"
+                                                        },
+                                                        "patronymic": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "phone": {
+                                                            "type": "string"
+                                                        },
+                                                        "password": {
+                                                            "type": "string"
+                                                        },
+                                                        "role": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "code": {
+                                                                    "type": "string"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Something went wrong in AuthController.register"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "Auth user as",
+                "operationId": "2a588e5752105246ab7e8a2bf454eb4e",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "string, maxLength=255, uniqueItems=true",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "uniqueItems": true
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "minLength": 6
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "schema": "User response",
+                                            "title": "Sample schema users list",
+                                            "properties": {
+                                                "userData": {
+                                                    "properties": {
+                                                        "firstName": {
+                                                            "type": "string"
+                                                        },
+                                                        "secondName": {
+                                                            "type": "string"
+                                                        },
+                                                        "patronymic": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "phone": {
+                                                            "type": "string"
+                                                        },
+                                                        "password": {
+                                                            "type": "string"
+                                                        },
+                                                        "role": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "code": {
+                                                                    "type": "string"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Something went wrong in AuthController.register"
+                    }
+                }
+            }
+        },
+        "/api//parented.children": {
+            "get": {
+                "tags": [
+                    "CHILDRENS"
+                ],
+                "summary": "Get list of childrens",
+                "description": "Returns list of childrens",
+                "operationId": "getChildrenListForParent",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
         "/api/users": {
             "get": {
                 "tags": [
@@ -16,7 +328,59 @@
                 "operationId": "getUsersList",
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "schema": "User response",
+                                            "title": "Sample schema users list",
+                                            "properties": {
+                                                "userData": {
+                                                    "properties": {
+                                                        "firstName": {
+                                                            "type": "string"
+                                                        },
+                                                        "secondName": {
+                                                            "type": "string"
+                                                        },
+                                                        "patronymic": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "phone": {
+                                                            "type": "string"
+                                                        },
+                                                        "password": {
+                                                            "type": "string"
+                                                        },
+                                                        "role": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "code": {
+                                                                    "type": "string"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Unauthenticated"
@@ -73,9 +437,8 @@
                                         "maxLength": 255,
                                         "minLength": 6
                                     },
-                                    "role_id": {
-                                        "type": "integer",
-                                        "maxLength": 1
+                                    "role_code": {
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object",
@@ -103,45 +466,42 @@
                                             "schema": "User response",
                                             "title": "Sample schema users list",
                                             "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "firstName": {
-                                                                "type": "string"
-                                                            },
-                                                            "secondName": {
-                                                                "type": "string"
-                                                            },
-                                                            "patronymic": {
-                                                                "type": "string"
-                                                            },
-                                                            "email": {
-                                                                "type": "string"
-                                                            },
-                                                            "phone": {
-                                                                "type": "string"
-                                                            },
-                                                            "password": {
-                                                                "type": "string"
-                                                            },
-                                                            "role": {
-                                                                "properties": {
-                                                                    "id": {
-                                                                        "type": "integer"
-                                                                    },
-                                                                    "code": {
-                                                                        "type": "string"
-                                                                    },
-                                                                    "title": {
-                                                                        "type": "string"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
+                                                "userData": {
+                                                    "properties": {
+                                                        "firstName": {
+                                                            "type": "string"
                                                         },
-                                                        "type": "object"
-                                                    }
+                                                        "secondName": {
+                                                            "type": "string"
+                                                        },
+                                                        "patronymic": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "phone": {
+                                                            "type": "string"
+                                                        },
+                                                        "password": {
+                                                            "type": "string"
+                                                        },
+                                                        "role": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "code": {
+                                                                    "type": "string"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"
