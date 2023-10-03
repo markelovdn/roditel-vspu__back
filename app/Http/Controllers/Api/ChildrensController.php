@@ -23,12 +23,12 @@ class ChildrensController extends Controller
         $childrens = Children::where('parented_id', $parented->id)->get();
 
         if (count($childrens) == 0) {
-            response()->json([
+            return response()->json([
                 'message' => 'You don\'t have any children added'
             ], 200);
         }
 
-        return response()->json([ 'childrens' => $childrens ], 200);
+        return response()->json([ 'childrens' => json_decode(json_encode((object) $childrens[0]), FALSE) ], 200);
 
     }
 

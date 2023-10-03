@@ -33,7 +33,7 @@ class WebinarPartisipantTest extends TestCase
         $user = User::where('role_id', $role->id)->first();
         Auth::login($user);
 
-        $webinar = Webinar::find(2);
+        $webinar = Webinar::first();
 
         $response = $this->post('api/webinarPartisipants', [
             'webinar_id' => $webinar->id,
