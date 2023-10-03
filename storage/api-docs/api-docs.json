@@ -297,7 +297,7 @@
                 }
             }
         },
-        "/api//parented.children": {
+        "/api/parented.children": {
             "get": {
                 "tags": [
                     "CHILDRENS"
@@ -307,13 +307,75 @@
                 "operationId": "getChildrenListForParent",
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
-                    },
-                    "401": {
-                        "description": "Unauthenticated"
-                    },
-                    "403": {
-                        "description": "Forbidden"
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "schema": "User response",
+                                            "title": "Sample schema users list",
+                                            "properties": {
+                                                "childrens": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "age": {
+                                                            "type": "integer"
+                                                        },
+                                                        "parented_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "USERS"
+                ],
+                "summary": "Adds a new user",
+                "operationId": "42b95e9de319e01f0172ef7a12202406",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "age",
+                                    "parented_id"
+                                ],
+                                "properties": {
+                                    "age": {
+                                        "type": "integer"
+                                    },
+                                    "parented_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Something went wrong in UserController.store"
                     }
                 }
             }
@@ -513,6 +575,175 @@
                     },
                     "400": {
                         "description": "Something went wrong in UserController.store"
+                    }
+                }
+            }
+        },
+        "/api/webinars": {
+            "get": {
+                "tags": [
+                    "WEBINARS"
+                ],
+                "summary": "Get list of webinars",
+                "description": "Returns list of webinars",
+                "operationId": "getWebinarsList",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "WEBINARS"
+                ],
+                "summary": "Adds a new webinar",
+                "operationId": "b8295e9697f7a93a7e913ca2d03e2c80",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    },
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "description": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "timeStart",
+                        "in": "path",
+                        "description": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "timeEnd",
+                        "in": "path",
+                        "description": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "lectorName",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    },
+                    {
+                        "name": "logo",
+                        "in": "path",
+                        "description": "image:jpg,jpeg,png, maxSize=1MB",
+                        "required": true
+                    },
+                    {
+                        "name": "cost",
+                        "in": "path",
+                        "description": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "videoLink",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    },
+                    {
+                        "name": "webinarCategoryId",
+                        "in": "path",
+                        "description": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Something went wrong in WebinarsController.store"
+                    }
+                }
+            }
+        },
+        "/api/webinars/{id}": {
+            "get": {
+                "tags": [
+                    "WEBINARS"
+                ],
+                "summary": "Get list of webinars",
+                "description": "Returns list of webinars",
+                "operationId": "getWebinarItem",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "WEBINARS"
+                ],
+                "summary": "Update webinar",
+                "operationId": "ad5639d51fb640e8465c0d3a80ad024e",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, maxLength=255"
+                    },
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "description": "string"
+                    },
+                    {
+                        "name": "timeStart",
+                        "in": "path",
+                        "description": "string"
+                    },
+                    {
+                        "name": "timeEnd",
+                        "in": "path",
+                        "description": "string"
+                    },
+                    {
+                        "name": "lectorName",
+                        "in": "path",
+                        "description": "string, maxLength=255"
+                    },
+                    {
+                        "name": "logo",
+                        "in": "path",
+                        "description": "image:jpg,jpeg,png, maxSize=1MB"
+                    },
+                    {
+                        "name": "cost",
+                        "in": "path",
+                        "description": "integer"
+                    },
+                    {
+                        "name": "videoLink",
+                        "in": "path",
+                        "description": "string, maxLength=255"
+                    },
+                    {
+                        "name": "webinarCategoryId",
+                        "in": "path",
+                        "description": "integer"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Something went wrong in WebinarsController.store"
                     }
                 }
             }

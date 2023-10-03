@@ -17,4 +17,16 @@ class FilesHandler
 
         return response()->json(['error' => 'Uploaded photo error'], 400);
     }
+
+    public function uploadWebinarLogo(object $file): string
+    {
+        $filePath = '/webinars/';
+
+        if (Storage::disk('local')->put($filePath.'_logo.'.$file->extension(), $file->openFile()->fread($file->getSize())))
+        {
+            return config('filesystems.disks.public.url').$filePath.'_logo.'.$file->extension();
+        }
+
+        return response()->json(['error' => 'Uploaded logo error'], 400);
+    }
 }

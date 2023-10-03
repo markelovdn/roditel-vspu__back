@@ -28,7 +28,7 @@ Route::apiResource("/specializations", SpecializationsController::class);
 Route::apiResource("/professions", ProfessionsController::class);
 Route::apiResource("/regions", RegionsController::class);
 Route::apiResource("/consultants", ConsultantsController::class);
-Route::apiResource("/webinars", WebinarsController::class);
+Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy');
 Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -52,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::apiResource("/users", UsersController::class);
         Route::apiResource("/parenteds", ParentedsController::class)->except(['store', 'update']);
+        Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show');
     });
 });
 
