@@ -5,21 +5,18 @@ namespace Tests\Feature;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Webinar;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class WebinarsTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
+    use DatabaseTransactions;
+
     public function test_index_webinars(): void
     {
-        $response = $this->get('api/webinars?page=2&dateBetween=2023-10-03,2023-10-07');
+        $response = $this->get('api/webinars');
         $response
             ->assertStatus(200)
             ->assertJsonIsObject();

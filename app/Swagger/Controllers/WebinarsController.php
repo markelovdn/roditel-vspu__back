@@ -19,7 +19,7 @@ class WebinarsController
  *         name="page",
  *         ),
  *      @OA\Parameter(
- *         description="integer, webinarCategoryId, /api/webinars?category=1",
+ *         description="integer, webinarCategoryId (from /api/webinarCategories), /api/webinars?category=1, ",
  *         in="query",
  *         name="category",
  *         ),
