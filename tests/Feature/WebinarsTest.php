@@ -19,7 +19,7 @@ class WebinarsTest extends TestCase
      */
     public function test_index_webinars(): void
     {
-        $response = $this->get('api/webinars?dateBetween=2023-10-04,2023-10-07');
+        $response = $this->get('api/webinars?page=2&dateBetween=2023-10-03,2023-10-07');
         $response
             ->assertStatus(200)
             ->assertJsonIsObject();
@@ -84,6 +84,14 @@ class WebinarsTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJsonIsObject();
+    }
+
+    public function test_getWebinarLectors(): void
+    {
+        //TODO: доработать тест
+        $response = $this->get('api/webinarLectors');
+        $response
+            ->assertStatus(200);
     }
 
     // public function test_destroy_webinars(): void

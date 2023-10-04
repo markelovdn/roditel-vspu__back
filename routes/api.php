@@ -29,6 +29,7 @@ Route::apiResource("/professions", ProfessionsController::class);
 Route::apiResource("/regions", RegionsController::class);
 Route::apiResource("/consultants", ConsultantsController::class);
 Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy');
+Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']);
 Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class);
 
 Route::middleware('auth:sanctum')->group(function () {

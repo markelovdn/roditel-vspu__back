@@ -13,6 +13,41 @@ class WebinarsController
  *      tags={"WEBINARS"},
  *      summary="Get list of webinars",
  *      description="Returns list of webinars",
+*      @OA\Parameter(
+ *         description="integer, номер страницы пагинаци, /api/webinars?page=1",
+ *         in="query",
+ *         name="page",
+ *         ),
+ *      @OA\Parameter(
+ *         description="integer, webinarCategoryId, /api/webinars?category=1",
+ *         in="query",
+ *         name="category",
+ *         ),
+ *     @OA\Parameter(
+ *         description="string, Предстоящие и текущие вебинары, /api/webinars?dateActual=2023-10-04, исключает dateArchive",
+ *         in="query",
+ *         name="dateActual",
+ *         ),
+ *     @OA\Parameter(
+ *         description="string, Прошедшие вебинары, /api/webinars?dateArchive=2023-10-04, исключает dateActual",
+ *         in="query",
+ *         name="dateArchive",
+ *         ),
+ *     @OA\Parameter(
+ *         description="string, Вебинары в указанный промежуток дат, /api/webinars?dateBetween=2023-10-04,2023-10-07, исключает dateArchive и dateActual",
+ *         in="query",
+ *         name="dateBetween",
+ *         ),
+ *     @OA\Parameter(
+ *         description="string, Вебинары выбранные из выпадающего списка лекторов, /api/webinars?lector=Иванов И.И.",
+ *         in="query",
+ *         name="lector",
+ *         ),
+ *     @OA\Parameter(
+ *         description="string, Вебинары выбранные из выпадающего списка лекторов, /api/webinars?searchField=Психология дошкольник",
+ *         in="query",
+ *         name="searchField",
+ *         ),
  *     @OA\Response(
  *         response=200,
  *         description="OK",
@@ -201,4 +236,27 @@ class WebinarsController
     {
 
     }
+
+/**
+ * @OA\Get(
+ *      path="/api/webinarLectors",
+ *      operationId="getWebinarLectors",
+ *      tags={"WEBINARS"},
+ *      summary="Получение массива лекторов для выпадающего списка фильтрации",
+ *      description="Получение массива лекторов для выпадающего списка фильтрации",
+ *     @OA\Response(
+ *         response=200,
+ *         description="OK",
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="Unauthenticated",
+ *      ),
+ *      @OA\Response(
+ *          response=403,
+ *          description="Forbidden"
+ *      )
+ *     )
+ */
+    public function getWebinarLectors() {}
 }
