@@ -39,7 +39,7 @@ class WebinarFilter extends QueryFilter {
         });
     }
 
-    public function search_field($search_string = ''){
+    public function searchField($search_string = ''){
         return $this->builder
             ->when($search_string, function($query) use($search_string){
             $query->where('title', 'LIKE', '%'.$search_string.'%');})->orderBy('title', 'ASC');

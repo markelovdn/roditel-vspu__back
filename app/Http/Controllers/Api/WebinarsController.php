@@ -9,15 +9,17 @@ use App\Http\Requests\StoreWebinarRequest;
 use App\Http\Requests\UpdateWebinarRequest;
 use App\Http\Resources\WebinarsResource;
 use App\Models\Webinar;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class WebinarsController extends Controller
 {
 
-    public function index(WebinarFilter $webinarFilter, Request $request)
+    public function index(WebinarFilter $webinarFilter) : JsonResource
     {
-        return WebinarsResource::collection(Webinar::with('webinarCategory')->filter($webinarFilter)->paginate(19));
+        return WebinarsResource::collection(Webinar::with('webinarCategory')->filter($webinarFilter)->paginate(2));
     }
 
     public function store(StoreWebinarRequest $request,  FilesHandler $filesHandler)
@@ -98,5 +100,17 @@ class WebinarsController extends Controller
         //         'message' => 'Something went wrong in WebinarsController.destroy'
         //     ], 400);
         // }
+    }
+
+    public function getWebinarLectors() {
+        $lectors = DB::table('webinars')
+        ->select('lector_name')
+        ->get();
+        $res = [];
+        foreach ($lectors as $lector)
+        {
+            array_push($res, $lector->lector_name);
+        }
+        return $res;
     }
 }

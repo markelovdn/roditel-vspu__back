@@ -380,6 +380,27 @@
                 }
             }
         },
+        "/api/consultants": {
+            "get": {
+                "tags": [
+                    "CONSULTANTS"
+                ],
+                "summary": "Get list of consultants",
+                "description": "Returns list of consultants",
+                "operationId": "getConsultantsList",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
         "/api/users": {
             "get": {
                 "tags": [
@@ -587,6 +608,43 @@
                 "summary": "Get list of webinars",
                 "description": "Returns list of webinars",
                 "operationId": "getWebinarsList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "integer, номер страницы пагинаци, /api/webinars?page=1"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "integer, webinarCategoryId, /api/webinars?category=1"
+                    },
+                    {
+                        "name": "dateActual",
+                        "in": "query",
+                        "description": "string, Предстоящие и текущие вебинары, /api/webinars?dateActual=2023-10-04, исключает dateArchive"
+                    },
+                    {
+                        "name": "dateArchive",
+                        "in": "query",
+                        "description": "string, Прошедшие вебинары, /api/webinars?dateArchive=2023-10-04, исключает dateActual"
+                    },
+                    {
+                        "name": "dateBetween",
+                        "in": "query",
+                        "description": "string, Вебинары в указанный промежуток дат, /api/webinars?dateBetween=2023-10-04,2023-10-07, исключает dateArchive и dateActual"
+                    },
+                    {
+                        "name": "lector",
+                        "in": "query",
+                        "description": "string, Вебинары выбранные из выпадающего списка лекторов, /api/webinars?lector=Иванов И.И."
+                    },
+                    {
+                        "name": "searchField",
+                        "in": "query",
+                        "description": "string, Вебинары выбранные из выпадающего списка лекторов, /api/webinars?searchField=Психология дошкольник"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -744,6 +802,27 @@
                 "responses": {
                     "400": {
                         "description": "Something went wrong in WebinarsController.store"
+                    }
+                }
+            }
+        },
+        "/api/webinarLectors": {
+            "get": {
+                "tags": [
+                    "WEBINARS"
+                ],
+                "summary": "Получение массива лекторов для выпадающего списка фильтрации",
+                "description": "Получение массива лекторов для выпадающего списка фильтрации",
+                "operationId": "getWebinarLectors",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
                     }
                 }
             }
