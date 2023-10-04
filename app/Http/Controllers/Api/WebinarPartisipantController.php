@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWebinarPartisipantRequest;
 use App\Http\Requests\UpdateWebinarPartisipantRequest;
 use App\Models\WebinarPartisipant;
-use App\Http\Resources\WebinarPartisipantsResourse;
+use App\Http\Resources\WebinarPartisipantsResource;
 use App\Models\Role;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,7 +24,7 @@ class WebinarPartisipantController extends Controller
         $isAdmin = $role->isAdmin(Auth()->user()->id);
 
         $result = $isAdmin ?
-                    WebinarPartisipantsResourse::collection(WebinarPartisipant::get()) :
+                    WebinarPartisipantsResource::collection(WebinarPartisipant::get()) :
                     response()->json(['error' => 'Access is denied'], 400);
 
         return $result;

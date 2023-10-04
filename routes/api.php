@@ -13,9 +13,11 @@ use App\Http\Controllers\Api\QuestionnairesController;
 use App\Http\Controllers\Api\RegionsController;
 use App\Http\Controllers\Api\SpecializationsController;
 use App\Http\Controllers\Api\UsersController;
+use App\Http\Controllers\Api\WebinarCategoriesController;
 use App\Http\Controllers\Api\WebinarPartisipantController;
 use App\Http\Controllers\Api\WebinarsController;
 use App\Http\Controllers\Api\WebinarsQuestionsController;
+use App\Models\WebinarCategory;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/test', function() {
@@ -30,6 +32,7 @@ Route::apiResource("/regions", RegionsController::class);
 Route::apiResource("/consultants", ConsultantsController::class);
 Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy');
 Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']);
+Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except(['store','update', 'destroy']);
 Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -54,6 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/users", UsersController::class);
         Route::apiResource("/parenteds", ParentedsController::class)->except(['store', 'update']);
         Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show');
+        Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except(['index','show']);
     });
 });
 

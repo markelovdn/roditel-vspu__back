@@ -600,6 +600,110 @@
                 }
             }
         },
+        "/api/webinarCategories": {
+            "get": {
+                "tags": [
+                    "WEBINAR_CATEGORIES"
+                ],
+                "summary": "Get list of webinar categories",
+                "description": "Returns list of webinar categories",
+                "operationId": "getWebinarCategoriesList",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "WEBINAR_CATEGORIES"
+                ],
+                "summary": "Adds a new webinar category",
+                "operationId": "173de9d57e363236af91c539fe4a0734",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Something went wrong in WebinarCategoriesController.store"
+                    }
+                }
+            }
+        },
+        "/api/webinarCategories/{id}": {
+            "get": {
+                "tags": [
+                    "WEBINAR_CATEGORIES"
+                ],
+                "summary": "Get webinar category item",
+                "description": "Returns item of webinar categroy",
+                "operationId": "getWebinarCategoriesItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "WEBINAR_CATEGORIES"
+                ],
+                "summary": "Adds a new webinar category",
+                "operationId": "f6fc89cedee7e25924a943486c01d68b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Something went wrong in WebinarCategoriesController.store"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "WEBINAR_CATEGORIES"
+                ],
+                "summary": "Delete webinar category",
+                "operationId": "ef09c3c64a1a3fa34fe6247228490322",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "The entry cannot be deleted"
+                    }
+                }
+            }
+        },
         "/api/webinars": {
             "get": {
                 "tags": [
@@ -617,7 +721,7 @@
                     {
                         "name": "category",
                         "in": "query",
-                        "description": "integer, webinarCategoryId, /api/webinars?category=1"
+                        "description": "integer, webinarCategoryId (from /api/webinarCategories), /api/webinars?category=1, "
                     },
                     {
                         "name": "dateActual",
