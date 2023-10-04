@@ -229,5 +229,24 @@ class UsersController
     {
 
     }
+/**
+ * @OA\Post(
+ *     path="/api/getUserByToken",
+ *     summary="Get user by token",
+ *     tags={"USERS"},
+ *     @OA\Parameter(
+ *         description="string",
+ *         in="header",
+ *         name="token",
+ *         required=true,
+ *     ),
+ *      @OA\Response(
+ *         response=400,
+ *         description="Something went wrong in UserController.getUserByToken",
+ *     )
+ * )
+ */
+    public function getUserByToken()
+    {}
 }
 

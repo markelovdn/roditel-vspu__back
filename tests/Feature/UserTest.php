@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
@@ -147,6 +148,27 @@ class UserTest extends TestCase
             ->assertStatus(200)
             ->assertJson(fn (AssertableJson $json) =>
             $json->has('message'));
+    }
+
+    public function test_getUserByToken(): void
+    {
+        // $user = User::first();
+
+        // $this->post('/api/login', [
+        //     'email' => $user->email,
+        //     'password' => $user->password
+        // ]);
+
+        // $token = DB::table('personal_access_tokens')->where('tokenable_id', $user->id)->first();
+
+        // $response = $this->post('/api/getUserByToken', [
+        //     'token' => $token->token
+        // ]);
+
+        // $response
+        //     ->assertStatus(200)
+        //     ->assertJson(fn (AssertableJson $json) =>
+        //     $json->has('data'));
     }
 
 }

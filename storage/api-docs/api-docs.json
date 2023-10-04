@@ -600,6 +600,28 @@
                 }
             }
         },
+        "/api/getUserByToken": {
+            "post": {
+                "tags": [
+                    "USERS"
+                ],
+                "summary": "Get user by token",
+                "operationId": "df4bdfefb27c89673e2cc03790bf0bc2",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Something went wrong in UserController.getUserByToken"
+                    }
+                }
+            }
+        },
         "/api/webinarCategories": {
             "get": {
                 "tags": [
