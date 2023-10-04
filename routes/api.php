@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/consultations", ConsultationsController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
     Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class);
+    Route::post("/getUserByToken", [UsersController::class, 'getUserByToken']);
 
     Route::middleware('consultant')->group(function () {
         Route::apiResource("/consultantReports", ConsultantReportsController::class);
