@@ -51,8 +51,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'show', 'destroy');
     });
 
-    Route::middleware(['parented'])->group(function () {
-        Route::apiResource("/parenteds", ParentedsController::class);
+    Route::middleware('parented')->group(function () {
+        Route::apiResource("/parenteds", ParentedsController::class)->except('destroy');
         Route::apiResource("/parented.children", ChildrensController::class);
         Route::apiResource("/questionnaires", QuestionnairesController::class);
         Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
