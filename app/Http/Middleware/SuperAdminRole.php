@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminRole
+class SuperAdminRole
 {
     /**
      * Handle an incoming request.
@@ -17,12 +17,11 @@ class AdminRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $role = Role::where('code', Role::ADMIN)->first();
-        $roleSA = Role::where('code', 'superadmin')->first();
+        $role = Role::where('code', 'superadmin')->first();
         $admin = User::where('id', auth()->user()->id)->first();
 
-        if($admin->role_id != $role->id & $role->id != $roleSA->id) {
-            return response()->json([ 'message' => 'У вас нет доступа (A) к данному ресурсу' ], 401);
+        if($admin->role_id != $role->id) {
+            return response()->json([ 'message' => 'У вас нет доступа (SA) к данному ресурсу' ], 401);
         }
 
         return $next($request);

@@ -118,7 +118,8 @@ class DatabaseSeeder extends Seeder
         Role::insert([
             ['code' => 'admin', 'title' => 'Администратор'],
             ['code' => 'consultant', 'title' => 'Консультант'],
-            ['code' => 'parented', 'name' => 'Родитель']
+            ['code' => 'parented', 'name' => 'Родитель'],
+            ['code' => 'superadmin', 'name' => 'Супер администратор']
         ]);
 
         Specialization::insert([
@@ -164,27 +165,53 @@ class DatabaseSeeder extends Seeder
         \App\Models\ConsultationMessage::factory(10)->create();
         \App\Models\WebinarPartisipant::factory(10)->create();
 
-        User::insert([
-            'first_name' => 'test',
-            'second_name' => 'test',
-            'patronymic' => 'test',
-            'email' => 'test@test.ru',
-            'phone' => '+7 (111) 111 1111',
-            'role_id' => '3',
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-        ]
-    );
+        User::insert(
+            [
+                'first_name' => 'test',
+                'second_name' => 'test',
+                'patronymic' => 'test',
+                'email' => 'test@test.ru',
+                'phone' => '+7 (111) 111 1111',
+                'role_id' => '3',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            ]
+        );
 
-    User::insert([
-        'first_name' => 'admin',
-        'second_name' => 'admin',
-        'patronymic' => 'admin',
-        'email' => 'admin@admin.ru',
-        'phone' => '+7 (000) 000 0000',
-        'role_id' => '1',
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-    ]
-    );
+        User::insert(
+            [
+                'first_name' => 'consultant',
+                'second_name' => 'consultant',
+                'patronymic' => 'consultant',
+                'email' => 'consultant@consultant.ru',
+                'phone' => '+7 (111) 111 1119',
+                'role_id' => '2',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            ]
+        );
+
+        User::insert(
+            [
+                'first_name' => 'admin',
+                'second_name' => 'admin',
+                'patronymic' => 'admin',
+                'email' => 'admin@admin.ru',
+                'phone' => '+7 (000) 000 0000',
+                'role_id' => '1',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            ]
+        );
+
+        User::insert(
+            [
+                'first_name' => 'super_admin',
+                'second_name' => 'super_admin',
+                'patronymic' => 'super_admin',
+                'email' => 'super_admin@super_admin.ru',
+                'phone' => '+7 (000) 000 0007',
+                'role_id' => '4',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            ]
+        );
 
         Consultant::create([
             'user_id' => '11',
@@ -204,12 +231,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')
-        ->whereIn('id', DB::table('parenteds')->select('user_id'))
-        ->update(['role_id' => Role::where('code', Role::PARENTED)->first()->id]);
+            ->whereIn('id', DB::table('parenteds')->select('user_id'))
+            ->update(['role_id' => Role::where('code', Role::PARENTED)->first()->id]);
 
         DB::table('users')
-        ->whereIn('id', DB::table('consultants')->select('user_id'))
-        ->update(['role_id' => Role::where('code', Role::CONSULTANT)->first()->id]);
+            ->whereIn('id', DB::table('consultants')->select('user_id'))
+            ->update(['role_id' => Role::where('code', Role::CONSULTANT)->first()->id]);
 
         DB::table('parenteds')->insert([
             'user_id' => User::where('email', 'test@test.ru')->first()->id,
@@ -217,9 +244,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('childrens')->insert([
-            'age'=>6,
-            'parented_id'=>41
+            'age' => 6,
+            'parented_id' => 41
         ]);
-
     }
 }
