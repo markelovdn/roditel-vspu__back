@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -43,8 +44,7 @@ class AuthController extends Controller
             $token = $user->createToken('user_token')->plainTextToken;
             $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
-            return response()->json([ 'userData' => json_decode(json_encode((object) $userData[0]), FALSE), 'token' => $token ], 200);
-
+            return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), FALSE), 'token' => $token], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -62,7 +62,7 @@ class AuthController extends Controller
         $data = $request->validated();
 
         if (!Auth::attempt($data)) {
-            return response()->json('Cridentials not match', 401);
+            return response()->json('Credentials not match', 401);
         }
 
         /** @var User $user */
@@ -71,6 +71,22 @@ class AuthController extends Controller
 
         $token = $user->createToken('api')->plainTextToken;
 
-        return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), FALSE),'token' => $token]);
+        return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), FALSE), 'token' => $token]);
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            $accessToken = $request->bearerToken();
+            $token = PersonalAccessToken::findToken($accessToken);
+            $token->delete();
+
+            return response()->json('Successful logout', 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong in AuthController.register'
+            ], 400);
+        }
     }
 }

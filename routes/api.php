@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
     Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class);
     Route::post("/getUserByToken", [UsersController::class, 'getUserByToken']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::middleware('consultant')->group(function () {
         Route::apiResource("/consultantReports", ConsultantReportsController::class);
