@@ -39,7 +39,7 @@ class WebinarsController
  *         name="lector",
  *         ),
  *     @OA\Parameter(
- *         description="string, Вебинары выбранные из выпадающего списка лекторов, /api/webinars?searchField=Психология дошкольник",
+ *         description="string, Поиск по полю названия вебинара, /api/webinars?searchField=дошкольник",
  *         in="query",
  *         name="searchField",
  *         ),
