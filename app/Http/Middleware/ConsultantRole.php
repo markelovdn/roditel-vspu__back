@@ -21,8 +21,9 @@ class ConsultantRole
 
         $role = Role::where('code', Role::CONSULTANT)->first();
         $consultant = User::where('id', auth()->user()->id)->first();
+        $roleSA = Role::where('code', 'superadmin')->first();
 
-        if($consultant->role_id != $role->id) {
+        if($consultant->role_id != $role->id & $consultant->role_id != $roleSA->id) {
             return response()->json([ 'message' => 'У вас нет доступа (C) к данному ресурсу' ], 401);
         }
 

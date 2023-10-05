@@ -17,19 +17,21 @@ use App\Http\Controllers\Api\WebinarCategoriesController;
 use App\Http\Controllers\Api\WebinarPartisipantController;
 use App\Http\Controllers\Api\WebinarsController;
 use App\Http\Controllers\Api\WebinarsQuestionsController;
-use App\Models\WebinarCategory;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/test', function() {
-//     return 'test worked';
-// });
-
+//AUTH
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+
+//COLLECTIONS
 Route::apiResource("/specializations", SpecializationsController::class);
 Route::apiResource("/professions", ProfessionsController::class);
 Route::apiResource("/regions", RegionsController::class);
-Route::apiResource("/consultants", ConsultantsController::class);
+
+//CONSULTANTS
+Route::apiResource("/consultants", ConsultantsController::class)->except('store', 'update', 'destroy');
+
+//WEBINARS
 Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy');
 Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']);
 Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except(['store','update', 'destroy']);
@@ -46,9 +48,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/consultantReports", ConsultantReportsController::class);
         Route::apiResource("/questionnaires", QuestionnairesController::class);
         Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
+        Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'show', 'destroy');
     });
 
-    Route::middleware('parented')->group(function () {
+    Route::middleware(['parented'])->group(function () {
         Route::apiResource("/parenteds", ParentedsController::class)->except(['index']);
         Route::apiResource("/parented.children", ChildrensController::class);
         Route::apiResource("/questionnaires", QuestionnairesController::class);
@@ -62,6 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except(['index','show']);
     });
 });
+
 
 Route::get('/api/documentation', function() {
     return view('vendor.l5-swagger.index');

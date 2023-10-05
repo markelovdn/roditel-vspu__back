@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AdminRole;
 use App\Http\Middleware\ConsultantRole;
 use App\Http\Middleware\ParentedRole;
+use App\Http\Middleware\SuperAdminRole;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -70,5 +71,6 @@ class Kernel extends HttpKernel
         'consultant' => ConsultantRole::class,
         'parented' => ParentedRole::class,
         'admin' => AdminRole::class,
+        'superAdmin' => SuperAdminRole::class,
     ];
 }
