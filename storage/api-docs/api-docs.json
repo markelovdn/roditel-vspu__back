@@ -297,6 +297,31 @@
                 }
             }
         },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "Logout user",
+                "operationId": "427df7aced3958803e880a4b395b0ba4",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful logout"
+                    },
+                    "400": {
+                        "description": "Something went wrong in AuthController.logout"
+                    }
+                }
+            }
+        },
         "/api/parented.children": {
             "get": {
                 "tags": [

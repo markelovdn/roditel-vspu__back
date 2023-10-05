@@ -311,4 +311,29 @@ class AuthController
     {
 
     }
+
+/**
+ * @OA\Post(
+ *     path="/api/logout",
+ *     summary="Logout user",
+ *     tags={"AUTH"},
+ *     @OA\Parameter(
+ *         description="string",
+ *         in="header",
+ *         name="token",
+ *         required=true,
+ *     ),
+ *      @OA\Response(
+ *         response=200,
+ *         description="Successful logout",
+ *     ),
+ *      @OA\Response(
+ *         response=400,
+ *         description="Something went wrong in AuthController.logout",
+ *     )
+ * )
+ */
+
+    public function logout () {}
+
 }
