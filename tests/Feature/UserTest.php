@@ -150,8 +150,8 @@ class UserTest extends TestCase
             $json->has('message'));
     }
 
-    public function test_getUserByToken(): void
-    {
+    // public function test_getUserByToken(): void
+    // {
         // $user = User::first();
 
         // $this->post('/api/login', [
@@ -169,6 +169,6 @@ class UserTest extends TestCase
         //     ->assertStatus(200)
         //     ->assertJson(fn (AssertableJson $json) =>
         //     $json->has('data'));
-    }
+    // }
 
 }

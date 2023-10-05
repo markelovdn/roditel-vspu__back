@@ -52,7 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware(['parented'])->group(function () {
-        Route::apiResource("/parenteds", ParentedsController::class)->except(['index']);
+        Route::apiResource("/parenteds", ParentedsController::class);
         Route::apiResource("/parented.children", ChildrensController::class);
         Route::apiResource("/questionnaires", QuestionnairesController::class);
         Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
@@ -63,6 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/parenteds", ParentedsController::class)->except(['store', 'update']);
         Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show');
         Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except(['index','show']);
+        Route::apiResource("/consultants", ConsultantsController::class)->only('destroy');
     });
 });
 
