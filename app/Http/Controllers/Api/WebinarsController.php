@@ -12,14 +12,13 @@ use App\Models\Webinar;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\Cast\Object_;
 
 class WebinarsController extends Controller
 {
 
     public function index(WebinarFilter $webinarFilter) : JsonResource
     {
-        return WebinarsResource::collection(Webinar::with('webinarCategory')->filter($webinarFilter)->paginate(2));
+        return WebinarsResource::collection(Webinar::with('webinarCategory')->filter($webinarFilter)->paginate(4));
     }
 
     public function store(StoreWebinarRequest $request,  FilesHandler $filesHandler)
