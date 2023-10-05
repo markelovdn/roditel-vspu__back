@@ -788,7 +788,7 @@
                     {
                         "name": "searchField",
                         "in": "query",
-                        "description": "string, Вебинары выбранные из выпадающего списка лекторов, /api/webinars?searchField=Психология дошкольник"
+                        "description": "string, Поиск по полю названия вебинара, /api/webinars?searchField=дошкольник"
                     }
                 ],
                 "responses": {
