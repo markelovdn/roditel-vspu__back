@@ -771,19 +771,14 @@
                         "description": "integer, webinarCategoryId (from /api/webinarCategories), /api/webinars?category=1, "
                     },
                     {
-                        "name": "dateActual",
+                        "name": "actual",
                         "in": "query",
-                        "description": "string, Предстоящие и текущие вебинары, /api/webinars?dateActual=2023-10-04, исключает dateArchive"
-                    },
-                    {
-                        "name": "dateArchive",
-                        "in": "query",
-                        "description": "string, Прошедшие вебинары, /api/webinars?dateArchive=2023-10-04, исключает dateActual"
+                        "description": "string, Предстоящие, текущие или архивные вебинары, /api/webinars?actual=yes или /api/webinars?actual=no"
                     },
                     {
                         "name": "dateBetween",
                         "in": "query",
-                        "description": "string, Вебинары в указанный промежуток дат, /api/webinars?dateBetween=2023-10-04,2023-10-07, исключает dateArchive и dateActual"
+                        "description": "string, Вебинары в указанный промежуток дат, /api/webinars?dateBetween=04.10.2023,07.10.2023"
                     },
                     {
                         "name": "lector",

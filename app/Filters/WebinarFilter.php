@@ -3,6 +3,7 @@
 namespace App\Filters;
 
 use App\Models\Webinar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -15,21 +16,18 @@ class WebinarFilter extends QueryFilter {
         });
     }
 
-    public function dateActual($date = null){
-        return $this->builder->when($date, function($query) use($date){
-            $query->where('date', '>', $date);
-        });
-    }
-
-    public function dateArchive($date = null){
-        return $this->builder->when($date, function($query) use($date){
-            $query->where('date', '<', $date);
+    public function actual($actual = null){
+        return $this->builder->when($actual, function($query) use($actual) {
+            $query->where('date', $actual === 'yes' ? ">=" : "<", Carbon::now()->format('Y-m-d'));
         });
     }
 
     public function dateBetween($dates = null){
-        return $this->builder->when($dates, function($query) use($dates){
-            $query->whereBetween('date', [Str::before($dates, ','), Str::after($dates, ',')]);
+        $before = Carbon::parse(Str::before($dates, ','))->format('Y-m-d');
+        $after = Carbon::parse(Str::after($dates, ','))->format('Y-m-d');
+
+        return $this->builder->when($dates, function($query) use($before, $after){
+            $query->whereBetween('date', [$before, $after]);
         });
     }
 

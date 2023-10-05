@@ -24,17 +24,12 @@ class WebinarsController
  *         name="category",
  *         ),
  *     @OA\Parameter(
- *         description="string, Предстоящие и текущие вебинары, /api/webinars?dateActual=2023-10-04, исключает dateArchive",
+ *         description="string, Предстоящие, текущие или архивные вебинары, /api/webinars?actual=yes или /api/webinars?actual=no",
  *         in="query",
- *         name="dateActual",
+ *         name="actual",
  *         ),
  *     @OA\Parameter(
- *         description="string, Прошедшие вебинары, /api/webinars?dateArchive=2023-10-04, исключает dateActual",
- *         in="query",
- *         name="dateArchive",
- *         ),
- *     @OA\Parameter(
- *         description="string, Вебинары в указанный промежуток дат, /api/webinars?dateBetween=2023-10-04,2023-10-07, исключает dateArchive и dateActual",
+ *         description="string, Вебинары в указанный промежуток дат, /api/webinars?dateBetween=04.10.2023,07.10.2023",
  *         in="query",
  *         name="dateBetween",
  *         ),

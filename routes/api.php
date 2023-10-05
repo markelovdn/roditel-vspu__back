@@ -33,12 +33,17 @@ Route::apiResource("/consultants", ConsultantsController::class)->except('store'
 
 //WEBINARS
 Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy');
+//TODO:сделать уникальным список
 Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']);
 Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except(['store','update', 'destroy']);
 Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
+    //TODO:добавить методы которые не должны быть доступны
+    //TODO:проработать таблицу консультации на предмет завершения консультации
     Route::apiResource("/consultations", ConsultationsController::class);
+    //TODO:продумать получение всех анкет в зависимости от консультанта и админам
+    // Route::apiResource("/questionnaires", QuestionnairesController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
     Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class);
     Route::post("/getUserByToken", [UsersController::class, 'getUserByToken']);
@@ -67,7 +72,11 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
+//TODO:реализовать оценку качества консультаций
+
 
 Route::get('/api/documentation', function() {
     return view('vendor.l5-swagger.index');
 });
+
+
