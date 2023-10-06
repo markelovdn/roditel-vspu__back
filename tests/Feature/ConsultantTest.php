@@ -8,8 +8,6 @@ use App\Models\Role;
 use App\Models\Specialization;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -34,7 +32,7 @@ class ConsultantTest extends TestCase
         Auth::login($user);
 
         $response = $this->post('api/consultants', [
-            'user_id' => $user->id,
+            'userId' => $user->id,
             'photo' => UploadedFile::fake()->image('photo.jpg'),
             'description' => 'описание консультанта',
         ]);
@@ -61,11 +59,10 @@ class ConsultantTest extends TestCase
         Auth::login($user);
 
         $response = $this->put('api/consultants/'.Consultant::where('user_id', $user->id)->first()->id, [
-            'user_id' => $user->id,
             'photo' => UploadedFile::fake()->image('photo.jpg'),
             'description' => 'новое описание консультанта',
-            'specialization_id' => Specialization::find(1)->id,
-            'profession_id' => Profession::find(1)->id,
+            'specializationId' => Specialization::find(1)->id,
+            'professionId' => Profession::find(1)->id,
         ]);
 
         $this->assertDatabaseHas('consultants', [

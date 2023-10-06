@@ -2,49 +2,103 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DomainService\FilesHandler;
+use App\Filters\ConsultantReportsFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreConsultantReportsRequest;
+use App\Http\Resources\ConsultantReportsResource;
 use App\Models\Consultant;
+use App\Models\ConsultantReport;
+use Carbon\Carbon;
+use Database\Factories\ConsultantReportFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ConsultantReportsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): Object
+
+    public function index(Request $request): Object
     {
-        return Consultant::with('reports')->get();
+        $dateStart = Carbon::parse(Str::before($request->query('dateBetween'), ','))->format('Y-m-d');
+        $dateEnd = Carbon::parse(Str::after($request->query('dateBetween'), ','))->format('Y-m-d');
+        $consultant = Consultant::where('user_id', Auth::user()->id)->first();
+
+        $reports = ConsultantReportsResource::collection(ConsultantReport::where('consultant_id', $consultant->id)->whereRaw('DATE(updated_at) >= ?', [$dateStart])
+                                                            ->whereRaw('DATE(updated_at) <= ?', [$dateEnd])->paginate(6));
+
+        return response()->json([ 'reports' => json_decode(json_encode((object) $reports), true) ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreConsultantReportsRequest $request, FilesHandler $filesHandler)
     {
-        //
+        $report = new ConsultantReport();
+
+        try {
+            $report->file_url = $filesHandler->uploadConsultantReport($request->consultantId, $request->file);
+            $report->upload_status = $filesHandler->uploadConsultantReport($request->consultantId, $request->file) ? ConsultantReport::UPLOAD_SUCCESSFUL : ConsultantReport::UPLOAD_FAILED;
+            $report->consultant_id = $request->consultantId;
+
+            $report->save();
+
+            return response()->json([
+                'message' => 'Report successfully added'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong in ConsultantReportsController.store'
+            ], 400);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $consultant = Consultant::where('user_id', Auth::user()->id)->first();
+        $reports = ConsultantReportsResource::collection(ConsultantReport::where('id', $id)->where('consultant_id', $consultant->id)->get());
+
+        return response()->json([ 'reports' => json_decode(json_encode((object) $reports), true) ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(StoreConsultantReportsRequest $request, string $report, FilesHandler $filesHandler)
     {
-        //
+        $report = ConsultantReport::where('id', $report)->where('consultant_id', $request->consultantId)->first();
+
+        try {
+            $report->file_url = $filesHandler->uploadConsultantReport($request->consultantId, $request->file);
+            $report->upload_status = $filesHandler->uploadConsultantReport($request->consultantId, $request->file) ? ConsultantReport::UPLOAD_SUCCESSFUL : ConsultantReport::UPLOAD_FAILED;
+            $report->consultant_id = $request->consultantId;
+
+            $report->save();
+
+            return response()->json([
+                'message' => 'Report successfully updated'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong in ConsultantReportsController.update'
+            ], 400);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $report = ConsultantReport::where('id', $id)->first();
+
+        try {
+            $report->delete();
+            return response()->json([
+                'message' => 'Report successfully deleted'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong in ConsultantReportsController.destroy'
+            ], 400);
+        }
     }
 }

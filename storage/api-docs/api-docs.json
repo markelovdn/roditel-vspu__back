@@ -322,85 +322,279 @@
                 }
             }
         },
-        "/api/parented.children": {
+        "/api/parented/{parented}/children": {
             "get": {
                 "tags": [
                     "CHILDRENS"
                 ],
-                "summary": "Get list of childrens",
-                "description": "Returns list of childrens",
+                "summary": "Get list of childrens parent",
+                "description": "Returns list of childrens parent",
                 "operationId": "getChildrenListForParent",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id родителя, /api/parented/1/children"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "oneOf": [
-                                        {
-                                            "schema": "User response",
-                                            "title": "Sample schema users list",
-                                            "properties": {
-                                                "childrens": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "integer"
-                                                        },
-                                                        "age": {
-                                                            "type": "integer"
-                                                        },
-                                                        "parented_id": {
-                                                            "type": "integer"
-                                                        },
-                                                        "created_at": {
-                                                            "type": "string"
-                                                        },
-                                                        "updated_at": {
-                                                            "type": "string"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
+                        "description": "OK"
                     }
                 }
             },
             "post": {
                 "tags": [
-                    "USERS"
+                    "CHILDRENS"
                 ],
-                "summary": "Adds a new user",
-                "operationId": "42b95e9de319e01f0172ef7a12202406",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "age",
-                                    "parented_id"
-                                ],
-                                "properties": {
-                                    "age": {
-                                        "type": "integer"
-                                    },
-                                    "parented_id": {
-                                        "type": "integer"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
+                "summary": "Adds a new childrn for parent",
+                "operationId": "86ade57c607ef1908a64930f89e653ff",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id родителя, /api/parented/1/children"
+                    },
+                    {
+                        "name": "age",
+                        "in": "path",
+                        "description": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "parentedId",
+                        "in": "path",
+                        "description": "integer",
+                        "required": true
                     }
-                },
+                ],
                 "responses": {
                     "400": {
-                        "description": "Something went wrong in UserController.store"
+                        "description": "Something went wrong in ChildrensController.store"
+                    }
+                }
+            }
+        },
+        "/api/children/{child}": {
+            "get": {
+                "tags": [
+                    "CHILDRENS"
+                ],
+                "summary": "Get children",
+                "description": "Returns children",
+                "operationId": "getChildren",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id ребенка, /api/children/1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "CHILDRENS"
+                ],
+                "summary": "Update children data",
+                "operationId": "e76dd33659996a465aa26d4eb5c15cf0",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id ребенка, /api/children/1"
+                    },
+                    {
+                        "name": "age",
+                        "in": "path",
+                        "description": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "parentedId",
+                        "in": "path",
+                        "description": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Something went wrong in ChildrensController.update"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "CHILDRENS"
+                ],
+                "summary": "Delete children data",
+                "operationId": "99c865fec8c6b1e936c03448fed66888",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id ребенка, /api/children/1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Something went wrong in ChildrensController.update"
+                    }
+                }
+            }
+        },
+        "/api/consultant/{consultant}/reports": {
+            "get": {
+                "tags": [
+                    "CONSULTANT_REPORTS"
+                ],
+                "summary": "Get list of consultant reports",
+                "description": "Returns list of consultant reports",
+                "operationId": "storeConsultantReportList",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id консультанта, /api/consultant/1/reports"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "integer, номер страницы пагинаци, /api/consultant/1/reports?page=1"
+                    },
+                    {
+                        "name": "dateBetween",
+                        "in": "query",
+                        "description": "string, отчеты в указанный промежуток дат, /api/consultant/1/reports?dateBetween=04.10.2023,07.10.2023"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "CONSULTANT_REPORTS"
+                ],
+                "description": "store consultant reports",
+                "operationId": "28ece499583c567075c6057aa26a73b1",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id консультанта, /api/consultant/1/reports"
+                    },
+                    {
+                        "name": "file",
+                        "in": "path",
+                        "description": "file, type=*.xlsx",
+                        "required": true
+                    },
+                    {
+                        "name": "consultantId",
+                        "in": "path",
+                        "description": "integer id консультанта",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Something went wrong in ConsultantReportController.store"
+                    }
+                }
+            }
+        },
+        "api/reports/{report}": {
+            "get": {
+                "tags": [
+                    "CONSULTANT_REPORTS"
+                ],
+                "summary": "Get consultant report",
+                "description": "Returns consultant report",
+                "operationId": "showConsultantReport",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id отчета, /api/reports/1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/reports/{report}": {
+            "put": {
+                "tags": [
+                    "CONSULTANT_REPORTS"
+                ],
+                "description": "update consultant reports",
+                "operationId": "06398031750810f715d76f189bc78670",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id отчета, /api/reports/1"
+                    },
+                    {
+                        "name": "file",
+                        "in": "path",
+                        "description": "file, type=*.xlsx",
+                        "required": true
+                    },
+                    {
+                        "name": "consultantId",
+                        "in": "path",
+                        "description": "integer id консультанта",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Something went wrong in ConsultantReportController.update"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "CONSULTANT_REPORTS"
+                ],
+                "summary": "Delete report data",
+                "operationId": "8f688dfb062d70b40673e988863560a7",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id отчета, /api/reports/1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Something went wrong in ConsultantReportController.update"
                     }
                 }
             }
@@ -413,15 +607,127 @@
                 "summary": "Get list of consultants",
                 "description": "Returns list of consultants",
                 "operationId": "getConsultantsList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "integer, номер страницы пагинаци, по 9 записей, /api/consultants?page=1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "CONSULTANTS"
+                ],
+                "operationId": "storeConsultantsData",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "photo",
+                        "in": "path",
+                        "description": "file, image:jpg,jpeg,png, maxSize=1MB",
+                        "required": true
+                    },
+                    {
+                        "name": "description",
+                        "in": "path",
+                        "description": "string, max=65535",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Something went wrong in WebinarsController.store"
+                    }
+                }
+            }
+        },
+        "/api/consultants/{consultant}": {
+            "get": {
+                "tags": [
+                    "CONSULTANTS"
+                ],
+                "summary": "Get consultant",
+                "description": "Returns consultant",
+                "operationId": "getConsultant",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id консуьтанта, /api/consultants/1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "CONSULTANTS"
+                ],
+                "operationId": "updateConsultantsData",
+                "parameters": [
+                    {
+                        "name": "photo",
+                        "in": "path",
+                        "description": "file, image:jpg,jpeg,png, maxSize=1MB"
+                    },
+                    {
+                        "name": "description",
+                        "in": "path",
+                        "description": "string, max=65535"
+                    },
+                    {
+                        "name": "specializationId",
+                        "in": "path",
+                        "description": "integer, id специализации"
+                    },
+                    {
+                        "name": "professionId",
+                        "in": "path",
+                        "description": "integer, id профессии"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthenticated"
+                    "400": {
+                        "description": "Something went wrong in Something went wrong in UserController.update"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "CONSULTANTS"
+                ],
+                "summary": "Delete consultant data",
+                "operationId": "644da11460970757f860bac08d1cc9b7",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id консультанта, /api/consultants/1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
                     },
-                    "403": {
-                        "description": "Forbidden"
+                    "400": {
+                        "description": "Something went wrong in ConsultantController.update"
                     }
                 }
             }

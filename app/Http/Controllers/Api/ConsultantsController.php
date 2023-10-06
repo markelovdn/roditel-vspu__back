@@ -24,13 +24,13 @@ class ConsultantsController extends Controller
     {
         $role = new Role();
 
-        $isConsultant = $role->isConsultant($request->user_id);
+        $isConsultant = $role->isConsultant($request->userId);
 
         if(!$isConsultant) {
             return response()->json(['error' => 'Access is denied'], 400);
         }
 
-        $consultant = Consultant::where('user_id', $request->user_id)->first();
+        $consultant = Consultant::where('user_id', $request->userId)->first();
 
         try {
             $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
@@ -69,8 +69,8 @@ class ConsultantsController extends Controller
         try {
             $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
             $consultant->description = $request->description;
-            $consultant->specialization_id = $request->specialization_id;
-            $consultant->profession_id = $request->profession_id;
+            $consultant->specialization_id = $request->specializationId;
+            $consultant->profession_id = $request->professionId;
 
             $consultant->save();
 

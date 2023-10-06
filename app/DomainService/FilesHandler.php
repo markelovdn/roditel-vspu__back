@@ -29,4 +29,17 @@ class FilesHandler
 
         return response()->json(['error' => 'Uploaded logo error'], 400);
     }
+
+    public function uploadConsultantReport(int $consultant_id, object $file): string
+    {
+        $filePath = '/consultants/reports/';
+        $concultantId = $consultant_id;
+
+        if (Storage::disk('local')->put($filePath.'_report_concultant_id_.'.$concultantId.'.'.$file->extension(), $file->openFile()->fread($file->getSize())))
+        {
+            return config('filesystems.disks.public.url').$filePath.'_report_concultant_id_.'.$concultantId.'.'.$file->extension();
+        }
+
+        return response()->json(['error' => 'Uploaded report error'], 400);
+    }
 }
