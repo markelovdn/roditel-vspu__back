@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ChildrensController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): JsonResponse
     {
         $parented = Parented::where('user_id', Auth::user()->id)->first();
@@ -35,7 +32,7 @@ class ChildrensController extends Controller
     public function store(StoreChildrensRequest $request): JsonResponse
     {
         if ($request->age >= 18 ||
-            count(Children::where('parented_id', $request->parented_id)->get()) > Parented::MAX_QUANTITY_CHILDRENS)
+            count(Children::where('parented_id', $request->parentedId)->get()) > Parented::MAX_QUANTITY_CHILDRENS)
         {
             return response()->json([
                 'error' => 'The child\'s age is not suitable for adding, or the number of added children is more than six'
@@ -46,7 +43,7 @@ class ChildrensController extends Controller
 
         try {
             $children->age = $request->age;
-            $children->parented_id = $request->parented_id;
+            $children->parented_id = $request->parentedId;
 
             $children->save();
 
@@ -62,12 +59,9 @@ class ChildrensController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $children = Children::where('parented_id', $id)->get();
+        $children = Children::where('id', $id)->get();
 
         if (count($children) < 1)
         {
@@ -78,12 +72,9 @@ class ChildrensController extends Controller
         return response()->json([ 'children' => $children ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateChildrensRequest $request, string $id)
     {
-        $children = Children::where('parented_id', $id)->first();
+        $children = Children::where('id', $id)->first();
 
         try {
             $children->age = $request->age;
@@ -103,13 +94,10 @@ class ChildrensController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
-            $id = Children::where('parented_id', $id)->first()->id;
+            $id = Children::where('id', $id)->first()->id;
             Children::destroy($id);
             return response()->json([
                 'message' => 'Record children successfully deleted'

@@ -94,8 +94,7 @@ class UsersController extends Controller
         }
     }
 
-    public function getUserByToken()
-    {
+    public function getUserByToken() {
         $user = auth('sanctum')->user();
 
         $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());

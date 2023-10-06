@@ -22,7 +22,7 @@ class StoreConsultantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'numeric'],
+            'userId' => ['required', 'numeric'],
             'photo' => ['required', 'image:jpg,jpeg,png'],
             'description' => ['required', 'string'],
         ];

@@ -110,6 +110,8 @@ class WebinarsController extends Controller
         {
             array_push($res, $lector->lector_name);
         }
-        return $res;
+
+        $res = collect($res)->unique()->sort();
+        return $res->values()->all();
     }
 }

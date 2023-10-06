@@ -22,11 +22,10 @@ class UpdateConsultantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'numeric'],
-            'photo' => ['required', 'image:jpg,jpeg,png'],
-            'description' => ['required', 'string'],
-            'specialization_id' => ['required', 'numeric'],
-            'profession_id' => ['required', 'numeric'],
+            'photo' => ['image:jpg,jpeg,png'],
+            'description' => ['string'],
+            'specializationId' => ['numeric'],
+            'professionId' => ['numeric'],
         ];
     }
 }

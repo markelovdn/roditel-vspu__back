@@ -44,7 +44,7 @@ class AuthController extends Controller
             $token = $user->createToken('user_token')->plainTextToken;
             $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
-            return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), FALSE), 'token' => $token], 200);
+            return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), false), 'token' => $token], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -71,7 +71,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('api')->plainTextToken;
 
-        return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), FALSE), 'token' => $token]);
+        return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), false), 'token' => $token]);
     }
 
     public function logout(Request $request)

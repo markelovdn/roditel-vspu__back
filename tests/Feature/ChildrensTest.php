@@ -39,7 +39,7 @@ class ChildrensTest extends TestCase
 
         $response = $this->post('/api/parented/'.$parented->id.'/children', [
             'age' => 14,
-            'parented_id' => $parented->id
+            'parentedId' => $parented->id
         ]);
 
         $response->assertStatus(200)
@@ -53,7 +53,7 @@ class ChildrensTest extends TestCase
         $user = User::where('id', $parented->user_id)->first();
         Auth::login($user);
 
-        $response = $this->get('/api/parented/'.$parented->id.'/children'.'/'.$children->id);
+        $response = $this->get('/api/children'.'/'.$children->id);
 
         $response->assertStatus(200)
                  ->assertJsonIsObject();
@@ -66,7 +66,7 @@ class ChildrensTest extends TestCase
         $user = User::where('id', $parented->user_id)->first();
         Auth::login($user);
 
-        $response = $this->put('/api/parented/'.$parented->id.'/children'.'/'.$children->id, [
+        $response = $this->put('/api/children'.'/'.$children->id, [
             'age' => 15,
             'parented_id' => $parented->id,
         ]);
@@ -87,7 +87,7 @@ class ChildrensTest extends TestCase
         $user = User::where('id', $parented->user_id)->first();
         Auth::login($user);
 
-        $response = $this->delete('/api/parented/'.$parented->id.'/children'.'/'.$children->id);
+        $response = $this->delete('/api/children'.'/'.$children->id);
 
         $this->assertDatabaseMissing('childrens', [
             'id' => $children->id
