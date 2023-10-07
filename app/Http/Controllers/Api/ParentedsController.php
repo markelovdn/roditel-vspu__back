@@ -3,49 +3,80 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateParentedsRequest;
+use App\Http\Requests\UpdateRegionRequest;
 use App\Http\Resources\ParentedsResource;
 use App\Models\Parented;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class ParentedsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(): JsonResource
     {
-        return ParentedsResource::collection(Parented::with('childrens')->get());
+        return ParentedsResource::collection(Parented::with('childrens', 'user')->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        //Родитель создается в методе $user->registrationAs(Auth::user(), $request);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(int $id): JsonResource | JsonResponse
     {
-        //
+        $parented = Parented::where('user_id', Auth::user()->id)->first();
+
+        if ($parented->id != $id)
+        {
+            return response()->json([
+                'message' => 'You have\'t permissions'
+            ], 401);
+        }
+
+        return ParentedsResource::collection(Parented::where('id', $id)->get());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(UpdateParentedsRequest $request, int $id): JsonResponse
     {
-        //
+        $parented = Parented::where('user_id', Auth::user()->id)->first();
+
+        if ($parented->id != $id)
+        {
+            return response()->json([
+                'message' => 'You have\'t permissions'
+            ], 401);
+        }
+
+        try {
+            $parented->region_id = $request->regionId;
+            $parented->save();
+
+            return response()->json([
+                'message' => 'Parent successfully updated'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in ParentedController.update'
+            ], 400);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(int $id): JsonResponse
     {
-        //
+        try {
+            Parented::destroy($id);
+            return response()->json([
+                'message' => 'Parent successfully deleted'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in ParentedController.destroy'
+            ], 400);
+        }
     }
 }

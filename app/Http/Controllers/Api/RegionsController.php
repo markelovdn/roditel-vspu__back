@@ -12,11 +12,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class RegionsController extends Controller
 {
 
-    public function index()
+    public function index(): JsonResource
     {
         return RegionsResource::collection(Region::get());
     }
-
 
     public function store(StoreRegionRequest $request): JsonResponse
     {
@@ -41,7 +40,7 @@ class RegionsController extends Controller
         return RegionsResource::collection(Region::where('id', $id)->get());
     }
 
-    public function update(StoreRegionRequest $request, int $id)
+    public function update(StoreRegionRequest $request, int $id): JsonResponse
     {
         $region = Region::where('id', $id)->first();
         try {

@@ -19,6 +19,11 @@ use App\Http\Controllers\Api\WebinarsController;
 use App\Http\Controllers\Api\WebinarsQuestionsController;
 use Illuminate\Support\Facades\Route;
 
+    //TODO:добавить методы которые не должны быть доступны
+    //TODO:проработать таблицу консультации на предмет завершения консультации
+    //TODO:продумать получение всех анкет в зависимости от консультанта и админам
+    //TODO:реализовать оценку качества консультаций
+
 //AUTH
 Route::post('/login', [AuthController::class, 'login']); //S
 Route::post('/register', [AuthController::class, 'register']); //S
@@ -26,7 +31,7 @@ Route::post('/register', [AuthController::class, 'register']); //S
 //COLLECTIONS
 Route::apiResource("/specializations", SpecializationsController::class)->only('index'); //S
 Route::apiResource("/professions", ProfessionsController::class)->only('index'); //S
-Route::apiResource("/regions", RegionsController::class)->only('index');
+Route::apiResource("/regions", RegionsController::class)->only('index'); //S
 
 //CONSULTANTS
 Route::apiResource("/consultants", ConsultantsController::class)->except('store', 'update', 'destroy'); //S
@@ -38,11 +43,7 @@ Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->ex
 Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
-    //TODO:добавить методы которые не должны быть доступны
-    //TODO:проработать таблицу консультации на предмет завершения консультации
     Route::apiResource("/consultations", ConsultationsController::class);
-    //TODO:продумать получение всех анкет в зависимости от консультанта и админам
-    // Route::apiResource("/questionnaires", QuestionnairesController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
     Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class);
     Route::post("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
@@ -56,7 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('parented')->group(function () {
-        Route::apiResource("/parenteds", ParentedsController::class)->except('destroy');
+        Route::apiResource("/parenteds", ParentedsController::class)->only('update','show');
         Route::apiResource("/parented.children", ChildrensController::class)->shallow(); //S
         Route::apiResource("/questionnaires", QuestionnairesController::class);
         Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
@@ -64,19 +65,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('admin')->group(function () {
         Route::apiResource("/users", UsersController::class);
-        Route::apiResource("/parenteds", ParentedsController::class)->except(['store', 'update']);
+        Route::apiResource("/parenteds", ParentedsController::class)->only('index', 'destroy');
         Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show'); //S
-        Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except(['index','show']); //S
+        Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except('index','show'); //S
         Route::apiResource("/consultants", ConsultantsController::class)->only('destroy'); //S
         Route::apiResource("/specializations", SpecializationsController::class)->except('index'); //S
         Route::apiResource("/professions", ProfessionsController::class)->except('index'); //S
-        Route::apiResource("/regions", RegionsController::class)->except('index');
-
+        Route::apiResource("/regions", RegionsController::class)->except('index'); //S
     });
 });
-
-//TODO:реализовать оценку качества консультаций
-
 
 Route::get('/api/documentation', function() {
     return view('vendor.l5-swagger.index');

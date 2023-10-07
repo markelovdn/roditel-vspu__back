@@ -14,6 +14,15 @@ class ParentedsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'regionId' => $this->region_id,
+            'user' => [
+                'userId' => $this->user->id,
+                'firstName' => $this->user->first_name,
+                'patronymic' => $this->user->patronymic,
+                'secondName' => $this->user->second_name,
+            ]
+
+        ];
     }
 }
