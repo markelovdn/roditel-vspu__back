@@ -14,7 +14,7 @@ class RegionsController
      *      description="Returns list of regions",
      *     @OA\Response(
      *         response=200,
-     *         description="OK",
+     *         description="Array of regions",
      *      ),
      *     )
      */
@@ -43,7 +43,7 @@ class RegionsController
      *         ),
      *     @OA\Response(
      *         response=200,
-     *         description="OK",
+     *         description="Region successfully added",
      *      ),
      *     @OA\Response(
      *         response=401,
@@ -71,7 +71,7 @@ class RegionsController
      *         ),
      *     @OA\Response(
      *         response=200,
-     *         description="OK",
+     *         description="Array of region",
      *      ),
      *     @OA\Response(
      *         response=401,
@@ -108,7 +108,7 @@ class RegionsController
      *         ),
      *     @OA\Response(
      *         response=200,
-     *         description="OK",
+     *         description="Region successfully updated",
      *      ),
      *     @OA\Response(
      *         response=401,
@@ -135,7 +135,7 @@ class RegionsController
      *         ),
      *     @OA\Response(
      *         response=200,
-     *         description="OK",
+     *         description="Region successfully deleted",
      *      ),
      *     @OA\Response(
      *         response=401,

@@ -733,6 +733,101 @@
                 }
             }
         },
+        "/api/parenteds": {
+            "get": {
+                "tags": [
+                    "PARENTEDS"
+                ],
+                "summary": "Get list of parenteds",
+                "description": "Returns list of parenteds",
+                "operationId": "getParentedsList",
+                "responses": {
+                    "200": {
+                        "description": "Array of parenteds with user data"
+                    },
+                    "401": {
+                        "description": "Unauthorized, need roleCode admin"
+                    }
+                }
+            }
+        },
+        "/api/parenteds/{id}": {
+            "get": {
+                "tags": [
+                    "PARENTEDS"
+                ],
+                "summary": "Show parented",
+                "description": "Returns parented",
+                "operationId": "showParented",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id родителя",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of parented"
+                    },
+                    "401": {
+                        "description": "Unauthorized, need Auth user id === parent user id"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "PARENTEDS"
+                ],
+                "summary": "Update parented",
+                "operationId": "updateParented",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id родителя",
+                        "required": true
+                    },
+                    {
+                        "name": "regionId",
+                        "in": "path",
+                        "description": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "parented successfully updated"
+                    },
+                    "401": {
+                        "description": "Unauthorized, need Auth user id === parent user id"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "PARENTEDS"
+                ],
+                "summary": "Delete parented",
+                "operationId": "deleteParenteds",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id родителя",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "parented successfully deleted"
+                    },
+                    "401": {
+                        "description": "Unauthorized need roleCode admin"
+                    }
+                }
+            }
+        },
         "/api/professions": {
             "get": {
                 "tags": [
@@ -860,7 +955,7 @@
                 "operationId": "getRegionsList",
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Array of regions"
                     }
                 }
             },
@@ -886,7 +981,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Region successfully added"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -912,7 +1007,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Array of region"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -945,7 +1040,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Region successfully updated"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -968,7 +1063,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Region successfully deleted"
                     },
                     "401": {
                         "description": "Unauthorized"
