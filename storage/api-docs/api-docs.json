@@ -353,7 +353,8 @@
                     {
                         "name": "",
                         "in": "query",
-                        "description": "integer, id родителя, /api/parented/1/children"
+                        "description": "integer, id родителя, /api/parented/1/children",
+                        "required": true
                     },
                     {
                         "name": "age",
@@ -728,6 +729,123 @@
                     },
                     "400": {
                         "description": "Something went wrong in ConsultantController.update"
+                    }
+                }
+            }
+        },
+        "/api/specializations": {
+            "get": {
+                "tags": [
+                    "SPECIALIZATIONS"
+                ],
+                "summary": "Get list of specializations",
+                "description": "Returns list of specializations",
+                "operationId": "getSpecializationsList",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "SPECIALIZATIONS"
+                ],
+                "summary": "Add new specializations",
+                "description": "Returns list of specializations",
+                "operationId": "storeSpecialization",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, max=255",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/specializations/{id}": {
+            "get": {
+                "tags": [
+                    "SPECIALIZATIONS"
+                ],
+                "summary": "Show specialization",
+                "description": "Returns specialization",
+                "operationId": "showSpecialization",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id специализации",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "SPECIALIZATIONS"
+                ],
+                "summary": "Update specialization",
+                "operationId": "updateSpecialization",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id специализации",
+                        "required": true
+                    },
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, max=255",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "SPECIALIZATIONS"
+                ],
+                "summary": "Delete specialization",
+                "operationId": "deleteSpecialization",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id специализации",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 }
             }

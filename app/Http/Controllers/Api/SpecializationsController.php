@@ -3,49 +3,73 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSpecializationsRequest;
 use App\Http\Resources\SpecializationsResource;
 use App\Models\Specialization;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Ramsey\Uuid\Type\Integer;
 
 class SpecializationsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(): JsonResource
     {
         return SpecializationsResource::collection(Specialization::get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreSpecializationsRequest $request): JsonResponse
     {
-        //
+        $specialization = new Specialization();
+        try {
+            $specialization->title = $request->title;
+            $specialization->save();
+
+            return response()->json([
+                'message' => 'Specialization successfully added'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in SpecializationsController.store'
+            ], 400);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(int $id): JsonResource
     {
-        //
+        return SpecializationsResource::collection(Specialization::where('id', $id)->get());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(StoreSpecializationsRequest $request, int $id)
     {
-        //
+        $specialization = Specialization::where('id', $id)->first();
+        try {
+            $specialization->title = $request->title;
+            $specialization->save();
+
+            return response()->json([
+                'message' => 'Specialization successfully updated'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in SpecializationsController.update'
+            ], 400);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(int $id): JsonResponse
     {
-        //
+        try {
+            Specialization::destroy($id);
+            return response()->json([
+                'message' => 'Specialization successfully deleted'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in SpecializationsController.destroy'
+            ], 400);
+        }
     }
 }
