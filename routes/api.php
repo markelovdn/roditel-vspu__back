@@ -46,7 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/consultations", ConsultationsController::class);
     Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
     Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class);
-    Route::post("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
+    Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
     Route::post('/logout', [AuthController::class, 'logout']); //S
 
     Route::middleware('consultant')->group(function () {
@@ -57,7 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('parented')->group(function () {
-        Route::apiResource("/parenteds", ParentedsController::class)->only('update','show');
+        Route::apiResource("/parenteds", ParentedsController::class)->only('update','show'); //S
         Route::apiResource("/parented.children", ChildrensController::class)->shallow(); //S
         Route::apiResource("/questionnaires", QuestionnairesController::class);
         Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
@@ -65,7 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('admin')->group(function () {
         Route::apiResource("/users", UsersController::class);
-        Route::apiResource("/parenteds", ParentedsController::class)->only('index', 'destroy');
+        Route::apiResource("/parenteds", ParentedsController::class)->only('index', 'destroy'); //S
         Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show'); //S
         Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except('index','show'); //S
         Route::apiResource("/consultants", ConsultantsController::class)->only('destroy'); //S
