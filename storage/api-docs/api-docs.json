@@ -733,6 +733,123 @@
                 }
             }
         },
+        "/api/professions": {
+            "get": {
+                "tags": [
+                    "PROFESSIONS"
+                ],
+                "summary": "Get list of professions",
+                "description": "Returns list of professions",
+                "operationId": "getProfessionList",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "PROFESSIONS"
+                ],
+                "summary": "Add new profession",
+                "description": "Returns profession",
+                "operationId": "storeProfession",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, max=255",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/professions/{id}": {
+            "get": {
+                "tags": [
+                    "PROFESSIONS"
+                ],
+                "summary": "Show profession",
+                "description": "Returns profession",
+                "operationId": "showProfession",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id профессии",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "PROFESSIONS"
+                ],
+                "summary": "Update profession",
+                "operationId": "updateProfession",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id профессии",
+                        "required": true
+                    },
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, max=255",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "PROFESSIONS"
+                ],
+                "summary": "Delete professions",
+                "operationId": "deleteProfession",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id профессии",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
         "/api/specializations": {
             "get": {
                 "tags": [
