@@ -1388,12 +1388,12 @@
             }
         },
         "/api/getUserByToken": {
-            "post": {
+            "get": {
                 "tags": [
                     "USERS"
                 ],
                 "summary": "Get user by token",
-                "operationId": "df4bdfefb27c89673e2cc03790bf0bc2",
+                "operationId": "d01dd91e726d657c5cf61a3dbcb82939",
                 "parameters": [
                     {
                         "name": "token",

@@ -230,7 +230,7 @@ class UsersController
 
     }
 /**
- * @OA\Post(
+ * @OA\Get(
  *     path="/api/getUserByToken",
  *     summary="Get user by token",
  *     tags={"USERS"},
