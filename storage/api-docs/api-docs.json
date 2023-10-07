@@ -850,6 +850,132 @@
                 }
             }
         },
+        "/api/regions": {
+            "get": {
+                "tags": [
+                    "REGIONS"
+                ],
+                "summary": "Get list of regions",
+                "description": "Returns list of regions",
+                "operationId": "getRegionsList",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "REGIONS"
+                ],
+                "summary": "Add new regions",
+                "description": "Returns regions",
+                "operationId": "storeRegions",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "string, max=255"
+                    },
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, max=255",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/regions/{id}": {
+            "get": {
+                "tags": [
+                    "REGIONS"
+                ],
+                "summary": "Show region",
+                "description": "Returns region",
+                "operationId": "showRegion",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id региона",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "REGIONS"
+                ],
+                "summary": "Update region",
+                "operationId": "updateRegion",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id региона",
+                        "required": true
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "string, max=255"
+                    },
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "string, max=255"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "REGIONS"
+                ],
+                "summary": "Delete regions",
+                "operationId": "deleteRegions",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id региона",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
         "/api/specializations": {
             "get": {
                 "tags": [
