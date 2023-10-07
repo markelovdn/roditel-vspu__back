@@ -37,7 +37,8 @@ class ChildrensController
  *     @OA\Parameter(
  *         description="integer, id родителя, /api/parented/1/children",
  *         in="query",
- *         name=""
+ *         name="",
+ *         required=true
  *         ),
  *     @OA\Parameter(
  *         description="integer",

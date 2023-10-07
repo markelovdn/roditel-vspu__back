@@ -214,7 +214,7 @@ class DatabaseSeeder extends Seeder
         );
 
         Consultant::create([
-            'user_id' => '11',
+            'user_id' => '92',
             'photo' => 'https://via.placeholder.com/354x472.png/0033aa?text=people+accusantium',
             'specialization_id' => '1',
             'profession_id' => '1',

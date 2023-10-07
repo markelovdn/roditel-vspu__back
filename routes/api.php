@@ -24,7 +24,7 @@ Route::post('/login', [AuthController::class, 'login']); //S
 Route::post('/register', [AuthController::class, 'register']); //S
 
 //COLLECTIONS
-Route::apiResource("/specializations", SpecializationsController::class);
+Route::apiResource("/specializations", SpecializationsController::class)->only('index'); //S
 Route::apiResource("/professions", ProfessionsController::class);
 Route::apiResource("/regions", RegionsController::class);
 
@@ -68,6 +68,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show'); //S
         Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except(['index','show']); //S
         Route::apiResource("/consultants", ConsultantsController::class)->only('destroy'); //S
+        Route::apiResource("/specializations", SpecializationsController::class)->except('index'); //S
     });
 });
 
