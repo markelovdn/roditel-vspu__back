@@ -2,22 +2,20 @@
 
 namespace Tests\Feature;
 
-use App\Models\Profession;
+use App\Models\Region;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
-class ProfessionsTest extends TestCase
+class RegionsTest extends TestCase
 {
     use DatabaseTransactions;
 
     public function test_index(): void
     {
-        $response = $this->get('/api/professions');
+        $response = $this->get('/api/regions');
 
         $response->assertStatus(200)
         ->assertJsonIsObject();;
@@ -29,11 +27,13 @@ class ProfessionsTest extends TestCase
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
-        $response = $this->post('/api/professions/', [
+        $response = $this->post('/api/regions', [
+            'code' => '34',
             'title' => 'test'
         ]);
 
-        $this->assertDatabaseHas('professions', [
+        $this->assertDatabaseHas('regions', [
+            'code' => '34',
             'title' => 'test',
         ]);
 
@@ -47,8 +47,8 @@ class ProfessionsTest extends TestCase
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
-        $profession = Profession::first();
-        $response = $this->get('/api/professions/'.$profession->id);
+        $region = Region::first();
+        $response = $this->get('/api/regions/'.$region->id);
 
         $response->assertStatus(200)
         ->assertJsonIsObject();;
@@ -60,13 +60,13 @@ class ProfessionsTest extends TestCase
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
-        $profession = Profession::first();
+        $region = Region::first();
 
-        $response = $this->put('/api/professions/'.$profession->id, [
+        $response = $this->put('/api/regions/'.$region->id, [
             'title' => 'test2'
         ]);
 
-        $this->assertDatabaseHas('professions', [
+        $this->assertDatabaseHas('regions', [
             'title' => 'test2',
         ]);
 
@@ -80,11 +80,11 @@ class ProfessionsTest extends TestCase
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
-        $profession = Profession::first();
+        $region = Region::first();
 
-        $response = $this->delete('/api/professions/'.$profession->id);
+        $response = $this->delete('/api/regions/'.$region->id);
 
-        $this->assertSoftDeleted($profession);
+        $this->assertSoftDeleted($region);
 
         $response->assertStatus(200)
         ->assertJsonIsObject();;
