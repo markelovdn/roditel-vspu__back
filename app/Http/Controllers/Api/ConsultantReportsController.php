@@ -25,8 +25,12 @@ class ConsultantReportsController extends Controller
         $dateEnd = Carbon::parse(Str::after($request->query('dateBetween'), ','))->format('Y-m-d');
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
 
-        $reports = ConsultantReportsResource::collection(ConsultantReport::where('consultant_id', $consultant->id)->whereRaw('DATE(updated_at) >= ?', [$dateStart])
-                                                            ->whereRaw('DATE(updated_at) <= ?', [$dateEnd])->paginate(6));
+        $reports = ConsultantReportsResource::collection(
+            ConsultantReport::where('consultant_id', $consultant->id)
+            ->whereRaw('DATE(updated_at) >= ?', [$dateStart])
+            ->whereRaw('DATE(updated_at) <= ?', [$dateEnd])
+            ->paginate(6)
+        );
 
         return response()->json([ 'reports' => json_decode(json_encode((object) $reports), true) ], 200);
     }

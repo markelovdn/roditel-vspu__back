@@ -27,8 +27,8 @@ class ConsultantTest extends TestCase
 
     public function test_store_consultant(): void
     {
-        $role = Role::where('code', Role::CONSULTANT)->first();
-        $user = User::where('role_id', $role->id)->first();
+        $consultant = Consultant::first();
+        $user = User::where('id', $consultant->user_id)->first();
         Auth::login($user);
 
         $response = $this->post('api/consultants', [
@@ -54,8 +54,8 @@ class ConsultantTest extends TestCase
     public function test_update_consultant(): void
     {
         //TODO: Сделать загрузка файла через постман в raw формате
-        $role = Role::where('code', Role::CONSULTANT)->first();
-        $user = User::where('role_id', $role->id)->first();
+        $consultant = Consultant::first();
+        $user = User::where('id', $consultant->user_id)->first();
         Auth::login($user);
 
         $response = $this->put('api/consultants/'.Consultant::where('user_id', $user->id)->first()->id, [
@@ -84,12 +84,12 @@ class ConsultantTest extends TestCase
         $consultant = Consultant::first();
 
         $response = $this->delete('/api/consultants/'.$consultant->id);
+        // $response->dd();
 
-        $this->assertModelMissing($consultant);
+        $this->assertSoftDeleted($consultant);
 
         $response
             ->assertStatus(200)
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->has('message'));
+            ->assertJsonFragment(['message' => 'Record successfully deleted']);
     }
 }

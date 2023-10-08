@@ -3,13 +3,12 @@
 namespace Database\Factories;
 
 use App\Models\Questionnaire;
-use App\Models\QuestionnaireQuestion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\QuestionnaireAnswer>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class QuestionnaireAnswerFactory extends Factory
+class QuestionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,8 +19,7 @@ class QuestionnaireAnswerFactory extends Factory
     {
         return [
             'text' => fake()->text(),
-            'questionnaire_id' => Questionnaire::factory(),
-            'questionnaire_question_id' => QuestionnaireQuestion::factory()
+            'answer_type' => fake()->randomElement(['one', 'many', 'free'])
         ];
     }
 }
