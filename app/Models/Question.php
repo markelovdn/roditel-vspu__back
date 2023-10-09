@@ -12,30 +12,15 @@ class Question extends Model
 {
     use HasFactory;
 
-    public const ONE = 'one';
+    public const TEXT = 'text';
+    public const SINGLE = 'single';
     public const MANY = 'many';
-    public const FREE = 'free';
 
     public function questionnaire(): BelongsToMany {
         return $this->belongsToMany(Questionnaire::class);
     }
 
-    public function answers(): BelongsToMany {
-        return $this->belongsToMany(Answer::class);
+    public function options(): BelongsToMany {
+        return $this->belongsToMany(Option::class);
     }
-
-    public function storeAnswere($answers, $questionId) {
-        $question = Question::find($questionId);
-
-        foreach ($answers as $item) {
-            $answer = new Answer();
-
-            $answer->text = $item['text'];
-            $answer->save();
-
-            $question->answers()->attach($answer->id);
-
-        }
-    }
-
 }

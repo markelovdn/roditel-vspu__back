@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AnswersController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ChildrensController;
 use App\Http\Controllers\Api\ConsultantReportsController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Api\ConsultationsController;
 use App\Http\Controllers\Api\ParentedsController;
 use App\Http\Controllers\Api\ProfessionsController;
 use App\Http\Controllers\Api\QuestionnairesController;
+use App\Http\Controllers\Api\QuestionsController;
 use App\Http\Controllers\Api\RegionsController;
 use App\Http\Controllers\Api\SpecializationsController;
 use App\Http\Controllers\Api\UsersController;

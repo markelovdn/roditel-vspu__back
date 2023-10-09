@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuestionnairesRequest;
+use App\Http\Requests\StoreQuestionsRequest;
+use App\Http\Requests\UpdateQuestionnairesRequest;
 use App\Http\Resources\QuestionnairesResource;
 use App\Models\Consultant;
 use App\Models\Question;
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 class QuestionnairesController extends Controller
 {
 
-    public function index()
+    public function index(): JsonResource
     {
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
 
@@ -26,6 +28,7 @@ class QuestionnairesController extends Controller
 
     public function store(StoreQuestionnairesRequest $request): JsonResponse
     {
+
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
         $questionnaire = new Questionnaire();
         try {
@@ -34,8 +37,8 @@ class QuestionnairesController extends Controller
             $questionnaire->answer_before = $request->answerBefore;
             $questionnaire->consultant_id = $consultant->id;
             $questionnaire->save();
-            
-            $questionnaire->storeQuestions($request->questions, $questionnaire->id);
+
+            QuestionsController::store($request->questions, $questionnaire->id);
 
             return response()->json([
                 'message' => 'Questionnaire successfully added'
@@ -47,28 +50,36 @@ class QuestionnairesController extends Controller
         }
     }
 
-    // public function show(int $id): JsonResource
-    // {
-    //     return RegionsResource::collection(Region::where('id', $id)->get());
-    // }
+    public function show(int $id): JsonResource
+    {
+        $consultant = Consultant::where('user_id', Auth::user()->id)->first();
 
-    // public function update(StoreRegionRequest $request, int $id): JsonResponse
-    // {
-    //     $region = Region::where('id', $id)->first();
-    //     try {
-    //         $region->code = $request->title;
-    //         $region->title = $request->title;
-    //         $region->save();
+        return QuestionnairesResource::collection(Questionnaire::where('id', $id)->where('consultant_id', $consultant->id)->with('questions')->get());
 
-    //         return response()->json([
-    //             'message' => 'Region successfully updated'
-    //         ], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'message' => 'Something went wrong in RegionController.update'
-    //         ], 400);
-    //     }
-    // }
+    }
+
+    public function update(UpdateQuestionnairesRequest $request, int $id): JsonResponse
+    {
+        $consultant = Consultant::where('user_id', Auth::user()->id)->first();
+        $questionnaire = Questionnaire::where('id', $id)->where('consultant_id', $consultant->id)->with('questions')->first();
+        try {
+            $questionnaire->title = $request->title;
+            $questionnaire->description = $request->description;
+            $questionnaire->answer_before = $request->answerBefore;
+            $questionnaire->consultant_id = $consultant->id;
+            $questionnaire->save();
+
+            QuestionsController::update($request->questions, $questionnaire->id);
+
+            return response()->json([
+                'message' => 'Questionnaire successfully updated'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in QuestionnaireController.update'
+            ], 400);
+        }
+    }
 
     // public function destroy(int $id): JsonResponse
     // {

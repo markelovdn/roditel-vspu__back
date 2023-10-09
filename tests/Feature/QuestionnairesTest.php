@@ -15,7 +15,7 @@ use Tests\TestCase;
 
 class QuestionnairesTest extends TestCase
 {
-    // use DatabaseTransactions;
+    use DatabaseTransactions;
 
     public function test_index(): void
     {
@@ -43,22 +43,22 @@ class QuestionnairesTest extends TestCase
             'answerBefore' => '10.08.2000',
             'questions' => [
                 ['text' => 'test free',
-                'answerType' => Question::FREE,
-                'answers' => [
+                'type' => Question::TEXT,
+                'options' => [
                     ['text' => 'Другое']
                 ]
             ],
                 ['text' => 'test one',
-                'answerType' => Question::ONE,
-                'answers' => [
+                'type' => Question::SINGLE,
+                'options' => [
                     ['text' => 'Первый'],
                     ['text' => 'Второй'],
                     ['text' => 'Третий']
                 ]
                 ],
                 ['text' => 'test many',
-                'answerType' => Question::MANY,
-                'answers' => [
+                'type' => Question::MANY,
+                'options' => [
                     ['text' => 'Первый'],
                     ['text' => 'Второй'],
                     ['text' => 'Третий']
@@ -77,38 +77,77 @@ class QuestionnairesTest extends TestCase
         ->assertJsonFragment(["message" => "Questionnaire successfully added"]);
     }
 
-    // public function test_show(): void
-    // {
-    //     $role = Role::where('code', Role::ADMIN)->first();
-    //     $admin = User::where('role_id', $role->id)->first();
-    //     Auth::login($admin);
+    public function test_show(): void
+    {
+        $questionnaire = Questionnaire::first();
+        $consultant = Consultant::where('id', $questionnaire->consultant_id)->first();
+        $user = User::where('id', $consultant->user_id)->first();
+        Auth::login($user);
 
-    //     $region = Region::first();
-    //     $response = $this->get('/api/regions/'.$region->id);
+        $response = $this->get('/api/questionnaires/'.$questionnaire->id);
+        // $response->dd();
 
-    //     $response->assertStatus(200)
-    //     ->assertJsonIsObject();;
-    // }
+        $response->assertStatus(200)
+        ->assertJsonFragment(['consultantId' => $consultant->id]);
+    }
 
-    // public function test_update(): void
-    // {
-    //     $role = Role::where('code', Role::ADMIN)->first();
-    //     $admin = User::where('role_id', $role->id)->first();
-    //     Auth::login($admin);
+    public function test_update(): void
+    {
+        $questionnaire = Questionnaire::with('questions')->first();
+        $consultant = Consultant::where('id', $questionnaire->consultant_id)->first();
+        $user = User::where('id', $consultant->user_id)->first();
+        Auth::login($user);
 
-    //     $region = Region::first();
+        $response = $this->put('/api/questionnaires/'.$questionnaire->id, [
+            'title' => 'test2 title2',
+            'description' => 'test2 description2',
+            'answerBefore' => '10.08.2000',
+            'questions' => [
+                ['id' => $questionnaire->questions[0]->id,
+                'text' => 'test2 free2',
+                'type' => Question::TEXT,
+                'options' => [
+                    ['id' => $questionnaire->questions[0]->options[0]->id,
+                    'text' => 'Другое2']
+                ]
+            ],
+                ['id' => $questionnaire->questions[1]->id,
+                'text' => 'test2 one2',
+                'type' => Question::SINGLE,
+                'options' => [
+                    ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Первый2'],
+                    ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Второй2'],
+                    ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Третий2']
+                ]
+                ],
+                ['id' => $questionnaire->questions[2]->id,
+                'text' => 'test2 many2',
+                'type' => Question::MANY,
+                'options' => [
+                    ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Первый2'],
+                    ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Второй2'],
+                    ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Третий2']
+                ]]
+            ]
+        ]);
 
-    //     $response = $this->put('/api/regions/'.$region->id, [
-    //         'title' => 'test2'
-    //     ]);
+        $this->assertDatabaseHas('questionnaires', [
+            'title' => 'test2 title2',
+            'description' => 'test2 description2'
+        ]);
 
-    //     $this->assertDatabaseHas('regions', [
-    //         'title' => 'test2',
-    //     ]);
+        $this->assertDatabaseHas('questions', [
+            'text' => 'test2 free2',
+            'answer_type' => Question::TEXT
+        ]);
 
-    //     $response->assertStatus(200)
-    //     ->assertJsonIsObject();;
-    // }
+        $this->assertDatabaseHas('options', [
+            'text' => 'Другое2',
+        ]);
+
+        $response->assertStatus(200)
+        ->assertJsonFragment(["message" => "Questionnaire successfully updated"]);
+    }
 
     // public function test_destroy(): void
     // {
@@ -123,6 +162,6 @@ class QuestionnairesTest extends TestCase
     //     $this->assertSoftDeleted($region);
 
     //     $response->assertStatus(200)
-    //     ->assertJsonIsObject();;
+    //     ->assertJsonIsObject();
     // }
 }

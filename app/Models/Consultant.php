@@ -52,7 +52,7 @@ class Consultant extends Model
     }
 
     public function questionnaires(): HasMany {
-        return $this->hasMany(Questionnaire::class);
+        return $this->hasMany(Questionnaire::class)->with('questions');
     }
 
 

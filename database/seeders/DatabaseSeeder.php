@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Answer;
 use App\Models\Children;
 use App\Models\Consultant;
 use App\Models\Contract;
+use App\Models\Option;
 use App\Models\Parented;
 use App\Models\Profession;
 use App\Models\Question;
@@ -159,11 +159,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\WebinarQuestion::factory(10)->create();
         \App\Models\WebinarProgram::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
-        \App\Models\Questionnaire::factory(10)
-        ->has(Question::factory()->has(Answer::factory(3))->count(3))
+        \App\Models\Questionnaire::factory(1)
+        ->has(Question::factory()->has(Option::factory(3))->count(3))
         ->create();
-        // \App\Models\Question::factory(10)->create();
-        // \App\Models\Answer::factory(10)->create();
         \App\Models\Consultation::factory(10)->create();
         \App\Models\ConsultationMessage::factory(10)->create();
         \App\Models\WebinarPartisipant::factory(10)->create();
