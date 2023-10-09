@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Contract;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class ConsultantFactory extends Factory
         return [
             'photo' => fake()->imageUrl(354, 472, 'people', true),
             'description' => fake()->text(),
-            'user_id' => fake()->unique()->numberBetween(1,10),
+            'user_id' => User::factory(),
             'specialization_id' => fake()->numberBetween(1,5),
             'profession_id' => fake()->numberBetween(1,3),
         ];

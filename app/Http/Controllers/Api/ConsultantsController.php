@@ -22,14 +22,6 @@ class ConsultantsController extends Controller
 
     public function store(StoreConsultantRequest $request, FilesHandler $filesHandler)
     {
-        $role = new Role();
-
-        $isConsultant = $role->isConsultant($request->userId);
-
-        if(!$isConsultant) {
-            return response()->json(['error' => 'Access is denied'], 400);
-        }
-
         $consultant = Consultant::where('user_id', $request->userId)->first();
 
         try {
@@ -57,13 +49,6 @@ class ConsultantsController extends Controller
 
     public function update(UpdateConsultantRequest $request, string $id, FilesHandler $filesHandler)
     {
-        $role = new Role();
-        $isConsultant = $role->isConsultant(Auth()->user()->id);
-
-        if(!$isConsultant) {
-            return response()->json(['error' => 'Access is denied'], 400);
-        }
-
         $consultant = Consultant::where('id', $id)->first();
 
         try {
@@ -86,12 +71,6 @@ class ConsultantsController extends Controller
 
     public function destroy(string $id)
     {
-        $role = new Role();
-        $isAdmin = $role->isAdmin(Auth()->user()->id);
-
-        if(!$isAdmin) {
-            return response()->json(['error' => 'Access is denied'], 400);
-        }
 
         try {
             Consultant::destroy($id);

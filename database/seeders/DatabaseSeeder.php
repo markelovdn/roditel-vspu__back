@@ -7,8 +7,10 @@ namespace Database\Seeders;
 use App\Models\Children;
 use App\Models\Consultant;
 use App\Models\Contract;
+use App\Models\Option;
 use App\Models\Parented;
 use App\Models\Profession;
+use App\Models\Question;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\Specialization;
@@ -151,16 +153,15 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(10)->create();
         \App\Models\Contract::factory(10)->create();
         \App\Models\Parented::factory(10)->create();
+        \App\Models\Consultant::factory(10)->create();
         \App\Models\Children::factory(10)->create();
         \App\Models\Webinar::factory(10)->create();
         \App\Models\WebinarQuestion::factory(10)->create();
         \App\Models\WebinarProgram::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
-        \App\Models\Questionnaire::factory(10)->create();
-        \App\Models\QuestionnaireQuestion::factory(10)->create();
-        \App\Models\QuestionnaireAnswer::factory(10)->create();
-        \App\Models\QuestionnaireParentedAnswer::factory(10)->create();
-        \App\Models\QuestionnaireAnswerCount::factory(10)->create();
+        \App\Models\Questionnaire::factory(1)
+        ->has(Question::factory()->has(Option::factory(3))->count(3))
+        ->create();
         \App\Models\Consultation::factory(10)->create();
         \App\Models\ConsultationMessage::factory(10)->create();
         \App\Models\WebinarPartisipant::factory(10)->create();
@@ -214,7 +215,7 @@ class DatabaseSeeder extends Seeder
         );
 
         Consultant::create([
-            'user_id' => '92',
+            'user_id' => '72',
             'photo' => 'https://via.placeholder.com/354x472.png/0033aa?text=people+accusantium',
             'specialization_id' => '1',
             'profession_id' => '1',
@@ -245,7 +246,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('childrens')->insert([
             'age' => 6,
-            'parented_id' => 41
+            'parented_id' => 21
         ]);
     }
 }

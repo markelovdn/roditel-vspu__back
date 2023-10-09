@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AnswersController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ChildrensController;
 use App\Http\Controllers\Api\ConsultantReportsController;
@@ -8,8 +9,8 @@ use App\Http\Controllers\Api\ConsultationMessagesController;
 use App\Http\Controllers\Api\ConsultationsController;
 use App\Http\Controllers\Api\ParentedsController;
 use App\Http\Controllers\Api\ProfessionsController;
-use App\Http\Controllers\Api\QuestionnaireParentedsAnswersController;
 use App\Http\Controllers\Api\QuestionnairesController;
+use App\Http\Controllers\Api\QuestionsController;
 use App\Http\Controllers\Api\RegionsController;
 use App\Http\Controllers\Api\SpecializationsController;
 use App\Http\Controllers\Api\UsersController;
@@ -40,27 +41,23 @@ Route::apiResource("/consultants", ConsultantsController::class)->except('store'
 Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy'); //S
 Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']); //S
 Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except(['store','update', 'destroy']); //S
-Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class);
+Route::apiResource("/webinarsQuestions", WebinarsQuestionsController::class); //подумать над переделать в сторону
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource("/consultations", ConsultationsController::class);
-    Route::apiResource("/questionnaireParentedsAnswers", QuestionnaireParentedsAnswersController::class);
-    Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class);
+    Route::apiResource("/consultations", ConsultationsController::class); //подумать над переделать в сторону шалоу с юзером там же будут методы с сообщениями по аналогии с анкетами
+    Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class); //подумать над переделать в сторону шалоу с юзером
     Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
     Route::post('/logout', [AuthController::class, 'logout']); //S
 
     Route::middleware('consultant')->group(function () {
-        Route::apiResource("/questionnaires", QuestionnairesController::class);
-        Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
         Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'show', 'destroy'); //S
         Route::apiResource("/consultant.reports", ConsultantReportsController::class)->shallow(); //S
+        Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow();
     });
 
     Route::middleware('parented')->group(function () {
         Route::apiResource("/parenteds", ParentedsController::class)->only('update','show'); //S
         Route::apiResource("/parented.children", ChildrensController::class)->shallow(); //S
-        Route::apiResource("/questionnaires", QuestionnairesController::class);
-        Route::apiResource("/consultationMessages", ConsultationMessagesController::class);
     });
 
     Route::middleware('admin')->group(function () {

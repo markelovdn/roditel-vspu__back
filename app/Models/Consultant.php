@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Consultant extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'photo',
@@ -48,6 +49,10 @@ class Consultant extends Model
 
     public function consultantAnswers(): HasMany {
         return $this->hasMany(ConsultantAnswer::class);
+    }
+
+    public function questionnaires(): HasMany {
+        return $this->hasMany(Questionnaire::class)->with('questions');
     }
 
 

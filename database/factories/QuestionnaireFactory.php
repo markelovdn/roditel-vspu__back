@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Consultant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,8 @@ class QuestionnaireFactory extends Factory
         return [
             'title' => fake()->text(),
             'description' => fake()->text(),
+            'consultant_id' => fake()->numberBetween(1,10),
+            'answer_before' => fake()->date()
         ];
     }
 }

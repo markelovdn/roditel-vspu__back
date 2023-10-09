@@ -12,6 +12,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->date('answer_before');
+            $table->foreignId('consultant_id')->constrained('consultants', 'id')->onDelete('cascade')->require();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

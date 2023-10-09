@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->foreignId('specialization_id')->constrained('specializations', 'id');
             $table->foreignId('profession_id')->constrained('professions', 'id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

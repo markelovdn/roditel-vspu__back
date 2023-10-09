@@ -7,18 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 
-class Questionnaire extends Model
+class Option extends Model
 {
-    use HasFactory, SoftDeletes;
-
-    public function consultant(): BelongsTo {
-        return $this->belongsTo(Consultant::class);
-    }
+    use HasFactory;
 
     public function questions(): BelongsToMany {
-        return $this->belongsToMany(Question::class)->with('options');
+        return $this->belongsToMany(Question::class);
     }
+
+
 }

@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\Questionnaire;
+use App\Models\QuestionnaireQuestion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\QuestionnaireAnswer>
  */
-class QuestionnaireQuestionFactory extends Factory
+class OptionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +20,6 @@ class QuestionnaireQuestionFactory extends Factory
     {
         return [
             'text' => fake()->text(),
-            'questionnaire_id' => Questionnaire::factory()
         ];
     }
 }

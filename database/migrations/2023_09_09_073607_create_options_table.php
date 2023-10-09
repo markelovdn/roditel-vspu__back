@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('questionnaire_parented_answers', function (Blueprint $table) {
+        Schema::create('options', function (Blueprint $table) {
             $table->id();
             $table->string('text')->require();
-            $table->foreignId('questionnaire_id')->constrained('questionnaires', 'id');
-            $table->foreignId('parented_id')->constrained('parenteds', 'id');
-            $table->foreignId('questionnaire_question_id')->constrained('questionnaire_questions', 'id');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('questionnaire_parented_answers');
+        Schema::dropIfExists('options');
     }
 };
