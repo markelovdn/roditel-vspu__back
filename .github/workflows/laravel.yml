@@ -59,7 +59,7 @@ jobs:
       - name: Deploy to Hosting
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ 194.26.138.130 }}
+          username: ${{ legionrm }}
+          password: ${{ Dn100883! }}
           server-dir:  //здесь нужно указать папку вашего проекта на хостинге
