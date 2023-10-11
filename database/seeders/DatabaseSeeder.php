@@ -147,9 +147,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         WebinarCategory::insert([
-            ['title' => 'Основная школа'],
-            ['title' => 'Не основная школа'],
-            ['title' => 'Вечерняя школа'],
+            ['title' => 'Тестовая категория'],
+            ['title' => 'Тестовая категория 2'],
+            ['title' => 'Тестовая категория 3'],
         ]);
 
         \App\Models\User::factory(10)->create();
