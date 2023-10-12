@@ -39,7 +39,7 @@ Route::apiResource("/consultants", ConsultantsController::class)->except('store'
 
 //WEBINARS
 Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy'); //S
-Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->only('index', 'show');
+Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->only('index', 'show'); //S
 Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']); //S
 Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->only('index', 'show'); //S
 
@@ -47,8 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
     Route::post('/logout', [AuthController::class, 'logout']); //S
     Route::apiResource("/consultations", ConsultationsController::class); //подумать над переделать в сторону шалоу с юзером там же будут методы с сообщениями по аналогии с анкетами
-    Route::apiResource("/webinarPartisipants", WebinarPartisipantController::class); //подумать над переделать в сторону шалоу с юзером
-
+    Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->only('store', 'destroy');
 
     Route::middleware('consultant')->group(function () {
         Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'show', 'destroy'); //S
@@ -67,7 +66,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/parenteds", ParentedsController::class)->only('index', 'destroy'); //S
         Route::apiResource("/consultants", ConsultantsController::class)->only('destroy'); //S
         Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show'); //S
-        Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->except('index', 'show');
+        Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->except('index', 'show'); //S
+        Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->except('store', 'destroy');
         Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except('index', 'show'); //S
         Route::apiResource("/specializations", SpecializationsController::class)->except('index'); //S
         Route::apiResource("/professions", ProfessionsController::class)->except('index'); //S

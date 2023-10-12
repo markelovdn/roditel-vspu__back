@@ -22,8 +22,8 @@ class StoreWebinarPartisipantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'webinar_id' => ['required', 'integer'],
-            'user_id' => ['required', 'integer'],
+            'webinarId' => ['required', 'integer'],
+            'userId' => ['required', 'integer'],
         ];
     }
 }

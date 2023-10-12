@@ -1513,6 +1513,88 @@
                 }
             }
         },
+        "/api/webinar/{webinarId}/webinarPartisipants": {
+            "get": {
+                "tags": [
+                    "WEBINAR_PARTISIPANTS"
+                ],
+                "summary": "Get list of webinarPartisipants",
+                "description": "Returns list of webinarPartisipants",
+                "operationId": "getWebinarPartisipantsList",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id вебинара, /api/webinar/1/webinarPartisipants"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of webinarPartisipants"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "WEBINAR_PARTISIPANTS"
+                ],
+                "summary": "Add new webinarPartisipants",
+                "operationId": "storeWebinarPartisipants",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id вебинара, /api/webinar/1/webinarPartisipants"
+                    },
+                    {
+                        "name": "webinarId",
+                        "in": "path",
+                        "description": "integer"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "webinarPartisipant successfully added"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/webinarPartisipants/{id}": {
+            "delete": {
+                "tags": [
+                    "WEBINAR_PARTISIPANTS"
+                ],
+                "summary": "Delete webinarPartisipants",
+                "operationId": "deletewebinarPartisipants",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id записи в табице участников вебинара",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "webinarPartisipant successfully deleted"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
         "/api/webinar/{webinarId}/webinarQuestions": {
             "get": {
                 "tags": [
