@@ -24,12 +24,12 @@ class StoreWebinarRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'date' => ['required', 'string'],
-            'timeStart' => ['required', 'string'],
-            'timeEnd' => ['required', 'string'],
-            'lectorName' => ['required', 'string'],
-            'logo' => ['required', 'image:jpg,jpeg,png'],
-            'cost' => ['required', 'numeric'],
-            'videoLink' => ['required', 'string'],
+            'timeStart' => ['string'],
+            'timeEnd' => ['string'],
+            'lectorName' => ['string'],
+            'logo' => ['image:jpg,jpeg,png'],
+            'cost' => ['numeric'],
+            'videoLink' => ['string'],
             'webinarCategoryId' => ['required', 'numeric'],
         ];
     }

@@ -6,21 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('parented_answers', function (Blueprint $table) {
             $table->id();
-            $table->string('text')->require();
-            $table->string('description')->nullable();
-            $table->string('answer_type')->require();
+            $table->string('text');
+            $table->foreignId('question_id')->constrained('questions');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
 
-
     public function down(): void
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('parented_answers');
     }
 };

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreWebinarPartisipantRequest extends FormRequest
+class StoreSelectedOptionsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,13 +17,13 @@ class StoreWebinarPartisipantRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'webinarId' => ['required', 'integer'],
-            'userId' => ['required', 'integer'],
+            'option_id' => ['numeric'],
+            'text' => ['string']
         ];
     }
 }

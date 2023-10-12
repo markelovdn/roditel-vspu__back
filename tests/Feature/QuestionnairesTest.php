@@ -37,33 +37,38 @@ class QuestionnairesTest extends TestCase
         $user = User::where('id', $consultant->user_id)->first();
         Auth::login($user);
 
-        $response = $this->post('/api/consultant/'.$consultant->id.'/questionnaires', [
+        $response = $this->post('/api/consultant/'.$consultant->id.'/questionnaires',
+        [
             'title' => 'test title',
             'description' => 'test description',
             'answerBefore' => '10.08.2000',
-            'questions' => [
-                ['text' => 'test free',
-                'type' => Question::TEXT,
-                'options' => [
-                    ['text' => 'Другое']
+            'questions' =>
+                [
+                    ['text' => 'test free', 'type' => Question::TEXT,
+                        'options' =>
+                            [
+                                ['text' => 'Другое']
+                            ]
+                    ],
+
+                    ['text' => 'test one', 'type' => Question::SINGLE,
+                        'options' =>
+                            [
+                                ['text' => 'Первый'],
+                                ['text' => 'Второй'],
+                                ['text' => 'Третий']
+                            ]
+                    ],
+
+                    ['text' => 'test many', 'type' => Question::MANY,
+                        'options' =>
+                            [
+                                ['text' => 'Первый'],
+                                ['text' => 'Второй'],
+                                ['text' => 'Третий']
+                            ]
+                    ]
                 ]
-            ],
-                ['text' => 'test one',
-                'type' => Question::SINGLE,
-                'options' => [
-                    ['text' => 'Первый'],
-                    ['text' => 'Второй'],
-                    ['text' => 'Третий']
-                ]
-                ],
-                ['text' => 'test many',
-                'type' => Question::MANY,
-                'options' => [
-                    ['text' => 'Первый'],
-                    ['text' => 'Второй'],
-                    ['text' => 'Третий']
-                ]]
-            ]
         ]);
 
         // $response->dd();
@@ -98,37 +103,38 @@ class QuestionnairesTest extends TestCase
         $user = User::where('id', $consultant->user_id)->first();
         Auth::login($user);
 
-        $response = $this->put('/api/questionnaires/'.$questionnaire->id, [
+        $response = $this->put('/api/questionnaires/'.$questionnaire->id,
+        [
             'title' => 'test2 title2',
             'description' => 'test2 description2',
             'answerBefore' => '10.08.2000',
-            'questions' => [
-                ['id' => $questionnaire->questions[0]->id,
-                'text' => 'test2 free2',
-                'type' => Question::TEXT,
-                'options' => [
-                    ['id' => $questionnaire->questions[0]->options[0]->id,
-                    'text' => 'Другое2']
+            'questions' =>
+                [
+                    ['id' => $questionnaire->questions[0]->id, 'text' => 'test2 free2', 'type' => Question::TEXT,
+                        'options' =>
+                            [
+                                ['id' => $questionnaire->questions[0]->options[0]->id, 'text' => 'Другое2']
+                            ]
+                    ],
+
+                    ['id' => $questionnaire->questions[1]->id, 'text' => 'test2 one2', 'type' => Question::SINGLE,
+                        'options' =>
+                            [
+                                ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Первый2'],
+                                ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Второй2'],
+                                ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Третий2']
+                            ]
+                    ],
+
+                    ['id' => $questionnaire->questions[2]->id, 'text' => 'test2 many2', 'type' => Question::MANY,
+                        'options' =>
+                            [
+                                ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Первый2'],
+                                ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Второй2'],
+                                ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Третий2']
+                            ]
+                    ]
                 ]
-            ],
-                ['id' => $questionnaire->questions[1]->id,
-                'text' => 'test2 one2',
-                'type' => Question::SINGLE,
-                'options' => [
-                    ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Первый2'],
-                    ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Второй2'],
-                    ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Третий2']
-                ]
-                ],
-                ['id' => $questionnaire->questions[2]->id,
-                'text' => 'test2 many2',
-                'type' => Question::MANY,
-                'options' => [
-                    ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Первый2'],
-                    ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Второй2'],
-                    ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Третий2']
-                ]]
-            ]
         ]);
 
         $this->assertDatabaseHas('questionnaires', [
@@ -149,19 +155,18 @@ class QuestionnairesTest extends TestCase
         ->assertJsonFragment(["message" => "Questionnaire successfully updated"]);
     }
 
-    // public function test_destroy(): void
-    // {
-    //     $role = Role::where('code', Role::ADMIN)->first();
-    //     $admin = User::where('role_id', $role->id)->first();
-    //     Auth::login($admin);
+    public function test_destroy(): void
+    {
+        $questionnaire = Questionnaire::with('questions')->first();
+        $consultant = Consultant::where('id', $questionnaire->consultant_id)->first();
+        $user = User::where('id', $consultant->user_id)->first();
+        Auth::login($user);
 
-    //     $region = Region::first();
+        $response = $this->delete('/api/questionnaires/'.$questionnaire->id);
 
-    //     $response = $this->delete('/api/regions/'.$region->id);
+        $this->assertSoftDeleted($questionnaire);
 
-    //     $this->assertSoftDeleted($region);
-
-    //     $response->assertStatus(200)
-    //     ->assertJsonIsObject();
-    // }
+        $response->assertStatus(200)
+        ->assertJsonIsObject();
+    }
 }

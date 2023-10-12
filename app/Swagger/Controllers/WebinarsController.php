@@ -84,37 +84,31 @@ class WebinarsController
  *         description="string",
  *         in="path",
  *         name="timeStart",
- *         required=true,
  *     ),
  *     @OA\Parameter(
  *         description="string",
  *         in="path",
  *         name="timeEnd",
- *         required=true,
  *     ),
  *     @OA\Parameter(
  *         description="string, maxLength=255",
  *         in="path",
  *         name="lectorName",
- *         required=true,
  *     ),
  *     @OA\Parameter(
  *         description="image:jpg,jpeg,png, maxSize=1MB",
  *         in="path",
  *         name="logo",
- *         required=true,
  *     ),
  *     @OA\Parameter(
  *         description="integer",
  *         in="path",
  *         name="cost",
- *         required=true,
  *     ),
  *     @OA\Parameter(
  *         description="string, maxLength=255",
  *         in="path",
  *         name="videoLink",
- *         required=true,
  *     ),
  *     @OA\Parameter(
  *         description="integer",
@@ -126,6 +120,16 @@ class WebinarsController
  *      @OA\Response(
  *         response=400,
  *         description="Something went wrong in WebinarsController.store",
+ *     ),
+ *
+ *      @OA\Response(
+ *         response=401,
+ *         description="Unauthorized",
+ *     ),
+ *
+ *      @OA\Response(
+ *         response=200,
+ *         description="Data webinar successfully added",
  *     )
  * )
  */
@@ -216,7 +220,17 @@ class WebinarsController
  *
  *      @OA\Response(
  *         response=400,
- *         description="Something went wrong in WebinarsController.store",
+ *         description="Something went wrong in WebinarsController.update",
+ *     ),
+ *
+ *      @OA\Response(
+ *         response=401,
+ *         description="Unauthorized",
+ *     ),
+ *
+ *      @OA\Response(
+ *         response=200,
+ *         description="Data webinar successfully update",
  *     )
  * )
  */

@@ -9,16 +9,19 @@ use App\Http\Resources\WebinarCategoriesResource;
 use App\Models\Webinar;
 use App\Models\WebinarCategory;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class WebinarCategoriesController extends Controller
 {
 
-    public function index()
+    public function index(): JsonResource
     {
         return WebinarCategoriesResource::collection(WebinarCategory::get());
     }
 
-    public function store(StoreWebinarCategoriesRequest $request)
+    public function store(StoreWebinarCategoriesRequest $request): JsonResponse
     {
         $webinarCategories = new WebinarCategory();
 
@@ -39,16 +42,14 @@ class WebinarCategoriesController extends Controller
                 'message' => 'Something went wrong in WebinarCategoriesController.store'
             ], 400);
         }
-
-
     }
 
-    public function show(string $id)
+    public function show(int $id): JsonResource
     {
         return WebinarCategoriesResource::collection(Webinar::where('id', $id)->get());
     }
 
-    public function update(StoreWebinarCategoriesRequest $request, string $id)
+    public function update(StoreWebinarCategoriesRequest $request, int $id): JsonResponse
     {
         $webinarCategories = Webinar::find($id);
 
@@ -71,7 +72,7 @@ class WebinarCategoriesController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(int $id): JsonResponse
     {
         $webinarCategories = WebinarCategory::find($id);
 

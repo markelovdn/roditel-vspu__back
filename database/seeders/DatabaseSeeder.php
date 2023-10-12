@@ -9,10 +9,12 @@ use App\Models\Consultant;
 use App\Models\Contract;
 use App\Models\Option;
 use App\Models\Parented;
+use App\Models\ParentedAnswer;
 use App\Models\Profession;
 use App\Models\Question;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
+use App\Models\SelectedOption;
 use App\Models\Specialization;
 use App\Models\User;
 use App\Models\WebinarCategory;
@@ -145,9 +147,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         WebinarCategory::insert([
-            ['title' => 'Основная школа'],
-            ['title' => 'Не основная школа'],
-            ['title' => 'Вечерняя школа'],
+            ['title' => 'Тестовая категория'],
+            ['title' => 'Тестовая категория 2'],
+            ['title' => 'Тестовая категория 3'],
         ]);
 
         \App\Models\User::factory(10)->create();
@@ -162,6 +164,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Questionnaire::factory(1)
         ->has(Question::factory()->has(Option::factory(3))->count(3))
         ->create();
+        ParentedAnswer::factory(1)->create();
+        SelectedOption::factory(1)->create();
         \App\Models\Consultation::factory(10)->create();
         \App\Models\ConsultationMessage::factory(10)->create();
         \App\Models\WebinarPartisipant::factory(10)->create();

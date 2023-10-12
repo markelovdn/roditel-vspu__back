@@ -20,17 +20,14 @@ class ProfessionsController extends Controller
     {
         $professions = new Profession();
 
-        try
-        {
+        try {
             $professions->title = $request->title;
             $professions->save();
 
             return response()->json([
                 'message' => 'Profession successfully added'
             ], 200);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Something went wrong in ProfessionssController.store'
             ], 400);
@@ -46,17 +43,14 @@ class ProfessionsController extends Controller
     {
         $professions = Profession::where('id', $id)->first();
 
-        try
-        {
+        try {
             $professions->title = $request->title;
             $professions->save();
 
             return response()->json([
                 'message' => 'Profession successfully updated'
             ], 200);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Something went wrong in ProfessionssController.update'
             ], 400);
@@ -65,16 +59,13 @@ class ProfessionsController extends Controller
 
     public function destroy(int $id)
     {
-        try
-        {
+        try {
             Profession::destroy($id);
 
             return response()->json([
                 'message' => 'Profession successfully deleted'
             ], 200);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Something went wrong in ProfessionssController.destroy'
             ], 400);

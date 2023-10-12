@@ -23,6 +23,8 @@ class WebinarsController extends Controller
 
     public function store(StoreWebinarRequest $request,  FilesHandler $filesHandler)
     {
+        //TODO::сделать заглушку для логотипа
+        //TODO::переформатировать время и дату
 
         $webinar = new Webinar();
 
@@ -32,7 +34,7 @@ class WebinarsController extends Controller
             $webinar->time_start = $request->timeStart;
             $webinar->time_end = $request->timeEnd;
             $webinar->lector_name = $request->lectorName;
-            $webinar->logo = $filesHandler->uploadWebinarLogo($request->logo);
+            $webinar->logo = $request->logo ? $filesHandler->uploadWebinarLogo($request->logo) : "";
             $webinar->cost = $request->cost;
             $webinar->video_link = $request->videoLink;
             $webinar->webinar_category_id = $request->webinarCategoryId;
@@ -58,6 +60,9 @@ class WebinarsController extends Controller
 
     public function update(UpdateWebinarRequest $request, string $id, FilesHandler $filesHandler)
     {
+        //TODO::сделать заглушку для логотипа
+        //TODO::переформатировать время и дату
+        
         $webinar = Webinar::where('id', $id)->first();
 
         try {
@@ -66,7 +71,7 @@ class WebinarsController extends Controller
             $webinar->time_start = $request->timeStart;
             $webinar->time_end = $request->timeEnd;
             $webinar->lector_name = $request->lectorName;
-            $webinar->logo = $filesHandler->uploadWebinarLogo($request->logo);
+            $webinar->logo = $request->logo ? $filesHandler->uploadWebinarLogo($request->logo) : "";
             $webinar->cost = $request->cost;
             $webinar->video_link = $request->videoLink;
             $webinar->webinar_category_id = $request->webinarCategoryId;
@@ -79,8 +84,7 @@ class WebinarsController extends Controller
 
         } catch (\Exception $e) {
             return response()->json([
-                'error' => $e->getMessage(),
-                'message' => 'Something went wrong in WebinarsController.store'
+                'message' => 'Something went wrong in WebinarsController.update'
             ], 400);
         }
     }

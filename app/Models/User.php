@@ -79,6 +79,10 @@ class User extends Authenticatable
         return $this->hasMany(WebinarPartisipant::class);
     }
 
+    public function selectedOptions(): HasMany {
+        return $this->hasMany(SelectedOption::class);
+    }
+
     public function registrationAs(object $user, $request): void {
 
         $role = new Role();

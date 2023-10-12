@@ -81,18 +81,18 @@ class QuestionnairesController extends Controller
         }
     }
 
-    // public function destroy(int $id): JsonResponse
-    // {
-    //     try {
-    //         Region::destroy($id);
-    //         return response()->json([
-    //             'message' => 'Region successfully deleted'
-    //         ], 200);
+    public function destroy(int $id): JsonResponse
+    {
+        try {
+            Questionnaire::destroy($id);
+            return response()->json([
+                'message' => 'Questionnaire successfully deleted'
+            ], 200);
 
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'message' => 'Something went wrong in RegionsController.destroy'
-    //         ], 400);
-    //     }
-    // }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in QuestionnairesController.destroy'
+            ], 400);
+        }
+    }
 }

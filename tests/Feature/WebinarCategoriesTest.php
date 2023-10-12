@@ -14,17 +14,15 @@ class WebinarCategoriesTest extends TestCase
 
     use DatabaseTransactions;
 
-    public function test_index_webinarCategories(): void
+    public function test_index(): void
     {
         $response = $this->get('/api/webinarCategories');
 
-        $response->assertStatus(200)->assertJsonIsObject();
+        $response->assertStatus(200)->assertJsonFragment(["title" => "Тестовая категория"]);
     }
 
-    public function test_store_webinars(): void
+    public function test_store(): void
     {
-        $webinarCategory = WebinarCategory::first();
-        //TODO::сделать проверки на уникальность семинара и проверку на время
         $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
@@ -35,10 +33,10 @@ class WebinarCategoriesTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJsonIsObject();
+            ->assertJsonFragment(['message' => 'Webinar category successfully added']);
     }
 
-    public function test_show_webinarsCategories(): void
+    public function test_show(): void
     {
         $webinar = WebinarCategory::first();
         $response = $this->get('api/webinarCategories/'.$webinar->id);
@@ -48,7 +46,7 @@ class WebinarCategoriesTest extends TestCase
             ->assertJsonIsObject();
     }
 
-    public function test_update_webinarsCategory(): void
+    public function test_update(): void
     {
         $role = Role::where('code', Role::ADMIN)->first();
         $admin = User::where('role_id', $role->id)->first();
