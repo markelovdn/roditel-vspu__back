@@ -62,4 +62,4 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir:  //здесь нужно указать папку вашего проекта на хостинге
+          server-dir:  /var/www/test
