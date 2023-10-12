@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\WebinarCategoriesController;
 use App\Http\Controllers\Api\WebinarPartisipantController;
 use App\Http\Controllers\Api\WebinarQuestionsController;
 use App\Http\Controllers\Api\WebinarsController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 
 //TODO:добавить методы которые не должны быть доступны
@@ -78,3 +79,5 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/api/documentation', function () {
     return view('vendor.l5-swagger.index');
 });
+
+Route::get('send', [MailController::class, 'send']);
