@@ -138,7 +138,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        DB::table('password_reset_tokens')->where(['email' => $request->email])->delete();
+        DB::table('password_reset_tokens')->where(['token' => $token])->delete();
 
         return response()->json('Password updated success', 200);
     }
