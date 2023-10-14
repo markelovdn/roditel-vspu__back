@@ -336,4 +336,52 @@ class AuthController
 
     public function logout () {}
 
+    /**
+ * @OA\Post(
+ *     path="/api/forgotPassword",
+ *     summary="Sending a link to reset your password",
+ *     tags={"AUTH"},
+ *     @OA\Parameter(
+ *         description="string, email",
+ *         in="path",
+ *         name="email",
+ *         required=true,
+ *     ),
+ *      @OA\Response(
+ *         response=200,
+ *         description="Data send success",
+ *     ),
+ *      @OA\Response(
+ *         response=400,
+ *         description="This email is not registered or the token has already been received at the specified email",
+ *     )
+ * )
+ */
+
+    public function sendToken () {}
+
+    /**
+ * @OA\Post(
+ *     path="/api/resetPassword/{token}",
+ *     summary="Set new password",
+ *     tags={"AUTH"},
+ *     @OA\Parameter(
+ *         description="string",
+ *         in="path",
+ *         name="password",
+ *         required=true,
+ *     ),
+ *      @OA\Response(
+ *         response=200,
+ *         description="Password updated success",
+ *     ),
+ *      @OA\Response(
+ *         response=400,
+ *         description="This email is not registered or the token is expired",
+ *     )
+ * )
+ */
+
+    public function resetPassword() {}
+
 }

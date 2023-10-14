@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\AnswersController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ChildrensController;
 use App\Http\Controllers\Api\ConsultantReportsController;
 use App\Http\Controllers\Api\ConsultantsController;
-use App\Http\Controllers\Api\ConsultationMessagesController;
 use App\Http\Controllers\Api\ConsultationsController;
 use App\Http\Controllers\Api\ParentedsController;
 use App\Http\Controllers\Api\ProfessionsController;
@@ -18,7 +16,7 @@ use App\Http\Controllers\Api\WebinarCategoriesController;
 use App\Http\Controllers\Api\WebinarPartisipantController;
 use App\Http\Controllers\Api\WebinarQuestionsController;
 use App\Http\Controllers\Api\WebinarsController;
-use App\Http\Controllers\MailController;
+use App\Http\Controllers\Api\MailController;
 use Illuminate\Support\Facades\Route;
 
 //TODO:добавить методы которые не должны быть доступны
@@ -80,4 +78,5 @@ Route::get('/api/documentation', function () {
     return view('vendor.l5-swagger.index');
 });
 
-Route::get('send', [MailController::class, 'send']);
+Route::post('/forgotPassword', [AuthController::class, 'sendToken']);
+Route::post('/resetPassword/{token}', [AuthController::class, 'resetPassword']);

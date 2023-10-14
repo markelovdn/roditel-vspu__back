@@ -322,6 +322,56 @@
                 }
             }
         },
+        "/api/forgotPassword": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "Sending a link to reset your password",
+                "operationId": "2537a4b1bf9304890c7222958dbade6d",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "string, email",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data send success"
+                    },
+                    "400": {
+                        "description": "This email is not registered or the token has already been received at the specified email"
+                    }
+                }
+            }
+        },
+        "/api/resetPassword/{token}": {
+            "post": {
+                "tags": [
+                    "AUTH"
+                ],
+                "summary": "Set new password",
+                "operationId": "642539364c8ad8a25216599196971b77",
+                "parameters": [
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Password updated success"
+                    },
+                    "400": {
+                        "description": "This email is not registered or the token is expired"
+                    }
+                }
+            }
+        },
         "/api/parented/{parented}/children": {
             "get": {
                 "tags": [
