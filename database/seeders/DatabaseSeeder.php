@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Children;
 use App\Models\Consultant;
+use App\Models\ConsultantReport;
 use App\Models\Contract;
 use App\Models\Option;
 use App\Models\Parented;
@@ -223,6 +224,18 @@ class DatabaseSeeder extends Seeder
             'photo' => 'https://via.placeholder.com/354x472.png/0033aa?text=people+accusantium',
             'specialization_id' => '1',
             'profession_id' => '1',
+        ]);
+
+        ConsultantReport::create([
+            'file_url' => 'http://www.hermiston.net/eligendi-omnis-neque-quas-provident',
+            'upload_status' => 'Не загружен',
+            'consultant_id' => '21',
+        ]);
+
+        ConsultantReport::create([
+            'file_url' => 'http://www.hermiston.net/eligendi-omnis-neque-quas-provident',
+            'upload_status' => 'Загружен',
+            'consultant_id' => '21',
         ]);
 
         Contract::create([
