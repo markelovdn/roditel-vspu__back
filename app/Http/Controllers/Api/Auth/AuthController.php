@@ -126,9 +126,9 @@ class AuthController extends Controller
     public function resetPassword(UpdatePasswordRequest $request): JsonResponse
     {
         //TODO:переработать
-        $token = explode('/', $_SERVER['REQUEST_URI'])[3];
+        // $token = explode('/', $_SERVER['REQUEST_URI'])[3];
         try {
-            DB::table('password_reset_tokens')->where('token', $token)->get()->firstOrFail();
+            DB::table('password_reset_tokens')->where('token', $request->token)->get()->firstOrFail();
 
         } catch (Exception $e) {
             return response()->json('This email is not registered or the token is expired', 401);
@@ -138,7 +138,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        DB::table('password_reset_tokens')->where(['token' => $token])->delete();
+        DB::table('password_reset_tokens')->where(['token' => $request->token])->delete();
 
         return response()->json('Password updated success', 200);
     }
