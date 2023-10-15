@@ -93,9 +93,10 @@ class ConsultantReportsController extends Controller
 
     public function destroy(string $id)
     {
-        $report = ConsultantReport::where('id', $id)->first();
+        $consultant = Consultant::where('user_id', Auth::user()->id)->first();
 
         try {
+            $report = ConsultantReport::where(['id' => $id, 'consultant_id' => $consultant->id])->first();
             $report->delete();
             return response()->json([
                 'message' => 'Report successfully deleted'
