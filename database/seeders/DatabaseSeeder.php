@@ -228,13 +228,13 @@ class DatabaseSeeder extends Seeder
 
         ConsultantReport::create([
             'file_url' => 'http://www.hermiston.net/eligendi-omnis-neque-quas-provident',
-            'upload_status' => 'Не загружен',
+            'upload_status' => 'fail',
             'consultant_id' => '21',
         ]);
 
         ConsultantReport::create([
             'file_url' => 'http://www.hermiston.net/eligendi-omnis-neque-quas-provident',
-            'upload_status' => 'Загружен',
+            'upload_status' => 'success',
             'consultant_id' => '21',
         ]);
 
