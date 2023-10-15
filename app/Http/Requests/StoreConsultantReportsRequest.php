@@ -24,7 +24,6 @@ class StoreConsultantReportsRequest extends FormRequest
     {
         return [
             'file' => ['required', File::types(['xlsx'])],
-            'consultantId' => ['required', 'numeric'],
         ];
     }
 }

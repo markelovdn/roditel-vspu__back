@@ -53,14 +53,11 @@ class ConsultantReportsController
  *         name="file",
  *         required=true,
  *     ),
- *     @OA\Parameter(
- *         description="integer id консультанта",
- *         in="path",
- *         name="consultantId",
- *         required=true,
+ *     @OA\Response(
+ *         response=200,
+ *         description="Report successfully added",
  *     ),
- *
- *      @OA\Response(
+ *     @OA\Response(
  *         response=400,
  *         description="Something went wrong in ConsultantReportController.store",
  *     )
@@ -112,11 +109,9 @@ class ConsultantReportsController
  *         name="file",
  *         required=true,
  *     ),
- *     @OA\Parameter(
- *         description="integer id консультанта",
- *         in="path",
- *         name="consultantId",
- *         required=true,
+ *     @OA\Response(
+ *         response=200,
+ *         description="Report successfully updated",
  *     ),
  *      @OA\Response(
  *         response=400,

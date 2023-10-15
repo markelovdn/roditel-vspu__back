@@ -37,12 +37,13 @@ class ConsultantReportsController extends Controller
 
     public function store(StoreConsultantReportsRequest $request, FilesHandler $filesHandler)
     {
+        $consultant = Consultant::where('user_id', Auth::user()->id)->first();
         $report = new ConsultantReport();
 
         try {
-            $report->file_url = $filesHandler->uploadConsultantReport($request->consultantId, $request->file);
-            $report->upload_status = $filesHandler->uploadConsultantReport($request->consultantId, $request->file) ? ConsultantReport::UPLOAD_SUCCESSFUL : ConsultantReport::UPLOAD_FAILED;
-            $report->consultant_id = $request->consultantId;
+            $report->file_url = $filesHandler->uploadConsultantReport($consultant->id, $request->file);
+            $report->upload_status = $filesHandler->uploadConsultantReport($consultant->id, $request->file) ? ConsultantReport::UPLOAD_SUCCESSFUL : ConsultantReport::UPLOAD_FAILED;
+            $report->consultant_id = $consultant->id;
 
             $report->save();
 
@@ -66,14 +67,15 @@ class ConsultantReportsController extends Controller
         return response()->json([ 'reports' => json_decode(json_encode((object) $reports), true) ], 200);
     }
 
-    public function update(StoreConsultantReportsRequest $request, string $report, FilesHandler $filesHandler)
+    public function update(StoreConsultantReportsRequest $request, int $report, FilesHandler $filesHandler)
     {
-        $report = ConsultantReport::where('id', $report)->where('consultant_id', $request->consultantId)->first();
+        $consultant = Consultant::where('user_id', Auth::user()->id)->first();
+        $report = ConsultantReport::where('id', $report)->where('consultant_id', $consultant->id)->first();
 
         try {
-            $report->file_url = $filesHandler->uploadConsultantReport($request->consultantId, $request->file);
-            $report->upload_status = $filesHandler->uploadConsultantReport($request->consultantId, $request->file) ? ConsultantReport::UPLOAD_SUCCESSFUL : ConsultantReport::UPLOAD_FAILED;
-            $report->consultant_id = $request->consultantId;
+            $report->file_url = $filesHandler->uploadConsultantReport($consultant->id, $request->file);
+            $report->upload_status = $filesHandler->uploadConsultantReport($consultant->id, $request->file) ? ConsultantReport::UPLOAD_SUCCESSFUL : ConsultantReport::UPLOAD_FAILED;
+            $report->consultant_id = $consultant->id;
 
             $report->save();
 
