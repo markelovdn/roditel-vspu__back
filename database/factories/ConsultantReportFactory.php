@@ -19,7 +19,7 @@ class ConsultantReportFactory extends Factory
     {
         return [
             'file_url' => fake()->url(),
-            'upload_status' => fake()->randomElement(['Загружен', 'Не загружен']),
+            'upload_status' => fake()->randomElement(['success', 'fail']),
             'consultant_id' => fake()->randomElement([1,3]),
         ];
     }

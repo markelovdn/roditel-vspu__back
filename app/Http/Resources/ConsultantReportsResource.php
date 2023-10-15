@@ -19,7 +19,6 @@ class ConsultantReportsResource extends JsonResource
             'id' => $this->id,
             'fileUrl' => $this->file_url,
             'uploadStatus' => $this->upload_status,
-            'consultantId' => $this->consultant_id,
             'createdAt' => Carbon::parse($this->created_at)->format('d.m.Y'),
             'updatedAt' => Carbon::parse($this->updated_at)->format('d.m.Y'),
         ];
