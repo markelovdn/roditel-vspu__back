@@ -18,7 +18,7 @@ class ConsultantReportFactory extends Factory
     public function definition(): array
     {
         return [
-            'file_url' => fake()->url(),
+            'file_url' => 'https://markelovdn.ru/storage/app/consultants/reports/Файл_1.xlsx',
             'upload_status' => fake()->randomElement(['success', 'fail']),
             'consultant_id' => fake()->randomElement([1,3]),
         ];

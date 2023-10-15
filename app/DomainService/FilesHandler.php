@@ -2,6 +2,8 @@
 
 namespace App\DomainService;
 
+use App\Models\Consultant;
+use App\Models\ConsultantReport;
 use Illuminate\Support\Facades\Storage;
 
 class FilesHandler
@@ -34,10 +36,11 @@ class FilesHandler
     {
         $filePath = '/consultants/reports/';
         $concultantId = $consultant_id;
+        $fileName = 'Файл_'.count(ConsultantReport::where('consultant_id', $consultant_id)->get())+1;
 
-        if (Storage::disk('local')->put($filePath.'_report_concultant_id_.'.$concultantId.'.'.$file->extension(), $file->openFile()->fread($file->getSize())))
+        if (Storage::disk('local')->put($filePath.$fileName.'.'.$file->extension(), $file->openFile()->fread($file->getSize())))
         {
-            return config('filesystems.disks.public.url').$filePath.'_report_concultant_id_.'.$concultantId.'.'.$file->extension();
+            return config('filesystems.disks.public.url').$filePath.$fileName.'.'.$file->extension();
         }
 
         return response()->json(['error' => 'Uploaded report error'], 400);
