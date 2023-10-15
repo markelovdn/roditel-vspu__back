@@ -23,7 +23,7 @@ class ConsultantReportTest extends TestCase
         $user = User::where('id', $consultant->user_id)->first();
         Auth::login($user);
 
-        $response = $this->get('/api/consultant/'.$consultant->id.'/reports?dateBetween=07.10.2023,09.10.2023,');
+        $response = $this->get('/api/consultant/'.$consultant->id.'/reports');
 
         $response->assertStatus(200)->assertJsonIsObject();
     }
@@ -37,7 +37,6 @@ class ConsultantReportTest extends TestCase
         $response = $this->post('/api/consultant/'.$consultant->id.'/reports', [
             'file' => UploadedFile::fake()->create('invoice.xlsx', 2),
             'uploadStatus' => ConsultantReport::UPLOAD_SUCCESSFUL,
-            'consultantId' => $consultant->id,
         ]);
 
         $response->assertStatus(200)->assertJsonIsObject();
@@ -66,7 +65,6 @@ class ConsultantReportTest extends TestCase
         $response = $this->put('/api/reports/'.$report->id, [
             'file' => UploadedFile::fake()->create('invoice2.xlsx', 2),
             'uploadStatus' => ConsultantReport::UPLOAD_SUCCESSFUL,
-            'consultantId' => $consultant->id,
         ]);
 
         $response->assertStatus(200)->assertJsonIsObject();
