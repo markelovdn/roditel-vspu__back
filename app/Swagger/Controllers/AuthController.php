@@ -371,6 +371,12 @@ class AuthController
  *         name="password",
  *         required=true,
  *     ),
+ *     @OA\Parameter(
+ *         description="string",
+ *         in="path",
+ *         name="token",
+ *         required=true,
+ *     ),
  *      @OA\Response(
  *         response=200,
  *         description="Password updated success",

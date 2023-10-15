@@ -79,4 +79,4 @@ Route::get('/api/documentation', function () {
 });
 
 Route::post('/forgotPassword', [AuthController::class, 'sendToken']);
-Route::get('/resetPassword/{token}', [AuthController::class, 'resetPassword']);
+Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
