@@ -67,7 +67,7 @@ class ConsultantReportsController extends Controller
         return response()->json([ 'reports' => json_decode(json_encode((object) $reports), true) ], 200);
     }
 
-    public function update(StoreConsultantReportsRequest $request, string $report, FilesHandler $filesHandler)
+    public function update(StoreConsultantReportsRequest $request, int $report, FilesHandler $filesHandler)
     {
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
         $report = ConsultantReport::where('id', $report)->where('consultant_id', $consultant->id)->first();

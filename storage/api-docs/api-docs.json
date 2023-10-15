@@ -558,15 +558,12 @@
                         "in": "path",
                         "description": "file, type=*.xlsx",
                         "required": true
-                    },
-                    {
-                        "name": "consultantId",
-                        "in": "path",
-                        "description": "integer id консультанта",
-                        "required": true
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Report successfully added"
+                    },
                     "400": {
                         "description": "Something went wrong in ConsultantReportController.store"
                     }
@@ -613,15 +610,12 @@
                         "in": "path",
                         "description": "file, type=*.xlsx",
                         "required": true
-                    },
-                    {
-                        "name": "consultantId",
-                        "in": "path",
-                        "description": "integer id консультанта",
-                        "required": true
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Report successfully updated"
+                    },
                     "400": {
                         "description": "Something went wrong in ConsultantReportController.update"
                     }
