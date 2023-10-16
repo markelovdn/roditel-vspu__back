@@ -5,27 +5,22 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreChildrensRequest;
 use App\Http\Requests\UpdateChildrensRequest;
+use App\Http\Resources\ChildrensResource;
 use App\Http\Resources\ParentedsResource;
 use App\Models\Children;
 use App\Models\Parented;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class ChildrensController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(): JsonResource
     {
         $parented = Parented::where('user_id', Auth::user()->id)->first();
-        $childrens = Children::where('parented_id', $parented->id)->get();
 
-        if (count($childrens) == 0) {
-            return response()->json([
-                'message' => 'You don\'t have any children added'
-            ], 200);
-        }
-
-        return response()->json([ 'childrens' => json_decode(json_encode((object) $childrens[0]), FALSE) ], 200);
+        return ChildrensResource::collection(Children::where('parented_id', $parented->id)->get());
 
     }
 
