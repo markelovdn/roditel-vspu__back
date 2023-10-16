@@ -54,17 +54,11 @@ class ChildrensController extends Controller
         }
     }
 
-    public function show(string $id)
+    public function show(int $id)
     {
-        $children = Children::where('id', $id)->get();
+        $parented = Parented::where('user_id', Auth::user()->id)->first();
 
-        if (count($children) < 1)
-        {
-            return response()->json([
-                'message' => 'You don\'t have any children added'
-            ], 200);
-        }
-        return response()->json([ 'children' => $children ], 200);
+        return ChildrensResource::collection(Children::where(['id'=> $id, 'parented_id' => $parented->id])->get());
     }
 
     public function update(UpdateChildrensRequest $request, string $id)
