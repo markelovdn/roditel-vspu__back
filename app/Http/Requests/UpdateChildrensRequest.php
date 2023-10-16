@@ -23,7 +23,6 @@ class UpdateChildrensRequest extends FormRequest
     {
         return [
             'age' => ['required', 'numeric'],
-            'parented_id' => ['required', 'numeric'],
         ];
     }
 }

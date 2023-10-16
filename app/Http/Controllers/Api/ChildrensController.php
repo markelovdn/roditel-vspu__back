@@ -63,11 +63,11 @@ class ChildrensController extends Controller
 
     public function update(UpdateChildrensRequest $request, string $id)
     {
-        $children = Children::where('id', $id)->first();
+        $parented = Parented::where('user_id', Auth::user()->id)->first();
+        $children = Children::where(['id'=> $id, 'parented_id' => $parented->id])->first();
 
         try {
             $children->age = $request->age;
-            $children->parented_id = $request->parented_id;
 
             $children->save();
 
@@ -85,9 +85,10 @@ class ChildrensController extends Controller
 
     public function destroy(string $id)
     {
+        $parented = Parented::where('user_id', Auth::user()->id)->first();
         try {
-            $id = Children::where('id', $id)->first()->id;
-            Children::destroy($id);
+            $children = Children::where(['id'=> $id, 'parented_id' => $parented->id])->first();
+            Children::destroy($children->id);
             return response()->json([
                 'message' => 'Record children successfully deleted'
             ], 200);
