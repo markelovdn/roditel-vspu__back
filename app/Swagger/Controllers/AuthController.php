@@ -362,7 +362,7 @@ class AuthController
 
     /**
  * @OA\Post(
- *     path="/api/resetPassword/{token}",
+ *     path="/api/resetPassword",
  *     summary="Set new password",
  *     tags={"AUTH"},
  *     @OA\Parameter(
@@ -374,7 +374,7 @@ class AuthController
  *     @OA\Parameter(
  *         description="string",
  *         in="path",
- *         name="token",
+ *         name="resetToken",
  *         required=true,
  *     ),
  *      @OA\Response(
