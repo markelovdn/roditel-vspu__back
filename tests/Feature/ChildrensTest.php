@@ -68,7 +68,6 @@ class ChildrensTest extends TestCase
 
         $response = $this->put('/api/children'.'/'.$children->id, [
             'age' => 15,
-            'parented_id' => $parented->id,
         ]);
 
         $this->assertDatabaseHas('childrens', [
