@@ -347,13 +347,13 @@
                 }
             }
         },
-        "/api/resetPassword/{token}": {
+        "/api/resetPassword": {
             "post": {
                 "tags": [
                     "AUTH"
                 ],
                 "summary": "Set new password",
-                "operationId": "642539364c8ad8a25216599196971b77",
+                "operationId": "332156063b568cbe0edbe98282156226",
                 "parameters": [
                     {
                         "name": "password",
@@ -362,7 +362,7 @@
                         "required": true
                     },
                     {
-                        "name": "token",
+                        "name": "resetToken",
                         "in": "path",
                         "description": "string",
                         "required": true

@@ -115,7 +115,7 @@ class AuthController extends Controller
             return response()->json('This email is not registered or the token has already been received at the specified email', 400);
         }
 
-        Mail::send('mail', ['url' => env('APP_URL').'/resetPassword/token='.$token], function ($message) use($request) {
+        Mail::send('mail', ['url' => env('APP_URL').'/resetPassword/resetToken='.$token], function ($message) use($request) {
             $message->to($request->email);
             $message->subject('Сброс пароля');
         });
@@ -126,7 +126,7 @@ class AuthController extends Controller
     public function resetPassword(UpdatePasswordRequest $request): JsonResponse
     {
         try {
-            $token = DB::table('password_reset_tokens')->where('token', $request->token)->get()->firstOrFail();
+            $token = DB::table('password_reset_tokens')->where('token', $request->resetToken)->get()->firstOrFail();
 
         } catch (Exception $e) {
             return response()->json('This email is not registered or the token is expired', 401);
@@ -137,7 +137,7 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        DB::table('password_reset_tokens')->where(['token' => $request->token])->delete();
+        DB::table('password_reset_tokens')->where(['token' => $request->resetToken])->delete();
 
         return response()->json('Password updated success', 200);
     }
