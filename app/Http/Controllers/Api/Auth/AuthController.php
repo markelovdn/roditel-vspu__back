@@ -129,7 +129,7 @@ class AuthController extends Controller
             $token = DB::table('password_reset_tokens')->where('token', $request->resetToken)->get()->firstOrFail();
 
         } catch (Exception $e) {
-            return response()->json('This email is not registered or the token is expired', 401);
+            return response()->json('This email is not registered or the token is expired', 400);
         }
 
         $user = User::where('email', $token->email)->first();
