@@ -22,7 +22,7 @@ class ParentedRole
         $parented = User::where('id', auth()->user()->id)->first();
 
         if($parented->role_id != $role->id & $parented->role_id != $roleSA->id) {
-            return response()->json([ 'message' => 'У вас нет доступа (P) к данному ресурсу' ], 401);
+            return response()->json([ 'message' => 'У вас нет доступа (P) к данному ресурсу' ], 400);
         }
 
         return $next($request);

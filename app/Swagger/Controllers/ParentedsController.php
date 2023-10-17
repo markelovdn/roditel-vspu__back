@@ -17,7 +17,7 @@ class ParentedsController
      *         description="Array of parenteds with user data",
      *      ),
      *     @OA\Response(
-     *         response=401,
+     *         response=400,
      *         description="Unauthorized, need roleCode admin",
      *      ),
      *     )
@@ -45,7 +45,7 @@ class ParentedsController
      *         description="Array of parented",
      *      ),
      *     @OA\Response(
-     *         response=401,
+     *         response=400,
      *         description="Unauthorized, need Auth user id === parent user id",
      *      ),
      *     )
@@ -77,7 +77,7 @@ class ParentedsController
      *         description="parented successfully updated",
      *      ),
      *     @OA\Response(
-     *         response=401,
+     *         response=400,
      *         description="Unauthorized, need Auth user id === parent user id",
      *      ),
      *     )
@@ -104,7 +104,7 @@ class ParentedsController
      *         description="parented successfully deleted",
      *      ),
      *     @OA\Response(
-     *         response=401,
+     *         response=400,
      *         description="Unauthorized need roleCode admin",
      *      ),
      *     )

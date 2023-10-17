@@ -48,8 +48,8 @@ class WebinarsController
  *         description="OK",
  *      ),
  *      @OA\Response(
- *          response=401,
- *          description="Unauthenticated",
+ *          response=400,
+ *          description="Permissions denied",
  *      ),
  *      @OA\Response(
  *          response=403,
@@ -123,11 +123,6 @@ class WebinarsController
  *     ),
  *
  *      @OA\Response(
- *         response=401,
- *         description="Unauthorized",
- *     ),
- *
- *      @OA\Response(
  *         response=200,
  *         description="Data webinar successfully added",
  *     )
@@ -152,8 +147,8 @@ class WebinarsController
  *         description="OK",
  *      ),
  *      @OA\Response(
- *          response=401,
- *          description="Unauthenticated",
+ *          response=400,
+ *          description="Permissions denied",
  *      ),
  *      @OA\Response(
  *          response=403,
@@ -224,11 +219,6 @@ class WebinarsController
  *     ),
  *
  *      @OA\Response(
- *         response=401,
- *         description="Unauthorized",
- *     ),
- *
- *      @OA\Response(
  *         response=200,
  *         description="Data webinar successfully update",
  *     )
@@ -258,8 +248,8 @@ class WebinarsController
  *         description="OK",
  *      ),
  *      @OA\Response(
- *          response=401,
- *          description="Unauthenticated",
+ *          response=400,
+ *          description="Permissions denied",
  *      ),
  *      @OA\Response(
  *          response=403,

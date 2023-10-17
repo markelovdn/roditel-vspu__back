@@ -34,7 +34,7 @@ class ParentedsController extends Controller
         {
             return response()->json([
                 'message' => 'You have\'t permissions'
-            ], 401);
+            ], 400);
         }
 
         return ParentedsResource::collection(Parented::where('id', $id)->get());
@@ -48,7 +48,7 @@ class ParentedsController extends Controller
         {
             return response()->json([
                 'message' => 'You have\'t permissions'
-            ], 401);
+            ], 400);
         }
 
         try {

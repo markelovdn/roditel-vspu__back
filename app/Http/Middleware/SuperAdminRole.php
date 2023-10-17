@@ -21,7 +21,7 @@ class SuperAdminRole
         $admin = User::where('id', auth()->user()->id)->first();
 
         if($admin->role_id != $role->id) {
-            return response()->json([ 'message' => 'У вас нет доступа (SA) к данному ресурсу' ], 401);
+            return response()->json([ 'message' => 'У вас нет доступа (SA) к данному ресурсу' ], 400);
         }
 
         return $next($request);

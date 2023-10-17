@@ -41,7 +41,7 @@ class ProfessionsController
      *         description="OK",
      *      ),
      *     @OA\Response(
-     *         response=401,
+     *         response=400,
      *         description="Unauthorized",
      *      ),
      *     )
@@ -69,8 +69,8 @@ class ProfessionsController
      *         description="OK",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -102,8 +102,8 @@ class ProfessionsController
      *         description="OK",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -129,8 +129,8 @@ class ProfessionsController
      *         description="OK",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */

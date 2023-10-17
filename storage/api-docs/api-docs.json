@@ -451,7 +451,7 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
+                    "400": {
                         "description": "Unauthenticated"
                     },
                     "403": {
@@ -795,7 +795,7 @@
                     "200": {
                         "description": "Array of parenteds with user data"
                     },
-                    "401": {
+                    "400": {
                         "description": "Unauthorized, need roleCode admin"
                     }
                 }
@@ -821,7 +821,7 @@
                     "200": {
                         "description": "Array of parented"
                     },
-                    "401": {
+                    "400": {
                         "description": "Unauthorized, need Auth user id === parent user id"
                     }
                 }
@@ -849,7 +849,7 @@
                     "200": {
                         "description": "parented successfully updated"
                     },
-                    "401": {
+                    "400": {
                         "description": "Unauthorized, need Auth user id === parent user id"
                     }
                 }
@@ -872,7 +872,7 @@
                     "200": {
                         "description": "parented successfully deleted"
                     },
-                    "401": {
+                    "400": {
                         "description": "Unauthorized need roleCode admin"
                     }
                 }
@@ -911,7 +911,7 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
+                    "400": {
                         "description": "Unauthorized"
                     }
                 }
@@ -937,8 +937,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             },
@@ -966,8 +966,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             },
@@ -989,8 +989,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }
@@ -1033,8 +1033,8 @@
                     "200": {
                         "description": "Region successfully added"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }
@@ -1059,8 +1059,8 @@
                     "200": {
                         "description": "Array of region"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             },
@@ -1092,8 +1092,8 @@
                     "200": {
                         "description": "Region successfully updated"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             },
@@ -1115,8 +1115,8 @@
                     "200": {
                         "description": "Region successfully deleted"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }
@@ -1154,8 +1154,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }
@@ -1180,8 +1180,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             },
@@ -1209,8 +1209,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             },
@@ -1232,8 +1232,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }
@@ -1302,8 +1302,8 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthenticated"
+                    "400": {
+                        "description": "Permissions denied"
                     },
                     "403": {
                         "description": "Forbidden"
@@ -1582,8 +1582,8 @@
                     "200": {
                         "description": "Array of webinarPartisipants"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             },
@@ -1614,8 +1614,8 @@
                     "200": {
                         "description": "webinarPartisipant successfully added"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }
@@ -1639,8 +1639,8 @@
                     "200": {
                         "description": "webinarPartisipant successfully deleted"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }
@@ -1688,8 +1688,8 @@
                     "200": {
                         "description": "webinarQuestion successfully added"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }
@@ -1714,8 +1714,8 @@
                     "200": {
                         "description": "Array of webinarQuestion"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             },
@@ -1742,8 +1742,8 @@
                     "200": {
                         "description": "webinarQuestion successfully updated"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             },
@@ -1765,8 +1765,8 @@
                     "200": {
                         "description": "webinarQuestion successfully deleted"
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }
@@ -1815,8 +1815,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthenticated"
+                    "400": {
+                        "description": "Permissions denied"
                     },
                     "403": {
                         "description": "Forbidden"
@@ -1883,9 +1883,6 @@
                     "400": {
                         "description": "Something went wrong in WebinarsController.store"
                     },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
                     "200": {
                         "description": "Data webinar successfully added"
                     }
@@ -1904,8 +1901,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthenticated"
+                    "400": {
+                        "description": "Permissions denied"
                     },
                     "403": {
                         "description": "Forbidden"
@@ -1969,9 +1966,6 @@
                     "400": {
                         "description": "Something went wrong in WebinarsController.update"
                     },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
                     "200": {
                         "description": "Data webinar successfully update"
                     }
@@ -1990,8 +1984,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "401": {
-                        "description": "Unauthenticated"
+                    "400": {
+                        "description": "Permissions denied"
                     },
                     "403": {
                         "description": "Forbidden"

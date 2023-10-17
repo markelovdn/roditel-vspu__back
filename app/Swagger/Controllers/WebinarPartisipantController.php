@@ -22,8 +22,8 @@ class WebinarPartisipantController
      *         description="Array of webinarPartisipants",
      *      ),
      *      @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -58,8 +58,8 @@ class WebinarPartisipantController
      *         description="webinarPartisipant successfully added",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -85,8 +85,8 @@ class WebinarPartisipantController
      *         description="webinarPartisipant successfully deleted",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
