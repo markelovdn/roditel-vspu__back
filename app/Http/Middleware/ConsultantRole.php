@@ -24,7 +24,7 @@ class ConsultantRole
         $roleSA = Role::where('code', 'superadmin')->first();
 
         if($consultant->role_id != $role->id & $consultant->role_id != $roleSA->id) {
-            return response()->json([ 'message' => 'У вас нет доступа (C) к данному ресурсу' ], 401);
+            return response()->json([ 'message' => 'У вас нет доступа (C) к данному ресурсу' ], 400);
         }
 
         return $next($request);

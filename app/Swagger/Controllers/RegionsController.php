@@ -46,8 +46,8 @@ class RegionsController
      *         description="Region successfully added",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -74,8 +74,8 @@ class RegionsController
      *         description="Array of region",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -111,8 +111,8 @@ class RegionsController
      *         description="Region successfully updated",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -138,8 +138,8 @@ class RegionsController
      *         description="Region successfully deleted",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */

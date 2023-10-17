@@ -49,8 +49,8 @@ class WebinarQuestionsController
      *         description="webinarQuestion successfully added",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -77,8 +77,8 @@ class WebinarQuestionsController
      *         description="Array of webinarQuestion",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -109,8 +109,8 @@ class WebinarQuestionsController
      *         description="webinarQuestion successfully updated",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */
@@ -136,8 +136,8 @@ class WebinarQuestionsController
      *         description="webinarQuestion successfully deleted",
      *      ),
      *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
+     *         response=400,
+     *         description="Permissions denied",
      *      ),
      *     )
      */

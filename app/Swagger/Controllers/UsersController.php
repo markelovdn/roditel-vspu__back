@@ -69,8 +69,8 @@ class UsersController
  *        )
  *      ),
  *      @OA\Response(
- *          response=401,
- *          description="Unauthenticated",
+ *          response=400,
+ *          description="Permissions denied",
  *      ),
  *      @OA\Response(
  *          response=403,

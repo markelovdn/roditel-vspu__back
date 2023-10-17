@@ -81,7 +81,7 @@ class ChildrensController
  *         description="OK",
  *      ),
  *      @OA\Response(
- *          response=401,
+ *          response=400,
  *          description="Unauthenticated",
  *      ),
  *      @OA\Response(

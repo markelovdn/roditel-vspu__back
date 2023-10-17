@@ -42,8 +42,8 @@ class SpecializationsController
  *         description="OK",
  *      ),
  *     @OA\Response(
- *         response=401,
- *         description="Unauthorized",
+ *         response=400,
+ *         description="Permissions denied",
  *      ),
  *     )
  */
@@ -71,8 +71,8 @@ class SpecializationsController
  *         description="OK",
  *      ),
  *     @OA\Response(
- *         response=401,
- *         description="Unauthorized",
+ *         response=400,
+ *         description="Permissions denied",
  *      ),
  *     )
  */
@@ -105,8 +105,8 @@ class SpecializationsController
  *         description="OK",
  *      ),
  *     @OA\Response(
- *         response=401,
- *         description="Unauthorized",
+ *         response=400,
+ *         description="Permissions denied",
  *      ),
  *     )
  */
@@ -133,8 +133,8 @@ class SpecializationsController
  *         description="OK",
  *      ),
  *     @OA\Response(
- *         response=401,
- *         description="Unauthorized",
+ *         response=400,
+ *         description="Permissions denied",
  *      ),
  *     )
  */
