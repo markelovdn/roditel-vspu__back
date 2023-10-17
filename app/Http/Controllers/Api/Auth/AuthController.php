@@ -88,6 +88,9 @@ class AuthController extends Controller
         try {
             $accessToken = $request->bearerToken();
             $token = PersonalAccessToken::findToken($accessToken);
+            if (!$token) {
+                return response()->json('Successful logout', 200);
+            }
             $token->delete();
 
             return response()->json('Successful logout', 200);

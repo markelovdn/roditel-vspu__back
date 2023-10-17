@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 //AUTH
 Route::post('/login', [AuthController::class, 'login']); //S
 Route::post('/register', [AuthController::class, 'register']); //S
+Route::post('/logout', [AuthController::class, 'logout']); //S
 
 //COLLECTIONS
 Route::apiResource("/specializations", SpecializationsController::class)->only('index'); //S
@@ -44,7 +45,6 @@ Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->on
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
-    Route::post('/logout', [AuthController::class, 'logout']); //S
     Route::apiResource("/consultations", ConsultationsController::class); //подумать над переделать в сторону шалоу с юзером там же будут методы с сообщениями по аналогии с анкетами
     Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->only('store', 'destroy');
 
