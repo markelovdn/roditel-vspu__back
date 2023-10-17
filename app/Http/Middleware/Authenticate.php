@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\Api\Auth\AuthController;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
+use Mockery\Matcher\HasValue;
 
 class Authenticate extends Middleware
 {
