@@ -42,7 +42,7 @@ class ProfessionsController
      *      ),
      *     @OA\Response(
      *         response=400,
-     *         description="Unauthorized",
+     *         description="Permissions denied",
      *      ),
      *     )
      */
