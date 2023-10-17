@@ -115,7 +115,7 @@ class AuthController extends Controller
             return response()->json('This email is not registered or the token has already been received at the specified email', 400);
         }
 
-        Mail::send('mail', ['url' => env('APP_URL').'/resetPassword/resetToken='.$token], function ($message) use($request) {
+        Mail::send('mail', ['url' => env('APP_URL').'/resetPassword/'.$token], function ($message) use($request) {
             $message->to($request->email);
             $message->subject('Сброс пароля');
         });
