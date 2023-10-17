@@ -796,7 +796,7 @@
                         "description": "Array of parenteds with user data"
                     },
                     "400": {
-                        "description": "Unauthorized, need roleCode admin"
+                        "description": "Permissions denied, need roleCode admin"
                     }
                 }
             }
@@ -822,7 +822,7 @@
                         "description": "Array of parented"
                     },
                     "400": {
-                        "description": "Unauthorized, need Auth user id === parent user id"
+                        "description": "Permissions denied, need Auth user id === parent user id"
                     }
                 }
             },
@@ -850,7 +850,7 @@
                         "description": "parented successfully updated"
                     },
                     "400": {
-                        "description": "Unauthorized, need Auth user id === parent user id"
+                        "description": "Permissions denied, need Auth user id === parent user id"
                     }
                 }
             },
@@ -873,7 +873,7 @@
                         "description": "parented successfully deleted"
                     },
                     "400": {
-                        "description": "Unauthorized need roleCode admin"
+                        "description": "Permissions denied need roleCode admin"
                     }
                 }
             }
@@ -912,7 +912,7 @@
                         "description": "OK"
                     },
                     "400": {
-                        "description": "Unauthorized"
+                        "description": "Permissions denied"
                     }
                 }
             }

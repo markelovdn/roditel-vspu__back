@@ -18,7 +18,7 @@ class ParentedsController
      *      ),
      *     @OA\Response(
      *         response=400,
-     *         description="Unauthorized, need roleCode admin",
+     *         description="Permissions denied, need roleCode admin",
      *      ),
      *     )
      */
@@ -46,7 +46,7 @@ class ParentedsController
      *      ),
      *     @OA\Response(
      *         response=400,
-     *         description="Unauthorized, need Auth user id === parent user id",
+     *         description="Permissions denied, need Auth user id === parent user id",
      *      ),
      *     )
      */
@@ -78,7 +78,7 @@ class ParentedsController
      *      ),
      *     @OA\Response(
      *         response=400,
-     *         description="Unauthorized, need Auth user id === parent user id",
+     *         description="Permissions denied, need Auth user id === parent user id",
      *      ),
      *     )
      */
@@ -105,7 +105,7 @@ class ParentedsController
      *      ),
      *     @OA\Response(
      *         response=400,
-     *         description="Unauthorized need roleCode admin",
+     *         description="Permissions denied need roleCode admin",
      *      ),
      *     )
      */
