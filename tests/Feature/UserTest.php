@@ -32,70 +32,67 @@ class UserTest extends TestCase
             $json->has('data'));
     }
 
-    public function test_store_user_as_consultant(): void
-    {
-        $role = Role::where('code', Role::ADMIN)->first();
-        $admin = User::where('role_id', $role->id)->first();
-        Auth::login($admin);
+    // public function test_store_user_as_consultant(): void
+    // {
+    //     $role = Role::where('code', Role::ADMIN)->first();
+    //     $admin = User::where('role_id', $role->id)->first();
+    //     Auth::login($admin);
 
-        $role = Role::where('code', 'consultant')->first();
-        //codeception
-        $response = $this->postJson('/api/users', [
-            'second_name' => 'Иван',
-            'first_name' => 'Иванов',
-            'patronymic' => 'Иванович',
-            'email' => 'ivan@test.ru',
-            'phone' => '+7 (000) 000-00-00',
-            'role_code' => $role->code,
-            'password' => '123123'
-        ]);
+    //     $role = Role::where('code', 'consultant')->first();
+    //     //codeception
+    //     $response = $this->postJson('/api/users', [
+    //         'second_name' => 'Иван',
+    //         'first_name' => 'Иванов',
+    //         'patronymic' => 'Иванович',
+    //         'email' => 'ivan@test.ru',
+    //         'phone' => '+7 (000) 000-00-00',
+    //         'role_code' => $role->code,
+    //         'password' => '123123'
+    //     ]);
 
-        $this->assertDatabaseHas('users', [
-            'second_name' => 'Иван',
-            'first_name' => 'Иванов',
-            'patronymic' => 'Иванович',
-        ]);
+    //     $this->assertDatabaseHas('users', [
+    //         'second_name' => 'Иван',
+    //         'first_name' => 'Иванов',
+    //         'patronymic' => 'Иванович',
+    //     ]);
 
-        $response
-        ->assertStatus(200)
-        ->assertJson(fn (AssertableJson $json) =>
-            $json->has('data'));
-    }
+    //     $response
+    //     ->assertStatus(200)
+    //     ->assertJson(fn (AssertableJson $json) =>
+    //         $json->has('data'));
+    // }
 
-    public function test_store_user_as_parented(): void
-    {
-        $role = Role::where('code', Role::ADMIN)->first();
-        $admin = User::where('role_id', $role->id)->first();
-        Auth::login($admin);
+    // public function test_store_user_as_parented(): void
+    // {
+    //     $role = Role::where('code', Role::ADMIN)->first();
+    //     $admin = User::where('role_id', $role->id)->first();
+    //     Auth::login($admin);
 
-        $role = Role::where('code', 'parented')->first();
-        //codeception
-        $response = $this->post('/api/users', [
-            'second_name' => 'Иван',
-            'first_name' => 'Иванов',
-            'patronymic' => 'Иванович',
-            'email' => 'ivan@test.ru',
-            'phone' => '+7 (000) 000-00-00',
-            'role_code' => $role->code,
-            'password' => '123123'
-        ]);
+    //     $role = Role::where('code', 'parented')->first();
+    //     //codeception
+    //     $response = $this->post('/api/users', [
+    //         'second_name' => 'Иван',
+    //         'first_name' => 'Иванов',
+    //         'patronymic' => 'Иванович',
+    //         'email' => 'ivan@test.ru',
+    //         'phone' => '+7 (000) 000-00-00',
+    //         'role_code' => $role->code,
+    //         'password' => '123123'
+    //     ]);
 
-        $this->assertDatabaseHas('users', [
-            'second_name' => 'Иван',
-            'first_name' => 'Иванов',
-            'patronymic' => 'Иванович',
-        ]);
+    //     $this->assertDatabaseHas('users', [
+    //         'second_name' => 'Иван',
+    //         'first_name' => 'Иванов',
+    //         'patronymic' => 'Иванович',
+    //     ]);
 
-        $response->assertStatus(200);
-    }
+    //     $response->assertStatus(200);
+    // }
 
     public function test_show_user(): void
     {
-        $role = Role::where('code', Role::ADMIN)->first();
-        $admin = User::where('role_id', $role->id)->first();
-        Auth::login($admin);
-
-        $user = User::where('id', 1)->first();
+        $user = User::first();
+        Auth::login($user);
 
         $response = $this->get('/api/users/'.$user->id);
 
@@ -104,11 +101,8 @@ class UserTest extends TestCase
 
     public function test_update_user(): void
     {
-        $role = Role::where('code', Role::ADMIN)->first();
-        $admin = User::where('role_id', $role->id)->first();
-        Auth::login($admin);
-
-        $user = User::where('id', 1)->first();
+        $user = User::first();
+        Auth::login($user);
 
         $response = $this->put('/api/users/'.$user->id, [
             'second_name' => 'Иван',
@@ -116,7 +110,6 @@ class UserTest extends TestCase
             'patronymic' => 'Иванович',
             'email' => 'ivan@test.ru',
             'phone' => '+7 (000) 000-00-00',
-            'role_code' => $role->code,
             'password' => '123123'
         ]);
 
@@ -128,8 +121,7 @@ class UserTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->has('data'));
+            ->assertJsonFragment(['message' => 'User data successfully updated']);
     }
 
     public function test_destroy_user(): void

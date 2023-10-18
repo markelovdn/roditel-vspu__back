@@ -62,7 +62,7 @@ class WebinarsController extends Controller
     {
         //TODO::сделать заглушку для логотипа
         //TODO::переформатировать время и дату
-        
+
         $webinar = Webinar::where('id', $id)->first();
 
         try {

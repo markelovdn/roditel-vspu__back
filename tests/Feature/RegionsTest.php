@@ -63,7 +63,8 @@ class RegionsTest extends TestCase
         $region = Region::first();
 
         $response = $this->put('/api/regions/'.$region->id, [
-            'title' => 'test2'
+            'title' => 'test2',
+            'code' => 'test2'
         ]);
 
         $this->assertDatabaseHas('regions', [
