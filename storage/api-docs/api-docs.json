@@ -1304,135 +1304,114 @@
                     },
                     "400": {
                         "description": "Permissions denied"
-                    },
-                    "403": {
-                        "description": "Forbidden"
                     }
                 }
-            },
-            "post": {
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
                 "tags": [
                     "USERS"
                 ],
-                "summary": "Adds a new user",
-                "operationId": "7bbd79520a62d14e957129d2d9745f14",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "first_name",
-                                    "second_name",
-                                    "patronymic",
-                                    "email",
-                                    "phone",
-                                    "password",
-                                    "role_id"
-                                ],
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "maxLength": 255
-                                    },
-                                    "second_name": {
-                                        "type": "string",
-                                        "maxLength": 255
-                                    },
-                                    "patronymic": {
-                                        "type": "string",
-                                        "maxLength": 255
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "maxLength": 255,
-                                        "uniqueItems": true
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "maxLength": 255,
-                                        "uniqueItems": true
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "maxLength": 255,
-                                        "minLength": 6
-                                    },
-                                    "role_code": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object",
-                                "example": {
-                                    "first_name": "Иван",
-                                    "second_name": "Иванов",
-                                    "patronymic": "Иванович",
-                                    "email": "ivan@gmail.ru",
-                                    "phone": "+7 (999) 999 9999",
-                                    "password": "834jhvasdf&",
-                                    "role_code": "consultant"
-                                }
-                            }
-                        }
+                "summary": "Show user",
+                "description": "Returns user",
+                "operationId": "showUser",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id user",
+                        "required": true
                     }
-                },
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "oneOf": [
-                                        {
-                                            "schema": "User response",
-                                            "title": "Sample schema users list",
-                                            "properties": {
-                                                "userData": {
-                                                    "properties": {
-                                                        "firstName": {
-                                                            "type": "string"
-                                                        },
-                                                        "secondName": {
-                                                            "type": "string"
-                                                        },
-                                                        "patronymic": {
-                                                            "type": "string"
-                                                        },
-                                                        "email": {
-                                                            "type": "string"
-                                                        },
-                                                        "phone": {
-                                                            "type": "string"
-                                                        },
-                                                        "password": {
-                                                            "type": "string"
-                                                        },
-                                                        "role": {
-                                                            "properties": {
-                                                                "id": {
-                                                                    "type": "integer"
-                                                                },
-                                                                "code": {
-                                                                    "type": "string"
-                                                                },
-                                                                "title": {
-                                                                    "type": "string"
-                                                                }
-                                                            },
-                                                            "type": "object"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
+                        "description": "OK"
                     },
                     "400": {
-                        "description": "Something went wrong in UserController.store"
+                        "description": "Permissions denied"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "USERS"
+                ],
+                "summary": "Update user",
+                "operationId": "c11e678f8c9168cc2f920202cdc6fd28",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id user",
+                        "required": true
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    },
+                    {
+                        "name": "second_name",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    },
+                    {
+                        "name": "patronymic",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    },
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "string, maxLength=255, uniqueItems=true",
+                        "required": true
+                    },
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "description": "string, maxLength=255, uniqueItems=true",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "string, maxLength=255",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Something went wrong in UserController.update"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "USERS"
+                ],
+                "summary": "Delete user",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Permissions denied"
                     }
                 }
             }

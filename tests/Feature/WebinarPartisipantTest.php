@@ -27,7 +27,7 @@ class WebinarPartisipantTest extends TestCase
         // $response->dd();
 
         $response->assertStatus(200)
-        ->assertJsonFragment(["user_id" => $webinarPartisipant->user_id]);
+        ->assertJsonFragment(["userId" => $webinarPartisipant->user_id]);
     }
 
     public function test_store(): void

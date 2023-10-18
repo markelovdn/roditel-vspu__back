@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,9 +18,9 @@ class WebinarsResource extends JsonResource
 
         return [
             'title' => $this->title,
-            'date' => $this->date,
-            'timeStart' => $this->time_start,
-            'timeEnd' => $this->time_end,
+            'date' => Carbon::parse($this->date)->format('d.m.Y'),
+            'timeStart' => Carbon::parse($this->time_start)->format('H.i'),
+            'timeEnd' => Carbon::parse($this->time_end)->format('H.i'),
             'lectorName' => $this->lector_name,
             'logo' => $this->logo,
             'cost' => $this->cost,
