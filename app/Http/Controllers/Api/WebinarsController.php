@@ -18,7 +18,7 @@ class WebinarsController extends Controller
 
     public function index(WebinarFilter $webinarFilter) : JsonResource
     {
-        return WebinarsResource::collection(Webinar::with('webinarCategory')->filter($webinarFilter)->paginate(4));
+        return WebinarsResource::collection(Webinar::with('webinarCategory', 'lectors')->filter($webinarFilter)->paginate(4));
     }
 
     public function store(StoreWebinarRequest $request,  FilesHandler $filesHandler)
@@ -33,7 +33,6 @@ class WebinarsController extends Controller
             $webinar->date = $request->date;
             $webinar->time_start = $request->timeStart;
             $webinar->time_end = $request->timeEnd;
-            $webinar->lector_name = $request->lectorName;
             $webinar->logo = $request->logo ? $filesHandler->uploadWebinarLogo($request->logo) : "";
             $webinar->cost = $request->cost;
             $webinar->video_link = $request->videoLink;
@@ -55,7 +54,7 @@ class WebinarsController extends Controller
 
     public function show(string $id)
     {
-        return WebinarsResource::collection(Webinar::where('id', $id)->with('webinarCategory', 'questions')->get());;
+        return WebinarsResource::collection(Webinar::where('id', $id)->with('webinarCategory', 'questions', 'lectors')->get());;
     }
 
     public function update(UpdateWebinarRequest $request, string $id, FilesHandler $filesHandler)
@@ -70,7 +69,6 @@ class WebinarsController extends Controller
             $webinar->date = $request->date;
             $webinar->time_start = $request->timeStart;
             $webinar->time_end = $request->timeEnd;
-            $webinar->lector_name = $request->lectorName;
             $webinar->logo = $request->logo ? $filesHandler->uploadWebinarLogo($request->logo) : "";
             $webinar->cost = $request->cost;
             $webinar->video_link = $request->videoLink;
@@ -106,7 +104,7 @@ class WebinarsController extends Controller
     }
 
     public function getWebinarLectors() {
-        $lectors = DB::table('webinars')
+        $lectors = DB::table('webinar_lectors')
         ->select('lector_name')
         ->get();
         $res = [];

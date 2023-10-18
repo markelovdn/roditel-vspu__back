@@ -16,7 +16,8 @@ class WebinarsTest extends TestCase
 
     public function test_index_webinars(): void
     {
-        $response = $this->get('api/webinars?dateBetween=05.10.2017,06.10.2023');
+        $response = $this->get('api/webinars');
+        // $response->dd();
 
         $response
             ->assertStatus(200)
@@ -36,7 +37,6 @@ class WebinarsTest extends TestCase
             'date' => fake()->date(),
             'timeStart' => fake()->time(),
             'timeEnd' => fake()->time(),
-            'lectorName' => fake()->name(),
             'logo' => UploadedFile::fake()->image('photo.jpg'),
             'cost' => 0.00,
             'videoLink' => fake()->url(),

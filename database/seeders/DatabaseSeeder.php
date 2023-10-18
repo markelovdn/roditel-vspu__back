@@ -19,6 +19,8 @@ use App\Models\SelectedOption;
 use App\Models\Specialization;
 use App\Models\User;
 use App\Models\WebinarCategory;
+use App\Models\WebinarLector;
+use App\Models\WebinarProgram;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -161,6 +163,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Webinar::factory(10)->create();
         \App\Models\WebinarQuestion::factory(10)->create();
         \App\Models\WebinarProgram::factory(10)->create();
+        \App\Models\WebinarLector::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
         \App\Models\Questionnaire::factory(1)
         ->has(Question::factory()->has(Option::factory(3))->count(3))

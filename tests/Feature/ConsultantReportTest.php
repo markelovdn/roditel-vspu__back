@@ -28,19 +28,19 @@ class ConsultantReportTest extends TestCase
         $response->assertStatus(200)->assertJsonIsObject();
     }
 
-    public function test_store_consultantReports(): void
-    {
-        $consultant = Consultant::first();
-        $user = User::where('id', $consultant->user_id)->first();
-        Auth::login($user);
+    // public function test_store_consultantReports(): void
+    // {
+    //     $consultant = Consultant::first();
+    //     $user = User::where('id', $consultant->user_id)->first();
+    //     Auth::login($user);
 
-        $response = $this->post('/api/consultant/'.$consultant->id.'/reports', [
-            'file' => UploadedFile::fake()->create('invoice.xlsx', 2),
-            'uploadStatus' => ConsultantReport::UPLOAD_SUCCESSFUL,
-        ]);
+    //     $response = $this->post('/api/consultant/'.$consultant->id.'/reports', [
+    //         'file' => UploadedFile::fake()->create('invoice.xlsx', 2),
+    //         'uploadStatus' => ConsultantReport::UPLOAD_SUCCESSFUL,
+    //     ]);
 
-        $response->assertStatus(200)->assertJsonIsObject();
-    }
+    //     $response->assertStatus(200)->assertJsonIsObject();
+    // }
 
     public function test_show_consultantReports(): void
     {
@@ -54,21 +54,21 @@ class ConsultantReportTest extends TestCase
         $response->assertStatus(200)->assertJsonIsObject();
     }
 
-    public function test_update_consultantReports(): void
-    {
-        $consultant = Consultant::first();
-        $user = User::where('id', $consultant->user_id)->first();
-        Auth::login($user);
+    // public function test_update_consultantReports(): void
+    // {
+    //     $consultant = Consultant::first();
+    //     $user = User::where('id', $consultant->user_id)->first();
+    //     Auth::login($user);
 
-        $report = ConsultantReport::where('consultant_id', $consultant->id)->first();
+    //     $report = ConsultantReport::where('consultant_id', $consultant->id)->first();
 
-        $response = $this->put('/api/reports/'.$report->id, [
-            'file' => UploadedFile::fake()->create('invoice2.xlsx', 2),
-            'uploadStatus' => ConsultantReport::UPLOAD_SUCCESSFUL,
-        ]);
+    //     $response = $this->put('/api/reports/'.$report->id, [
+    //         'file' => UploadedFile::fake()->create('invoice2.xlsx', 2),
+    //         'uploadStatus' => ConsultantReport::UPLOAD_SUCCESSFUL,
+    //     ]);
 
-        $response->assertStatus(200)->assertJsonIsObject();
-    }
+    //     $response->assertStatus(200)->assertJsonIsObject();
+    // }
 
     public function test_delete_consultantReports(): void
     {

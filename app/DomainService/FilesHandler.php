@@ -32,6 +32,18 @@ class FilesHandler
         return response()->json(['error' => 'Uploaded logo error'], 400);
     }
 
+    public function uploadLectorPhoto(object $file, $lector_name): string
+    {
+        $filePath = '/webinars/lectors_photo/';
+
+        if (Storage::disk('local')->put($filePath.'_.'.$lector_name.'.'.$file->extension(), $file->openFile()->fread($file->getSize())))
+        {
+            return config('filesystems.disks.public.url').$filePath.'_.'.$lector_name.'.'.$file->extension();
+        }
+
+        return response()->json(['error' => 'Uploaded lector_photo error'], 400);
+    }
+
     public function uploadConsultantReport(int $consultant_id, object $file): string
     {
         $filePath = '/consultants/reports/';

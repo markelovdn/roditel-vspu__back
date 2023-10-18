@@ -17,7 +17,6 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->time('time_start')->nullable();
             $table->time('time_end')->nullable();
-            $table->string('lector_name')->nullable();
             $table->string('logo')->nullable();
             $table->decimal('cost', 19,2)->default(0);
             $table->string('video_link')->nullable();

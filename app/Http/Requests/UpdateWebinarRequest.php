@@ -26,7 +26,6 @@ class UpdateWebinarRequest extends FormRequest
             'date' => ['string'],
             'timeStart' => ['string'],
             'timeEnd' => ['string'],
-            'lectorName' => ['string'],
             'logo' => ['image:jpg,jpeg,png'],
             'cost' => ['numeric'],
             'videoLink' => ['string'],
