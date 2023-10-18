@@ -26,6 +26,10 @@ class Webinar extends Model
         return $this->hasMany(WebinarQuestion::class);
     }
 
+    public function lectors(): HasMany {
+        return $this->hasMany(WebinarLector::class);
+    }
+
     public function scopeFilter(Builder $builder, QueryFilter $filter){
         return $filter->apply($builder);
     }

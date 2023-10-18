@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreWebinarRequest extends FormRequest
+class StoreWebinarLectorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,10 @@ class StoreWebinarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string'],
-            'date' => ['required', 'string'],
-            'timeStart' => ['string'],
-            'timeEnd' => ['string'],
-            'logo' => ['image:jpg,jpeg,png'],
-            'cost' => ['numeric'],
-            'videoLink' => ['string'],
-            'webinarCategoryId' => ['required', 'numeric'],
+            'lectorName' => ['required', 'string'],
+            'lectorDescription' => ['string'],
+            'lectorDepartment' => ['string'],
+            'lectorPhoto' => ['image:jpg,jpeg,png'],
         ];
     }
 }

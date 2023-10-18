@@ -1542,6 +1542,162 @@
                 }
             }
         },
+        "/api/webinar/{webinarId}/webinarLectors": {
+            "get": {
+                "tags": [
+                    "WEBINAR_LECTORS"
+                ],
+                "summary": "Get list of webinarLectors",
+                "description": "Returns list of webinarLectors",
+                "operationId": "getWebinarLectorsList",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id лектора, /api/webinar/1/webinarLectors"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of webinarLectors"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "WEBINAR_LECTORS"
+                ],
+                "summary": "Add new webinarLectors",
+                "operationId": "storeWebinarLectors",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id лектора, /api/webinar/1/webinarLectors"
+                    },
+                    {
+                        "name": "lectorName",
+                        "in": "path",
+                        "description": "string, max=255"
+                    },
+                    {
+                        "name": "lectorDescription",
+                        "in": "path",
+                        "description": "string, max=255"
+                    },
+                    {
+                        "name": "lectorDepartment",
+                        "in": "path",
+                        "description": "string, max=255"
+                    },
+                    {
+                        "name": "lectorPhoto",
+                        "in": "path",
+                        "description": "file, image:jpg,jpeg,png, maxSize=1MB"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "webinarLector successfully added"
+                    },
+                    "400": {
+                        "description": "Permissions denied"
+                    }
+                }
+            }
+        },
+        "/api/webinarLectors/{id}": {
+            "get": {
+                "tags": [
+                    "WEBINAR_LECTORS"
+                ],
+                "summary": "Show webinarLector",
+                "description": "Returns webinarLector",
+                "operationId": "showWebinarLector",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id лектора",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of webinarLector"
+                    },
+                    "400": {
+                        "description": "Permissions denied"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "WEBINAR_LECTORS"
+                ],
+                "summary": "Update webinarLector",
+                "operationId": "updateWebinarLector",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id лектора, /api/webinar/1/webinarLectors"
+                    },
+                    {
+                        "name": "lectorName",
+                        "in": "path",
+                        "description": "string, max=255",
+                        "required": true
+                    },
+                    {
+                        "name": "lectorDescription",
+                        "in": "path",
+                        "description": "string, max=255"
+                    },
+                    {
+                        "name": "lectorDepartment",
+                        "in": "path",
+                        "description": "string, max=255"
+                    },
+                    {
+                        "name": "lectorPhoto",
+                        "in": "path",
+                        "description": "file, image:jpg,jpeg,png, maxSize=1MB"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "webinarLector successfully updated"
+                    },
+                    "400": {
+                        "description": "Permissions denied"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "WEBINAR_LECTORS"
+                ],
+                "summary": "Delete webinarLectors",
+                "operationId": "deletewebinarLectors",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id вопроса к вебинару",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "webinarLector successfully deleted"
+                    },
+                    "400": {
+                        "description": "Permissions denied"
+                    }
+                }
+            }
+        },
         "/api/webinar/{webinarId}/webinarPartisipants": {
             "get": {
                 "tags": [
@@ -1617,6 +1773,144 @@
                 "responses": {
                     "200": {
                         "description": "webinarPartisipant successfully deleted"
+                    },
+                    "400": {
+                        "description": "Permissions denied"
+                    }
+                }
+            }
+        },
+        "/api/webinar/{webinarId}/webinarPrograms": {
+            "get": {
+                "tags": [
+                    "WEBINAR_PROGRAMS"
+                ],
+                "summary": "Get list of webinarPrograms",
+                "description": "Returns list of webinarPrograms",
+                "operationId": "getWebinarProgramsList",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id программы, /api/webinar/1/webinarPrograms"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of webinarPrograms"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "WEBINAR_PROGRAMS"
+                ],
+                "summary": "Add new webinarPrograms",
+                "operationId": "storeWebinarPrograms",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id программы, /api/webinar/1/webinarPrograms"
+                    },
+                    {
+                        "name": "timeStart",
+                        "in": "path",
+                        "description": "string, example 10:00",
+                        "required": true
+                    },
+                    {
+                        "name": "subject",
+                        "in": "path",
+                        "description": "string, max=255",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "webinarProgram successfully added"
+                    },
+                    "400": {
+                        "description": "Permissions denied"
+                    }
+                }
+            }
+        },
+        "/api/webinarPrograms/{id}": {
+            "get": {
+                "tags": [
+                    "WEBINAR_PROGRAMS"
+                ],
+                "summary": "Show webinarProgram",
+                "description": "Returns webinarProgram",
+                "operationId": "showWebinarProgram",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id программы",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of webinarProgram"
+                    },
+                    "400": {
+                        "description": "Permissions denied"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "WEBINAR_PROGRAMS"
+                ],
+                "summary": "Update webinarProgram",
+                "operationId": "updateWebinarProgram",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id вопроса к вебинару",
+                        "required": true
+                    },
+                    {
+                        "name": "timeStart",
+                        "in": "path",
+                        "description": "string, example 10:00"
+                    },
+                    {
+                        "name": "subject",
+                        "in": "path",
+                        "description": "string, max=255"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "webinarProgram successfully updated"
+                    },
+                    "400": {
+                        "description": "Permissions denied"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "WEBINAR_PROGRAMS"
+                ],
+                "summary": "Delete webinarPrograms",
+                "operationId": "deletewebinarPrograms",
+                "parameters": [
+                    {
+                        "name": "",
+                        "in": "query",
+                        "description": "integer, id вопроса к вебинару",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "webinarProgram successfully deleted"
                     },
                     "400": {
                         "description": "Permissions denied"

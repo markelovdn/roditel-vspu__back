@@ -7,15 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class WebinarProgram extends Model
+class WebinarLector extends Model
 {
     use HasFactory;
 
-    public function webinarProgram(): BelongsTo {
+    public function webinar(): BelongsTo {
         return $this->belongsTo(Webinar::class);
     }
 
-    public function lectors(): BelongsToMany {
-        return $this->belongsToMany(WebinarLector::class);
+    public function programs(): BelongsToMany {
+        return $this->belongsToMany(WebinarProgram::class);
     }
+
+
 }
