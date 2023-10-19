@@ -91,11 +91,6 @@ class WebinarsController
  *         name="timeEnd",
  *     ),
  *     @OA\Parameter(
- *         description="string, maxLength=255",
- *         in="path",
- *         name="lectorName",
- *     ),
- *     @OA\Parameter(
  *         description="image:jpg,jpeg,png, maxSize=1MB",
  *         in="path",
  *         name="logo",

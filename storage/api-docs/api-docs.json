@@ -2126,11 +2126,6 @@
                         "description": "string"
                     },
                     {
-                        "name": "lectorName",
-                        "in": "path",
-                        "description": "string, maxLength=255"
-                    },
-                    {
                         "name": "logo",
                         "in": "path",
                         "description": "image:jpg,jpeg,png, maxSize=1MB"

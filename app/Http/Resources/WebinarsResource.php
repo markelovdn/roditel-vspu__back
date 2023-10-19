@@ -25,7 +25,7 @@ class WebinarsResource extends JsonResource
             'logo' => $this->logo,
             'cost' => $this->cost,
             'webinarCategory' => [
-                'tite' => $this->webinarCategory->title
+                'title' => $this->webinarCategory->title
             ],
             'questions' => WebinarQuestionsResource::collection($this->questions),
             'lectors' => WebinarLectorResource::collection($this->lectors)
