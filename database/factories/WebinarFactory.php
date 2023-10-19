@@ -21,7 +21,7 @@ class WebinarFactory extends Factory
             'date' => fake()->date(),
             'time_start' => fake()->time(),
             'time_end' => fake()->time(),
-            'logo' => fake()->imageUrl(354, 472, 'people', true),
+            'logo' => 'https://markelovdn.ru/webinars/lectors_photo/test.png',
             'video_link' =>fake()->url(),
             'webinar_category_id' => fake()->randomElement([1,3]),
         ];
