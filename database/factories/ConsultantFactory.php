@@ -19,7 +19,11 @@ class ConsultantFactory extends Factory
     public function definition(): array
     {
         return [
-            'photo' => fake()->imageUrl(354, 472, 'people', true),
+            'photo' => fake()->randomElement([
+                'https://markelovdn.ru/consultants/photo/photo_1.png',
+                'https://markelovdn.ru/consultants/photo/photo_2.png',
+                'https://markelovdn.ru/consultants/photo/photo_3.png',
+            ]),
             'description' => fake()->text(),
             'user_id' => User::factory(),
             'specialization_id' => fake()->numberBetween(1,5),
