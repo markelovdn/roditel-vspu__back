@@ -27,5 +27,3 @@ class ClearResetTokens extends Command
         DB::table('password_reset_tokens')->where('created_at', '<', Carbon::now()->subMinutes(1))->delete();
     }
 }
-
-//TODO:сделать автоматическую очистку таблицу токенов

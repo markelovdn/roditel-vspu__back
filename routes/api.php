@@ -21,7 +21,6 @@ use App\Http\Controllers\Api\WebinarLectorController;
 use App\Http\Controllers\Api\WebinarProgramController;
 use Illuminate\Support\Facades\Route;
 
-//TODO:добавить методы которые не должны быть доступны
 //TODO:проработать таблицу консультации на предмет завершения консультации
 //TODO:продумать получение всех анкет в зависимости от консультанта и админам
 //TODO:реализовать оценку качества консультаций
