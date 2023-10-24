@@ -28,16 +28,24 @@ class OptionsController extends Controller
     public static function update(array $options, int $questionId)
     {
         //TODO:сделать валидацию массива
-        $question = Question::find($questionId);
+        $question = Question::with('options')->find($questionId);
 
         foreach ($options as $item) {
-            $option = Option::where('id', $item['id'])->first();
+            if (!isset($item['id'])) {
+                $option = new Option();
 
-            $option->text = $item['text'];
-            $option->save();
+                $option->text = $item['text'];
+                $option->save();
 
-            $question->options()->sync($option->id);
+                $question->options()->attach($option->id);
+            } else {
+                $option = $question->options()->find($item['id']);
 
+                $option->text = $item['text'];
+                $option->save();
+
+                $question->options()->sync($option->id);
+            }
         }
     }
 

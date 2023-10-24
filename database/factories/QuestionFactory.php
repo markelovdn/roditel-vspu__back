@@ -19,7 +19,8 @@ class QuestionFactory extends Factory
     public function definition(): array
     {
         return [
-            'text' => fake()->text(),
+            'text' => fake()->title(),
+            'description' => fake()->text(),
             'answer_type' => fake()->randomElement([Question::TEXT, Question::MANY, Question::SINGLE])
         ];
     }
