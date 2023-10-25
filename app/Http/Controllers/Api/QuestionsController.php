@@ -8,6 +8,7 @@ use App\Models\Question;
 use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class QuestionsController extends Controller
 {
@@ -49,7 +50,7 @@ class QuestionsController extends Controller
 
                 OptionsController::store($item['options'], $question->id);
             } else {
-                $question = $questionnairy->questions()->find($item['id']);
+                $question = Question::find($item['id']);
 
                 $question->text = $item['text'];
                 $question->description = $item['description'];

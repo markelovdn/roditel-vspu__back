@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Option;
 use App\Models\Question;
+use Illuminate\Support\Facades\DB;
 
 class OptionsController extends Controller
 {
@@ -39,7 +40,7 @@ class OptionsController extends Controller
 
                 $question->options()->attach($option->id);
             } else {
-                $option = $question->options()->find($item['id']);
+                $option = Option::find($item['id']);;
 
                 $option->text = $item['text'];
                 $option->save();
