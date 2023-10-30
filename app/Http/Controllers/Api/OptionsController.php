@@ -19,10 +19,11 @@ class OptionsController extends Controller
             $option = new Option();
 
             $option->text = $item['text'];
-            $option->save();
 
-            $question->options()->attach($option->id);
-
+            if ($item['text'] != null) {
+                $option->save();
+                $question->options()->attach($option->id);
+            }
         }
     }
 
