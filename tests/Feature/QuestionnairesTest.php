@@ -44,14 +44,14 @@ class QuestionnairesTest extends TestCase
             'answerBefore' => '10.08.2000',
             'questions' =>
                 [
-                    ['text' => 'test free', 'type' => Question::TEXT,
+                    ['text' => 'test free', 'description' => 'test description', 'type' => Question::TEXT,
                         'options' =>
                             [
                                 ['text' => 'Другое']
                             ]
                     ],
 
-                    ['text' => 'test one', 'type' => Question::SINGLE,
+                    ['text' => 'test one', 'description' => 'test description', 'type' => Question::SINGLE,
                         'options' =>
                             [
                                 ['text' => 'Первый'],
@@ -60,7 +60,7 @@ class QuestionnairesTest extends TestCase
                             ]
                     ],
 
-                    ['text' => 'test many', 'type' => Question::MANY,
+                    ['text' => 'test many', 'description' => 'test description', 'type' => Question::MANY,
                         'options' =>
                             [
                                 ['text' => 'Первый'],
@@ -70,8 +70,6 @@ class QuestionnairesTest extends TestCase
                     ]
                 ]
         ]);
-
-        // $response->dd();
 
         $this->assertDatabaseHas('questionnaires', [
             'title' => 'test title',
@@ -110,14 +108,14 @@ class QuestionnairesTest extends TestCase
             'answerBefore' => '10.08.2000',
             'questions' =>
                 [
-                    ['id' => $questionnaire->questions[0]->id, 'text' => 'test2 free2', 'type' => Question::TEXT,
+                    ['id' => $questionnaire->questions[0]->id, 'text' => 'test2 free2', 'description' => 'test description', 'type' => Question::TEXT,
                         'options' =>
                             [
                                 ['id' => $questionnaire->questions[0]->options[0]->id, 'text' => 'Другое2']
                             ]
                     ],
 
-                    ['id' => $questionnaire->questions[1]->id, 'text' => 'test2 one2', 'type' => Question::SINGLE,
+                    ['id' => $questionnaire->questions[1]->id, 'text' => 'test2 one2', 'description' => 'test description', 'type' => Question::SINGLE,
                         'options' =>
                             [
                                 ['id' => $questionnaire->questions[1]->options[1]->id, 'text' => 'Первый2'],
@@ -126,7 +124,7 @@ class QuestionnairesTest extends TestCase
                             ]
                     ],
 
-                    ['id' => $questionnaire->questions[2]->id, 'text' => 'test2 many2', 'type' => Question::MANY,
+                    ['id' => $questionnaire->questions[2]->id, 'text' => 'test2 many2', 'description' => 'test description', 'type' => Question::MANY,
                         'options' =>
                             [
                                 ['id' => $questionnaire->questions[2]->options[2]->id, 'text' => 'Первый2'],
@@ -136,6 +134,7 @@ class QuestionnairesTest extends TestCase
                     ]
                 ]
         ]);
+        // $response->dd();
 
         $this->assertDatabaseHas('questionnaires', [
             'title' => 'test2 title2',

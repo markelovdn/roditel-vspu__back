@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Option;
 use App\Models\Question;
+use Illuminate\Support\Facades\DB;
 
 class OptionsController extends Controller
 {
@@ -18,26 +19,35 @@ class OptionsController extends Controller
             $option = new Option();
 
             $option->text = $item['text'];
-            $option->save();
 
-            $question->options()->attach($option->id);
-
+            if ($item['text'] != null) {
+                $option->save();
+                $question->options()->attach($option->id);
+            }
         }
     }
 
     public static function update(array $options, int $questionId)
     {
         //TODO:сделать валидацию массива
-        $question = Question::find($questionId);
+        $question = Question::with('options')->find($questionId);
 
         foreach ($options as $item) {
-            $option = Option::where('id', $item['id'])->first();
+            if (!isset($item['id'])) {
+                $option = new Option();
 
-            $option->text = $item['text'];
-            $option->save();
+                $option->text = $item['text'];
+                $option->save();
 
-            $question->options()->sync($option->id);
+                $question->options()->attach($option->id);
+            } else {
+                $option = Option::find($item['id']);;
 
+                $option->text = $item['text'];
+                $option->save();
+
+                $question->options()->sync($option->id);
+            }
         }
     }
 

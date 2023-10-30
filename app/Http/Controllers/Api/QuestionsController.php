@@ -8,6 +8,7 @@ use App\Models\Question;
 use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class QuestionsController extends Controller
 {
@@ -20,6 +21,7 @@ class QuestionsController extends Controller
             $question = new Question();
 
             $question->text = $item['text'];
+            $question->description = $item['description'];
             $question->answer_type = $item['type'];
             $question->save();
 
@@ -32,18 +34,33 @@ class QuestionsController extends Controller
     public static function update(array $questions, int $questionnairyId): void
     {
         //TODO:сделать валидацию массива
-        $questionnairy = Questionnaire::find($questionnairyId);
+        $questionnairy = Questionnaire::with('questions')->find($questionnairyId);
 
         foreach ($questions as $item) {
-            $question = Question::where('id', $item['id'])->first();
+            if (!isset($item['id']))
+            {
+                $question = new Question();
 
-            $question->text = $item['text'];
-            $question->answer_type = $item['type'];
-            $question->save();
+                $question->text = $item['text'];
+                $question->description = $item['description'];
+                $question->answer_type = $item['type'];
+                $question->save();
 
-            $questionnairy->questions()->sync($question->id);
+                $questionnairy->questions()->attach($question->id);
 
-            OptionsController::update($item['options'], $question->id);
+                OptionsController::store($item['options'], $question->id);
+            } else {
+                $question = Question::find($item['id']);
+
+                $question->text = $item['text'];
+                $question->description = $item['description'];
+                $question->answer_type = $item['type'];
+                $question->save();
+
+                $questionnairy->questions()->sync($question->id);
+
+                OptionsController::update($item['options'], $question->id);
+            }
         }
     }
 
