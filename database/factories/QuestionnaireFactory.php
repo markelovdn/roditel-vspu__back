@@ -20,7 +20,7 @@ class QuestionnaireFactory extends Factory
         return [
             'title' => fake()->text(),
             'description' => fake()->text(),
-            'consultant_id' => fake()->numberBetween(1,10),
+            'consultant_id' => fake()->numberBetween(21,21),
             'answer_before' => fake()->date()
         ];
     }

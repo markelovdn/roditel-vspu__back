@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuestionsResource extends JsonResource
+class OptionsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,7 @@ class QuestionsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'text' => $this->text,
-            'description' => $this->description,
-            'answerType' => $this->answer_type,
-            'options' => OptionsResource::collection($this->whenLoaded('options')),
-            'optionOther' => new OptionOthersResource($this->whenLoaded('optionOther'))
+            'text' => $this->text
         ];
     }
 }
