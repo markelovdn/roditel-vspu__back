@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('parented_answers', function (Blueprint $table) {
+        Schema::create('option_others', function (Blueprint $table) {
             $table->id();
             $table->string('text');
             $table->foreignId('question_id')->constrained('questions');
@@ -19,6 +19,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('parented_answers');
+        Schema::dropIfExists('option_others');
     }
 };

@@ -6,10 +6,7 @@ use App\Models\Question;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ParentedAnswer>
- */
-class ParentedAnswerFactory extends Factory
+class OptionOtherFactory extends Factory
 {
     /**
      * Define the model's default state.

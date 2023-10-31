@@ -10,7 +10,7 @@ use App\Models\ConsultantReport;
 use App\Models\Contract;
 use App\Models\Option;
 use App\Models\Parented;
-use App\Models\ParentedAnswer;
+use App\Models\OptionOther;
 use App\Models\Profession;
 use App\Models\Question;
 use Illuminate\Database\Seeder;
@@ -165,10 +165,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\WebinarProgram::factory(10)->create();
         \App\Models\WebinarLector::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
-        \App\Models\Questionnaire::factory(1)
-        ->has(Question::factory()->has(Option::factory(3))->count(3))
-        ->create();
-        ParentedAnswer::factory(1)->create();
+        OptionOther::factory(1)->create();
         SelectedOption::factory(1)->create();
         \App\Models\Consultation::factory(10)->create();
         \App\Models\ConsultationMessage::factory(10)->create();
@@ -235,6 +232,7 @@ class DatabaseSeeder extends Seeder
             'consultant_id' => '21',
         ]);
 
+
         ConsultantReport::create([
             'file_url' => 'https://markelovdn.ru/storage/app/consultants/reports/Файл_2.xlsx',
             'upload_status' => 'success',
@@ -268,5 +266,9 @@ class DatabaseSeeder extends Seeder
             'age' => 6,
             'parented_id' => 21
         ]);
+
+        \App\Models\Questionnaire::factory(1)
+        ->has(Question::factory()->has(Option::factory(3))->count(3))
+        ->create();
     }
 }

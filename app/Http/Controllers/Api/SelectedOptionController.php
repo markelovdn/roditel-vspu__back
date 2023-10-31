@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSelectedOptionsRequest;
-use App\Models\ParentedAnswer;
+use App\Models\OptionOther;
 use App\Models\SelectedOption;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,11 +33,11 @@ class SelectedOptionController extends Controller
                     $selectedOption->save();
 
                 } else {
-                    $parentedAnswer = new ParentedAnswer();
-                    $parentedAnswer->text = $item['text'];
-                    $parentedAnswer->question_id = $questionId;
-                    $parentedAnswer->user_id = $user;
-                    $parentedAnswer->save();
+                    $OptionOther = new OptionOther();
+                    $OptionOther->text = $item['text'];
+                    $OptionOther->question_id = $questionId;
+                    $OptionOther->user_id = $user;
+                    $OptionOther->save();
                 }
 
             }
@@ -69,11 +69,11 @@ class SelectedOptionController extends Controller
                     $selectedOption->save();
 
                 } else {
-                    $parentedAnswer = ParentedAnswer::where('question_id', $questionId)->where('user_id', $user)->first();
-                    $parentedAnswer->text = $item['text'];
-                    $parentedAnswer->question_id = $questionId;
-                    $parentedAnswer->user_id = $user;
-                    $parentedAnswer->save();
+                    $OptionOther = OptionOther::where('question_id', $questionId)->where('user_id', $user)->first();
+                    $OptionOther->text = $item['text'];
+                    $OptionOther->question_id = $questionId;
+                    $OptionOther->user_id = $user;
+                    $OptionOther->save();
                 }
 
             }

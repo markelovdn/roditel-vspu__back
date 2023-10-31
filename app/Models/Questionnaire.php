@@ -19,6 +19,6 @@ class Questionnaire extends Model
     }
 
     public function questions(): BelongsToMany {
-        return $this->belongsToMany(Question::class)->with('options');
+        return $this->belongsToMany(Question::class)->with('options', 'optionOther');
     }
 }

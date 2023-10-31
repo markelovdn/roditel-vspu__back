@@ -23,7 +23,6 @@ class QuestionnairesController extends Controller
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
 
         return QuestionnairesResource::collection(Questionnaire::where('consultant_id', $consultant->id)->with('questions')->paginate(6));
-
     }
 
     public function store(StoreQuestionnairesRequest $request): JsonResponse

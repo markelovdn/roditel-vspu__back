@@ -23,7 +23,7 @@ class Question extends Model
         return $this->belongsToMany(Option::class);
     }
 
-    public function parentedAnwer(): HasOne {
-        return $this->hasOne(ParentedAnswer::class);
+    public function optionOther(): HasOne {
+        return $this->hasOne(OptionOther::class);
     }
 }
