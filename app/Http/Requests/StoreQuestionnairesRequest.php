@@ -23,7 +23,7 @@ class StoreQuestionnairesRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:255'],
+            'description' => ['max:255'],
             'answerBefore' => ['date'],
             'questions' => ['array'],
             'questions.*.text' => ['string', 'max:255'],

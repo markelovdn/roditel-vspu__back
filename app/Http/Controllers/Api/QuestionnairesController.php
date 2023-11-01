@@ -27,9 +27,9 @@ class QuestionnairesController extends Controller
 
     public function store(StoreQuestionnairesRequest $request): JsonResponse
     {
-
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
         $questionnaire = new Questionnaire();
+        
         try {
             $questionnaire->title = $request->title;
             $questionnaire->description = $request->description;

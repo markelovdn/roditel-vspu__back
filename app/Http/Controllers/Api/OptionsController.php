@@ -4,16 +4,26 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Option;
+use App\Models\OptionOther;
 use App\Models\Question;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OptionsController extends Controller
 {
 
-    public static function store(array $options, int $questionId)
+    public static function store(array $options, array $other, int $questionId)
     {
         //TODO:сделать валидацию массива
         $question = Question::find($questionId);
+
+        if ($other['show'] === true) {
+            $otherOption = new OptionOther();
+            $otherOption->text = "";
+            $otherOption->question_id = $question->id;
+            $otherOption->user_id = Auth::user()->id;
+            $otherOption->save();
+        }
 
         foreach ($options as $item) {
             $option = new Option();
