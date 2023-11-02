@@ -48,6 +48,11 @@ class QuestionnairesTest extends TestCase
                         'options' =>
                             [
                                 ['text' => 'Другое']
+                            ],
+                        'other' =>
+                            [
+                                'show' => true,
+                                'text' => 'Другое'
                             ]
                     ],
 
@@ -57,6 +62,11 @@ class QuestionnairesTest extends TestCase
                                 ['text' => 'Первый'],
                                 ['text' => 'Второй'],
                                 ['text' => 'Третий']
+                            ],
+                        'other' =>
+                            [
+                                'show' => true,
+                                'text' => 'Другое'
                             ]
                     ],
 
@@ -66,10 +76,16 @@ class QuestionnairesTest extends TestCase
                                 ['text' => 'Первый'],
                                 ['text' => 'Второй'],
                                 ['text' => 'Третий']
+                            ],
+                        'other' =>
+                            [
+                                'show' => true,
+                                'text' => 'Другое'
                             ]
                     ]
                 ]
         ]);
+        // $response->dd();
 
         $this->assertDatabaseHas('questionnaires', [
             'title' => 'test title',
