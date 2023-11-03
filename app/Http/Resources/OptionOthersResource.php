@@ -17,7 +17,7 @@ class OptionOthersResource extends JsonResource
         return [
             'id' => $this->id,
             'text' => $this->text,
-            'show' => $this->show
+            'show' => $this->show === 0 ? false : true,
         ];
     }
 }
