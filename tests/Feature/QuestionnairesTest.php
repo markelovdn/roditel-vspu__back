@@ -28,7 +28,7 @@ class QuestionnairesTest extends TestCase
         // $response->dd();
 
         $response->assertStatus(200)
-        ->assertJsonFragment(['consultantId' => $consultant->id]);
+        ->assertJsonFragment(['title' => $questionnaire->title]);
     }
 
     public function test_store(): void
@@ -107,7 +107,7 @@ class QuestionnairesTest extends TestCase
         // $response->dd();
 
         $response->assertStatus(200)
-        ->assertJsonFragment(['consultantId' => $consultant->id]);
+        ->assertJsonFragment(['title' => $questionnaire->title]);
     }
 
     public function test_update(): void
