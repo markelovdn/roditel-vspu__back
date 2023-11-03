@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('option_others', function (Blueprint $table) {
             $table->id();
             $table->string('text');
+            $table->boolean('show')->default(0);
             $table->foreignId('question_id')->constrained('questions');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();

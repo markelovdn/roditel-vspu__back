@@ -20,7 +20,7 @@ class QuestionsResource extends JsonResource
             'description' => $this->description,
             'answerType' => $this->answer_type,
             'options' => OptionsResource::collection($this->whenLoaded('options')),
-            'optionOther' => new OptionOthersResource($this->whenLoaded('optionOther'))
+            'other' => new OptionOthersResource($this->whenLoaded('optionOther'))
         ];
     }
 }
