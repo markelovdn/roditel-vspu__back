@@ -23,7 +23,6 @@ class QuestionnairesResource extends JsonResource
             'description' => $this->description,
             'answerBefore' => $this->answer_before,
             'updatedAt' => $this->updated_at,
-            'consultantId' => $this->consultant_id,
             'questions' => QuestionsResource::collection($this->whenLoaded('questions'))
         ];
     }
