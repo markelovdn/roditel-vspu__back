@@ -27,7 +27,7 @@ class QuestionsController extends Controller
 
             $questionnairy->questions()->attach($question->id);
 
-            if ($questions[0]['type'] === "text") {
+            if ($item['type'] === "text") {
                 $item['options'] = [];
             }
 
@@ -52,7 +52,7 @@ class QuestionsController extends Controller
 
                 $questionnairy->questions()->attach($question->id);
 
-                OptionsController::store($item['options'], $question->id);
+                OptionsController::store($item['options'], $item['other'], $question->id);
             } else {
                 $question = Question::find($item['id']);
 
