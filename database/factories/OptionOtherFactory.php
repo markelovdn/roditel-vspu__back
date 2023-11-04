@@ -16,8 +16,9 @@ class OptionOtherFactory extends Factory
     public function definition(): array
     {
         return [
-            'text' => fake()->text(),
+            'text' => "",
             'question_id' => Question::factory(),
+            'show' => false,
             'user_id' => User::factory()
         ];
     }

@@ -20,6 +20,7 @@ class OptionsController extends Controller
         if ($other['show'] === true) {
             $otherOption = new OptionOther();
             $otherOption->text = "";
+            $otherOption->show = true;
             $otherOption->question_id = $question->id;
             $otherOption->user_id = Auth::user()->id;
             $otherOption->save();
@@ -29,11 +30,12 @@ class OptionsController extends Controller
             $option = new Option();
 
             $option->text = $item['text'];
+            $option->save();
+            $question->options()->attach($option->id);
 
-            if ($item['text'] != null) {
-                $option->save();
-                $question->options()->attach($option->id);
-            }
+            // if ($item['text'] != null) {
+
+            // }
         }
     }
 
