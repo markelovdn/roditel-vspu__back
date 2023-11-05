@@ -30,7 +30,7 @@ class ConsultantReportsController extends Controller
             ->whereRaw('DATE(updated_at) >= ?', [$dateStart])
             ->whereRaw('DATE(updated_at) <= ?', [$dateEnd])
             ->paginate(6)
-        );;
+        );
     }
 
     public function store(StoreConsultantReportsRequest $request, FilesHandler $filesHandler)
