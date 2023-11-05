@@ -44,6 +44,10 @@ class ConsultantTest extends TestCase
 
     public function test_show_consultant(): void
     {
+        $consultant = Consultant::first();
+        $user = User::where('id', $consultant->user_id)->first();
+        Auth::login($user);
+        
         $response = $this->get('/api/consultants/'.Consultant::find(1)->id);
 
         $response->assertStatus(200)
