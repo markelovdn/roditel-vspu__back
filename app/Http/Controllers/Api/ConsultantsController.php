@@ -44,7 +44,7 @@ class ConsultantsController extends Controller
 
     public function show(string $id)
     {
-        return ConsultantShowResource::collection(Consultant::where('id', $id)->with('user', 'specialization', 'profession')->get());
+        return ConsultantShowResource::collection(Consultant::where('user_id', Auth::user()->id)->with('user', 'specialization', 'profession')->get());
     }
 
     public function update(UpdateConsultantRequest $request, string $id, FilesHandler $filesHandler)

@@ -36,7 +36,7 @@ Route::apiResource("/professions", ProfessionsController::class)->only('index');
 Route::apiResource("/regions", RegionsController::class)->only('index'); //S
 
 //CONSULTANTS
-Route::apiResource("/consultants", ConsultantsController::class)->except('store', 'update', 'destroy'); //S
+Route::apiResource("/consultants", ConsultantsController::class)->only('index'); //S
 
 //WEBINARS
 Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy'); //S
@@ -53,7 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->only('store', 'destroy');
 
     Route::middleware('consultant')->group(function () {
-        Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'show', 'destroy'); //S
+        Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'destroy'); //S
         Route::apiResource("/consultant.reports", ConsultantReportsController::class)->shallow(); //S
         Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow();
     });
