@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ChildrensController;
+use App\Http\Controllers\Api\ConsultantContractController;
 use App\Http\Controllers\Api\ConsultantReportsController;
 use App\Http\Controllers\Api\ConsultantsController;
 use App\Http\Controllers\Api\ConsultationsController;
@@ -76,6 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/specializations", SpecializationsController::class)->except('index'); //S
         Route::apiResource("/professions", ProfessionsController::class)->except('index'); //S
         Route::apiResource("/regions", RegionsController::class)->except('index'); //S
+        Route::apiResource("/contracts", ConsultantContractController::class);
     });
 });
 
