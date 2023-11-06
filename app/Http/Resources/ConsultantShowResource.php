@@ -24,6 +24,7 @@ class ConsultantShowResource extends JsonResource
                 'title' => $this->specialization->title,
             ],
             'profession' => [
+            'id' => $this->profession->id,
                 'title' => $this->profession->title,
             ],
         ];
