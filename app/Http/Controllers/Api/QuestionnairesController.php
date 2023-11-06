@@ -10,6 +10,7 @@ use App\Http\Resources\QuestionnairesResource;
 use App\Models\Consultant;
 use App\Models\Question;
 use App\Models\Questionnaire;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -29,11 +30,12 @@ class QuestionnairesController extends Controller
     {
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
         $questionnaire = new Questionnaire();
-        
+
         try {
             $questionnaire->title = $request->title;
             $questionnaire->description = $request->description;
             $questionnaire->answer_before = $request->answerBefore;
+            $questionnaire->file_url = config('filesystems.disks.public.url').'/consultants/questionnaires/questionnaire_'.$request->title.'_'.Carbon::now()->timestamp.'.xlsx';
             $questionnaire->consultant_id = $consultant->id;
             $questionnaire->save();
 
