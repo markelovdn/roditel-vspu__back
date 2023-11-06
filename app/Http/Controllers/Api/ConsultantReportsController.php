@@ -21,6 +21,13 @@ class ConsultantReportsController extends Controller
     public function index(Request $request): Object
     {
         //TODO:не смог сдеать фильтр через скоуп, возникла проблема с использованием whereRaw в скоупе.
+
+        if ($request->query('dateBetween') == null) {
+            return ConsultantReportsResource::collection(
+                ConsultantReport::where('consultant_id', Auth::user()->consultant->id)->paginate(6)
+            );
+        }
+        
         $dateStart = Carbon::parse(Str::before($request->query('dateBetween'), ','))->format('Y-m-d');
         $dateEnd = Carbon::parse(Str::after($request->query('dateBetween'), ','))->format('Y-m-d');
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();

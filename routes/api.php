@@ -1,5 +1,6 @@
 <?php
 
+use App\DomainService\FilesExport;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ChildrensController;
 use App\Http\Controllers\Api\ConsultantContractController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Api\MailController;
 use App\Http\Controllers\Api\WebinarLectorController;
 use App\Http\Controllers\Api\WebinarProgramController;
 use Illuminate\Support\Facades\Route;
+use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Sum;
 
 //TODO:проработать таблицу консультации на предмет завершения консультации
 //TODO:реализовать оценку качества консультаций
@@ -56,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'destroy'); //S
         Route::apiResource("/consultant.reports", ConsultantReportsController::class)->shallow(); //S
         Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow();
+        Route::post('/surveyExport', [FilesExport::class, 'surveyExport']);
     });
 
     Route::middleware('parented')->group(function () {
