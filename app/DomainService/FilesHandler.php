@@ -12,7 +12,7 @@ class FilesHandler
     {
         $filePath = '/consultants/photo/';
 
-        if (Storage::disk('local')->put($filePath.$user_id.'_photo.'.$file->extension(), $file->openFile()->fread($file->getSize())))
+        if (Storage::disk('public')->put($filePath.$user_id.'_photo.'.$file->extension(), $file->openFile()->fread($file->getSize())))
         {
             return config('filesystems.disks.public.url').$filePath.$user_id.'_photo.'.$file->extension();
         }
@@ -24,7 +24,7 @@ class FilesHandler
     {
         $filePath = '/webinars/';
 
-        if (Storage::disk('local')->put($filePath.'_logo.'.$file->extension(), $file->openFile()->fread($file->getSize())))
+        if (Storage::disk('public')->put($filePath.'_logo.'.$file->extension(), $file->openFile()->fread($file->getSize())))
         {
             return config('filesystems.disks.public.url').$filePath.'_logo.'.$file->extension();
         }
@@ -36,7 +36,7 @@ class FilesHandler
     {
         $filePath = '/webinars/lectors_photo/';
 
-        if (Storage::disk('local')->put($filePath.'_.'.$lector_name.'.'.$file->extension(), $file->openFile()->fread($file->getSize())))
+        if (Storage::disk('public')->put($filePath.'_.'.$lector_name.'.'.$file->extension(), $file->openFile()->fread($file->getSize())))
         {
             return config('filesystems.disks.public.url').$filePath.'_.'.$lector_name.'.'.$file->extension();
         }
@@ -50,7 +50,7 @@ class FilesHandler
         $concultantId = $consultant_id;
         $fileName = 'Файл_'.count(ConsultantReport::where('consultant_id', $consultant_id)->get())+1;
 
-        if (Storage::disk('local')->put($filePath.$fileName.'.'.$file->extension(), $file->openFile()->fread($file->getSize())))
+        if (Storage::disk('public')->put($filePath.$fileName.'.'.$file->extension(), $file->openFile()->fread($file->getSize())))
         {
             return config('filesystems.disks.public.url').$filePath.$fileName.'.'.$file->extension();
         }

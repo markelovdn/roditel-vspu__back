@@ -21,7 +21,7 @@ class QuestionFactory extends Factory
         return [
             'text' => fake()->title(),
             'description' => fake()->text(),
-            'answer_type' => fake()->randomElement([Question::TEXT, Question::MANY, Question::SINGLE])
+            'answer_type' => fake()->randomElement([Question::TEXT, Question::MANY, Question::SINGLE]),
         ];
     }
 }

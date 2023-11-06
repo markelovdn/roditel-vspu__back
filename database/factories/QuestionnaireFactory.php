@@ -21,7 +21,8 @@ class QuestionnaireFactory extends Factory
             'title' => fake()->text(),
             'description' => fake()->text(),
             'consultant_id' => fake()->numberBetween(21,21),
-            'answer_before' => fake()->date()
+            'answer_before' => fake()->date(),
+            'file_url' => fake()->imageUrl(),
         ];
     }
 }
