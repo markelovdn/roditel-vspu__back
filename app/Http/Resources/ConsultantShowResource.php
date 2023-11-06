@@ -20,11 +20,11 @@ class ConsultantShowResource extends JsonResource
             'photo' => $this->photo,
             'description' => $this->description,
             'specialization' => [
-            'id' => $this->specialization->id,
+                'id' => $this->specialization->id,
                 'title' => $this->specialization->title,
             ],
             'profession' => [
-            'id' => $this->profession->id,
+                'id' => $this->profession->id,
                 'title' => $this->profession->title,
             ],
         ];
