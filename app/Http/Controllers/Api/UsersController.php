@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DomainService\FilesHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UserByTokenRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Consultant;
+use App\Models\Parented;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +18,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Validation\Rule;
+
 
 class UsersController extends Controller
 {
@@ -24,50 +30,38 @@ class UsersController extends Controller
         return UserResource::collection(User::with('role')->get());
     }
 
-    // public function store(StoreUserRequest $request): JsonResource
-    // {
-    //     $user = new User();
-    //     $role = Role::where('code', $request->role_code)->first();
-
-    //     try {
-    //         $user->first_name = $request->first_name;
-    //         $user->second_name = $request->second_name;
-    //         $user->patronymic = $request->patronymic;
-    //         $user->email = $request->email;
-    //         $user->phone = $request->phone;
-    //         $user->role_id = $role->id;
-    //         $user->password = Hash::make($request->password);
-
-    //         $user->save();
-
-    //         return UserResource::collection(User::where('id', $user->id)->with('role')->get());
-
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'error' => $e->getMessage(),
-    //             'message' => 'Something went wrong in UserController.store'
-    //         ], 400);
-    //     }
-    // }
-
     public function show(int $id): JsonResource
     {
         return UserResource::collection(User::with('role')->where('id', Auth::user()->id)->get());
     }
 
-    public function update(UserUpdateRequest $request, int $id): JsonResponse
+    public function update(UserUpdateRequest $request, int $id, FilesHandler $filesHandler): JsonResponse
     {
         $user = User::where('id', Auth::user()->id)->first();
+        $consultant = Consultant::where('user_id', $user->id)->first();
+        $parented = Parented::where('user_id', $user->id)->first();
 
         try {
-            $user->first_name = $request->first_name;
-            $user->second_name = $request->second_name;
+            $user->first_name = $request->firstName;
+            $user->second_name = $request->secondName;
             $user->patronymic = $request->patronymic;
             $user->email = $request->email;
             $user->phone = $request->phone;
-            $user->password = Hash::make($request->password);
 
             $user->save();
+
+
+            if ($consultant) {
+                $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
+                $consultant->description = $request->description;
+                $consultant->specialization_id = $request->specializationId;
+                $consultant->profession_id = $request->professionId;
+
+                $consultant->save();
+            } else {
+                $parented->region_id = $request->regionId;
+                $parented->save();
+            }
 
             return response()->json([
                 'message' => 'User data successfully updated'

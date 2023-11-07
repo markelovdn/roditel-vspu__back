@@ -31,11 +31,11 @@ class WebinarFilter extends QueryFilter {
         });
     }
 
-    public function lector($lector_name = null){
-        return $this->builder->when($lector_name, function($query) use($lector_name){
-            $query->where('lector_name', '=', $lector_name);
-        });
-    }
+    // public function lector($lector_name = null){
+    //     return $this->builder->when($lector_name, function($query) use($lector_name){
+    //         $query->where('lector_name', '=', $lector_name);
+    //     });
+    // }
 
     public function searchField($search_string = ''){
         return $this->builder

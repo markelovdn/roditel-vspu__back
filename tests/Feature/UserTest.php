@@ -3,11 +3,14 @@
 namespace Tests\Feature;
 
 use App\Models\Consultant;
+use App\Models\Profession;
 use App\Models\Role;
+use App\Models\Specialization;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -101,16 +104,19 @@ class UserTest extends TestCase
 
     public function test_update_user(): void
     {
-        $user = User::first();
+        $user = User::where('email', 'consultant@consultant.ru')->first();
         Auth::login($user);
 
         $response = $this->put('/api/users/'.$user->id, [
-            'second_name' => 'Иван',
-            'first_name' => 'Иванов',
+            'secondName' => 'Иван',
+            'firstName' => 'Иванов',
             'patronymic' => 'Иванович',
-            'email' => 'ivan@test.ru',
+            'email' => 'consultant@consultant.ru',
             'phone' => '+7 (000) 000-00-00',
-            'password' => '123123'
+            'photo' => UploadedFile::fake()->image('photo.jpg'),
+            'description' => 'новое описание консультанта',
+            'specializationId' => Specialization::find(1)->id,
+            'professionId' => Profession::find(1)->id,
         ]);
 
         $this->assertDatabaseHas('users', [

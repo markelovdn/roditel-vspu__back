@@ -270,5 +270,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\Questionnaire::factory(1)
         ->has(Question::factory()->has(Option::factory(3))->count(3))
         ->create();
+
+        DB::table('parented_questionnaire')->insert([
+            'parented_id' => 21,
+            'questionnaire_id' => 1
+        ]);
     }
 }

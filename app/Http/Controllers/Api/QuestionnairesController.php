@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DomainService\FilesExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuestionnairesRequest;
-use App\Http\Requests\StoreQuestionsRequest;
 use App\Http\Requests\UpdateQuestionnairesRequest;
 use App\Http\Resources\QuestionnairesResource;
 use App\Models\Consultant;
-use App\Models\Question;
 use App\Models\Questionnaire;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class QuestionnairesController extends Controller
 {
@@ -30,16 +29,19 @@ class QuestionnairesController extends Controller
     {
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
         $questionnaire = new Questionnaire();
+        $fileUrl = config('filesystems.disks.public.url').'/consultants/questionnaires/'.Str::replace(' ', '_', $request->title).'_'.Carbon::now()->format('d.m.Y').'.xlsx';
 
         try {
             $questionnaire->title = $request->title;
             $questionnaire->description = $request->description;
             $questionnaire->answer_before = $request->answerBefore;
-            $questionnaire->file_url = config('filesystems.disks.public.url').'/consultants/questionnaires/questionnaire_'.$request->title.'_'.Carbon::now()->timestamp.'.xlsx';
+            $questionnaire->file_url = $fileUrl;
             $questionnaire->consultant_id = $consultant->id;
             $questionnaire->save();
 
             QuestionsController::store($request->questions, $questionnaire->id);
+
+            FilesExport::surveyExport($fileUrl, $questionnaire->id);
 
             return response()->json([
                 'message' => 'Questionnaire successfully added'
@@ -63,6 +65,8 @@ class QuestionnairesController extends Controller
     {
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
         $questionnaire = Questionnaire::where('id', $id)->where('consultant_id', $consultant->id)->with('questions')->first();
+
+        $fileUrl = config('filesystems.disks.public.url').'/consultants/questionnaires/'.Str::replace(' ', '_', $request->title).'_'.Carbon::now()->format('d.m.Y').'.xlsx';
         try {
             $questionnaire->title = $request->title;
             $questionnaire->description = $request->description;
@@ -71,6 +75,8 @@ class QuestionnairesController extends Controller
             $questionnaire->save();
 
             QuestionsController::update($request->questions, $questionnaire->id);
+
+            FilesExport::surveyExport($fileUrl, $questionnaire->id);
 
             return response()->json([
                 'message' => 'Questionnaire successfully updated'
