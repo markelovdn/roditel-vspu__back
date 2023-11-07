@@ -19,6 +19,7 @@ class WebinarsController extends Controller
 
     public function index(WebinarFilter $webinarFilter, Request $request) : JsonResource
     {
+        $a ='as';
         if ($request->query('lector') == null) {
             return WebinarsResource::collection(Webinar::with('webinarCategory', 'lectors')->filter($webinarFilter)->paginate(4));
         } else {
