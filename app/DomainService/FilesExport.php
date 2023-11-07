@@ -3,14 +3,14 @@
 namespace App\DomainService;
 
 use App\Exports\SurveyExport;
-use App\Http\Requests\SurveyEportRequest;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 
 class FilesExport
 {
-    public function surveyExport(SurveyEportRequest $request)
+    public static function surveyExport($fileUrl, $id)
     {
         //TODO: закрыть функцию для не авторизованых пользователей по токену
-        return (new SurveyExport)->store('/consultants/surveys/survey_'.$request->id.'.xlsx', 'public');
+
+        return (new SurveyExport($id))->store(Str::after($fileUrl, config('filesystems.disks.public.url')), 'public');
     }
 }

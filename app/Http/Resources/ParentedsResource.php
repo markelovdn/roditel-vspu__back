@@ -15,6 +15,7 @@ class ParentedsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'regionId' => $this->region_id,
             'user' => [
                 'userId' => $this->user->id,

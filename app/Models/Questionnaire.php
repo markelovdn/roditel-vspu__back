@@ -21,4 +21,8 @@ class Questionnaire extends Model
     public function questions(): BelongsToMany {
         return $this->belongsToMany(Question::class)->with('options', 'optionOther');
     }
+
+    public function parented(): BelongsToMany {
+        return $this->belongsToMany(Parented::class)->with('user', 'children');
+    }
 }

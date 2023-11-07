@@ -13,7 +13,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('answer_before');
-            $table->string('file_url')->require();
+            $table->date('status')->nullable();
+            $table->string('file_url')->nullable();
             $table->foreignId('consultant_id')->constrained('consultants', 'id')->onDelete('cascade')->require();
             $table->softDeletes();
             $table->timestamps();

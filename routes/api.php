@@ -58,7 +58,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'destroy'); //S
         Route::apiResource("/consultant.reports", ConsultantReportsController::class)->shallow(); //S
         Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow();
-        Route::post('/surveyExport', [FilesExport::class, 'surveyExport']);
     });
 
     Route::middleware('parented')->group(function () {
