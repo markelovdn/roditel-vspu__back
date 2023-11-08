@@ -12,13 +12,14 @@ use App\Models\ConsultantReport;
 use Carbon\Carbon;
 use Database\Factories\ConsultantReportFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ConsultantReportsController extends Controller
 {
 
-    public function index(Request $request): Object
+    public function index(Request $request): JsonResource
     {
         //TODO:не смог сделать фильтр через скоуп, возникла проблема с использованием whereRaw в скоупе.
 

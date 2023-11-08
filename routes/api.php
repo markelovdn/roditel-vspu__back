@@ -1,12 +1,12 @@
 <?php
 
-use App\DomainService\FilesExport;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ChildrensController;
 use App\Http\Controllers\Api\ConsultantContractController;
 use App\Http\Controllers\Api\ConsultantReportsController;
 use App\Http\Controllers\Api\ConsultantsController;
 use App\Http\Controllers\Api\ConsultationsController;
+use App\Http\Controllers\Api\LectorController;
 use App\Http\Controllers\Api\ParentedsController;
 use App\Http\Controllers\Api\ProfessionsController;
 use App\Http\Controllers\Api\QuestionnairesController;
@@ -18,11 +18,8 @@ use App\Http\Controllers\Api\WebinarCategoriesController;
 use App\Http\Controllers\Api\WebinarPartisipantController;
 use App\Http\Controllers\Api\WebinarQuestionsController;
 use App\Http\Controllers\Api\WebinarsController;
-use App\Http\Controllers\Api\MailController;
-use App\Http\Controllers\Api\WebinarLectorController;
 use App\Http\Controllers\Api\WebinarProgramController;
 use Illuminate\Support\Facades\Route;
-use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Sum;
 
 //TODO:проработать таблицу консультации на предмет завершения консультации
 //TODO:реализовать оценку качества консультаций
@@ -43,8 +40,7 @@ Route::apiResource("/consultants", ConsultantsController::class)->only('index');
 //WEBINARS
 Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy'); //S
 Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->only('index', 'show'); //S
-Route::apiResource("/webinar.webinarPrograms", WebinarProgramController::class)->shallow()->only('index', 'show');
-Route::apiResource("/webinar.webinarLectors", WebinarLectorController::class)->shallow()->only('index', 'show');
+Route::apiResource("/lectors", LectorController::class)->only('index', 'show');
 Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']); //S
 Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->only('index', 'show'); //S
 
@@ -73,7 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show'); //S
         Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->except('index', 'show'); //S
         Route::apiResource("/webinar.webinarPrograms", WebinarProgramController::class)->shallow()->except('index', 'show');
-        Route::apiResource("/webinar.webinarLectors", WebinarLectorController::class)->shallow()->except('index', 'show');
+        Route::apiResource("/lectors", LectorController::class)->except('index', 'show');
         Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->except('store', 'destroy');
         Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except('index', 'show'); //S
         Route::apiResource("/specializations", SpecializationsController::class)->except('index'); //S

@@ -21,14 +21,12 @@ class WebinarsResource extends JsonResource
             'date' => Carbon::parse($this->date)->format('d.m.Y'),
             'timeStart' => Carbon::parse($this->time_start)->format('H.i'),
             'timeEnd' => Carbon::parse($this->time_end)->format('H.i'),
-            'lectorName' => $this->lector_name,
-            'logo' => $this->logo,
             'cost' => $this->cost,
             'webinarCategory' => [
                 'title' => $this->webinarCategory->title
             ],
             'questions' => WebinarQuestionsResource::collection($this->questions),
-            'lectors' => WebinarLectorResource::collection($this->lectors)
+            'lectors' => LectorResource::collection($this->lectors)
         ];
     }
 }

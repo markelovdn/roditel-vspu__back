@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WebinarLector>
  */
-class WebinarLectorFactory extends Factory
+class LectorFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -22,7 +22,6 @@ class WebinarLectorFactory extends Factory
             'lector_description' => fake()->text(),
             'lector_department' => fake()->title(),
             'lector_photo' => fake()->imageUrl(354, 472, 'people', true),
-            'webinar_id' => Webinar::factory(),
         ];
     }
 }
