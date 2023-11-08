@@ -8,8 +8,6 @@ use App\Models\User;
 use App\Models\Webinar;
 use App\Models\WebinarLector;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -18,92 +16,84 @@ class LectorTest extends TestCase
 {
     use DatabaseTransactions;
 
-    // public function test_index(): void
-    // {
-    //     $lector = Lector::first();
-    //     $webinar = Webinar::whereHas('lectors', function ($query) use ($lector) {
-    //     $query->where('id', $lector->id);})->first();
+    public function test_index(): void
+    {
+        $lector = Lector::first();
 
-    //     $response = $this->get('/api/webinar/'.$webinar->id.'/webinarLectors');
-    //     // $response->dd();
+        $response = $this->get('/api/lectors');
+        // $response->dd();
 
-    //     $response->assertStatus(200)
-    //     ->assertJsonFragment(["lectorName" => $webinarLector->lector_name]);
-    // }
+        $response->assertStatus(200)
+        ->assertJsonFragment(["lectorName" => $lector->lector_name]);
+    }
 
-    // public function test_store(): void
-    // {
-    //     $role = Role::where('code', Role::ADMIN)->first();
-    //     $admin = User::where('role_id', $role->id)->first();
-    //     Auth::login($admin);
+    public function test_store(): void
+    {
+        $role = Role::where('code', Role::ADMIN)->first();
+        $admin = User::where('role_id', $role->id)->first();
+        Auth::login($admin);
 
-    //     $webinar = Webinar::first();
+        $response = $this->post('/api/lectors', [
+            'name' => 'Тестовый текст',
+            'description' => 'Тестовый текст',
+            'department' => 'Тестовый текст',
+            'photo' => UploadedFile::fake()->image('photo.jpg'),
+        ]);
+        // $response->dd();
 
-    //     $response = $this->post('/api/webinar/'.$webinar->id.'/webinarLectors', [
-    //         'lectorName' => 'Тестовый текст',
-    //         'lectorDescription' => 'Тестовый текст',
-    //         'lectorDepartment' => 'Тестовый текст',
-    //         'lectorPhoto' => UploadedFile::fake()->image('photo.jpg'),
-    //         'webinarId' => $webinar->id,
-    //     ]);
-    //     // $response->dd();
+        $this->assertDatabaseHas('lectors', [
+            'lector_name' => 'Тестовый текст'
+        ]);
 
-    //     $this->assertDatabaseHas('webinar_lectors', [
-    //         'lector_name' => 'Тестовый текст'
-    //     ]);
+        $response->assertStatus(200)
+        ->assertJsonFragment(['message' => 'Lector successfully added']);
+    }
 
-    //     $response->assertStatus(200)
-    //     ->assertJsonFragment(['message' => 'WebinarLector successfully added']);
-    // }
+    public function test_show(): void
+    {
+        $lector = Lector::first();
+        $response = $this->get('/api/lectors/'.$lector->id);
+        // $response->dd();
 
-    // public function test_show(): void
-    // {
-    //     $webinarLector = WebinarLector::first();
-    //     $response = $this->get('/api/webinarLectors/'.$webinarLector->id);
-    //     // $response->dd();
+        $response->assertStatus(200)
+        ->assertJsonFragment(["lectorName" => $lector->lector_name]);
+    }
 
-    //     $response->assertStatus(200)
-    //     ->assertJsonFragment(["lectorName" => $webinarLector->lector_name]);
-    // }
+    public function test_update(): void
+    {
+        $role = Role::where('code', Role::ADMIN)->first();
+        $admin = User::where('role_id', $role->id)->first();
+        Auth::login($admin);
 
-    // public function test_update(): void
-    // {
-    //     $role = Role::where('code', Role::ADMIN)->first();
-    //     $admin = User::where('role_id', $role->id)->first();
-    //     Auth::login($admin);
+        $lector = Lector::first();
 
-    //     $webinarLector = WebinarLector::first();
+        $response = $this->put('/api/lectors/'.$lector->id, [
+            'name' => 'Тестовый текст2',
+            'description' => 'Тестовый текст2',
+            'department' => 'Тестовый текст2',
+            'photo' => UploadedFile::fake()->image('photo.jpg'),
+        ]);
 
-    //     $response = $this->put('/api/webinarLectors/'.$webinarLector->id, [
-    //         'lectorName' => 'Тестовый текст2',
-    //         'lectorDescription' => 'Тестовый текст2',
-    //         'lectorDepartment' => 'Тестовый текст2',
-    //         'lectorPhoto' => UploadedFile::fake()->image('photo.jpg'),
-    //     ]);
+        $this->assertDatabaseHas('lectors', [
+            'lector_name' => 'Тестовый текст2'
+        ]);
 
-    //     $this->assertDatabaseHas('webinar_lectors', [
-    //         'lector_name' => 'Тестовый текст2'
-    //     ]);
+        $response->assertStatus(200)
+        ->assertJsonFragment(['message' => 'Lector successfully update']);
+    }
 
-    //     $response->assertStatus(200)
-    //     ->assertJsonFragment(['message' => 'WebinarLector successfully update']);
-    // }
+    public function test_destroy(): void
+    {
+        $role = Role::where('code', Role::ADMIN)->first();
+        $admin = User::where('role_id', $role->id)->first();
+        Auth::login($admin);
 
-    // public function test_destroy(): void
-    // {
-    //     $role = Role::where('code', Role::ADMIN)->first();
-    //     $admin = User::where('role_id', $role->id)->first();
-    //     Auth::login($admin);
+        $lector = Lector::first();
 
-    //     $webinarLector = WebinarLector::first();
+        $response = $this->delete('/api/lectors/'.$lector->id);
 
-    //     $response = $this->delete('/api/webinarLectors/'.$webinarLector->id);
-
-    //     $this->assertDatabaseMissing('webinar_lectors', [
-    //         'id' => $webinarLector->id
-    //     ]);
-
-    //     $response->assertStatus(200)
-    //     ->assertJsonFragment(['message' => 'WebinarLector successfully deleted']);
-    // }
+        $this->assertSoftDeleted($lector);
+        $response->assertStatus(200)
+        ->assertJsonFragment(['message' => 'Lector successfully deleted']);
+    }
 }

@@ -40,7 +40,7 @@ Route::apiResource("/consultants", ConsultantsController::class)->only('index');
 //WEBINARS
 Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy'); //S
 Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->only('index', 'show'); //S
-Route::apiResource("/lectors", LectorController::class)->shallow()->only('index', 'show');
+Route::apiResource("/lectors", LectorController::class)->only('index', 'show');
 Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']); //S
 Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->only('index', 'show'); //S
 
@@ -69,7 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show'); //S
         Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->except('index', 'show'); //S
         Route::apiResource("/webinar.webinarPrograms", WebinarProgramController::class)->shallow()->except('index', 'show');
-        Route::apiResource("/lectors", LectorController::class)->shallow()->except('index', 'show');
+        Route::apiResource("/lectors", LectorController::class)->except('index', 'show');
         Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->except('store', 'destroy');
         Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except('index', 'show'); //S
         Route::apiResource("/specializations", SpecializationsController::class)->except('index'); //S
