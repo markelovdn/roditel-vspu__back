@@ -17,19 +17,9 @@ use Illuminate\Http\Request;
 class WebinarsController extends Controller
 {
 
-    public function index(WebinarFilter $webinarFilter, Request $request) : JsonResource
+    public function index(WebinarFilter $webinarFilter)
     {
-        $a ='as';
-        if ($request->query('lector') == null) {
-            return WebinarsResource::collection(Webinar::with('webinarCategory', 'lectors')->filter($webinarFilter)->paginate(4));
-        } else {
-
-            $lectors = DB::table('webinar_lectors')
-            ->where('lector_name', $request->query('lector'))->first();
-
-            return WebinarsResource::collection(Webinar::with('webinarCategory', 'lectors')->where()->filter($webinarFilter)->paginate(4));
-
-        }
+        return WebinarsResource::collection(Webinar::with('webinarCategory', 'lectors')->filter($webinarFilter)->paginate(4));
     }
 
     public function store(StoreWebinarRequest $request,  FilesHandler $filesHandler)

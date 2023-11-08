@@ -25,6 +25,10 @@ class QuestionnairesResource extends JsonResource
             $parented = Parented::where('id', $parented_id->parented_id)->with('user')->first();
             $parentedFullName = $parented->user->second_name.' '.Str::limit($parented->user->first_name, 1,('.')).Str::limit($parented->user->patronymic, 1, ('.'));
         }
+        $status = null;
+        if ($this->status !== null) {
+            $status = Carbon::parse($this->status)->format('d.m.Y');
+        }
 
         return [
             'id' => $this->id,
@@ -33,7 +37,7 @@ class QuestionnairesResource extends JsonResource
             'answerBefore' => $this->answer_before,
             'fileUrl' => $this->file_url,
             'fileName' => Str::afterLast($this->file_url, '/'),
-            'status' => Carbon::parse($this->status)->format('d.m.Y'),
+            'status' => $status,
             'parented' => $parentedFullName,
             'updatedAt' => Carbon::parse($this->updated_at)->format('d.m.Y'),
             'questions' => QuestionsResource::collection($this->whenLoaded('questions'))

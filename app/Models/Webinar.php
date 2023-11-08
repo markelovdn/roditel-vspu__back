@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -26,8 +27,8 @@ class Webinar extends Model
         return $this->hasMany(WebinarQuestion::class);
     }
 
-    public function lectors(): HasMany {
-        return $this->hasMany(WebinarLector::class);
+    public function lectors(): BelongsToMany {
+        return $this->BelongsToMany(Lector::class);
     }
 
     public function scopeFilter(Builder $builder, QueryFilter $filter){

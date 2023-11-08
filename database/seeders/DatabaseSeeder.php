@@ -4,12 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Children;
 use App\Models\Consultant;
 use App\Models\ConsultantReport;
 use App\Models\Contract;
+use App\Models\Lector;
 use App\Models\Option;
-use App\Models\Parented;
 use App\Models\OptionOther;
 use App\Models\Profession;
 use App\Models\Question;
@@ -19,8 +18,6 @@ use App\Models\SelectedOption;
 use App\Models\Specialization;
 use App\Models\User;
 use App\Models\WebinarCategory;
-use App\Models\WebinarLector;
-use App\Models\WebinarProgram;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -160,16 +157,15 @@ class DatabaseSeeder extends Seeder
         \App\Models\Parented::factory(10)->create();
         \App\Models\Consultant::factory(10)->create();
         \App\Models\Children::factory(10)->create();
-        \App\Models\Webinar::factory(10)->create();
         \App\Models\WebinarQuestion::factory(10)->create();
-        \App\Models\WebinarProgram::factory(10)->create();
-        \App\Models\WebinarLector::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
         OptionOther::factory(1)->create();
         SelectedOption::factory(1)->create();
         \App\Models\Consultation::factory(10)->create();
         \App\Models\ConsultationMessage::factory(10)->create();
         \App\Models\WebinarPartisipant::factory(10)->create();
+        \App\Models\Lector::factory(10)->create();
+        \App\Models\Webinar::factory(10)->has(Lector::factory(2))->create();
 
         User::insert(
             [

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreWebinarLectorRequest extends FormRequest
+class UpdateLectorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,10 @@ class StoreWebinarLectorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lectorName' => ['required', 'string'],
-            'lectorDescription' => ['string'],
-            'lectorDepartment' => ['string'],
-            'lectorPhoto' => ['image:jpg,jpeg,png'],
+            'name' => ['string'],
+            'description' => ['string'],
+            'department' => ['string'],
+            'photo' => ['image:jpg,jpeg,png'],
         ];
     }
 }

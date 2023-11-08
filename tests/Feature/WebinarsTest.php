@@ -87,7 +87,7 @@ class WebinarsTest extends TestCase
     public function test_getWebinarLectors(): void
     {
         //TODO: доработать тест
-        $response = $this->get('api/webinarLectors');
+        $response = $this->get('api/lectors');
         $response
             ->assertStatus(200);
     }
