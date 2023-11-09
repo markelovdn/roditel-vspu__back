@@ -11,13 +11,11 @@ use Illuminate\Support\Str;
 class ConsultantReportsFilter extends QueryFilter {
 
     public function dateBetween($dates = null){
-        $before = Carbon::parse(Str::before($dates, ','))->format('Y-m-d');
-        $after = Carbon::parse(Str::after($dates, ','))->format('Y-m-d');
-
-        // $db = DB::table('consultant_reports')->whereRaw('DATE(updated_at) = ?', [$before])->get();
+        $before = Carbon::parse(Str::before($dates, ','))->format('Y-m-d-00:00:00');
+        $after = Carbon::parse(Str::after($dates, ','))->format('Y-m-d-23:59:59');
 
         return $this->builder->when($dates, function($query) use($before, $after){
-            $query->whereRaw('DATE(updated_at) = ?', [$before]);
+            $query->whereBetween('updated_at', [$before, $after]);;
 
         });
     }
