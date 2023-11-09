@@ -23,8 +23,8 @@ class WebinarFilter extends QueryFilter {
     }
 
     public function dateBetween($dates = null){
-        $before = Carbon::parse(Str::before($dates, ','))->format('Y-m-d');
-        $after = Carbon::parse(Str::after($dates, ','))->format('Y-m-d');
+        $before = Carbon::parse(Str::before($dates, ','))->format('Y-m-d-00:00:00');
+        $after = Carbon::parse(Str::after($dates, ','))->format('Y-m-d-23:59:59');
 
         return $this->builder->when($dates, function($query) use($before, $after){
             $query->whereBetween('date', [$before, $after]);
