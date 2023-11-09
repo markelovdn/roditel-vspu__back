@@ -30,7 +30,7 @@ class UserUpdateRequest extends FormRequest
             'firstName' => ['string'],
             'patronymic' => ['string'],
             'email' => ['email', Rule::unique('users')->ignore(Auth::user()->id)],
-            'phone' => ['unique:users'],
+            'phone' => ['string', Rule::unique('users')->ignore(Auth::user()->id)],
         ];
     }
 }

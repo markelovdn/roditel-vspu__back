@@ -10,19 +10,22 @@ use Illuminate\Support\Str;
 
 class QuestionnairesFilter extends QueryFilter {
 
-    // public function dateBetween($dates = null){
-    //     $before = Carbon::parse(Str::before($dates, ','))->format('Y-m-d');
-    //     $after = Carbon::parse(Str::after($dates, ','))->format('Y-m-d');
+    public function dateBetween($dates = null){
+        $before = Carbon::parse(Str::before($dates, ','))->format('Y-m-d');
+        $after = Carbon::parse(Str::after($dates, ','))->format('Y-m-d');
 
-    //     // $db = DB::table('consultant_reports')->whereRaw('DATE(updated_at) = ?', [$before])->get();
+        return $this->builder->when($dates, function($query) use($before, $after){
+            $query->whereBetween('updated_at', [$before, $after]);
 
-    //     return $this->builder->when($dates, function($query) use($before, $after){
-    //         $query->whereRaw('DATE(updated_at) = ?', [$before]);
-
-    //     });
-    // }
+        });
+    }
 
     public function status($status = null){
+        if ($status === 'notAnswered') {
+            return $this->builder->when($status, function($query) {
+                $query->where('status', '=', null);
+            });
+        }
         return $this->builder->when($status, function($query) {
             $query->where('status', '!=', null);
         });

@@ -52,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('consultant')->group(function () {
         Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'destroy'); //S
+        Route::post("/uploadPhotoConsultant", [ConsultantsController::class, 'uploadPhoto']);
         Route::apiResource("/consultant.reports", ConsultantReportsController::class)->shallow(); //S
         Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow();
     });
