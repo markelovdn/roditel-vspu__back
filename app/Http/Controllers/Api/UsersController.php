@@ -52,7 +52,7 @@ class UsersController extends Controller
 
 
             if ($consultant) {
-                $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
+                // $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
                 $consultant->description = $request->description;
                 $consultant->specialization_id = $request->specializationId;
                 $consultant->profession_id = $request->professionId;

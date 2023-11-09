@@ -10,6 +10,7 @@ use App\Http\Resources\ConsultantShowResource;
 use App\Http\Resources\ConsultantsResource;
 use App\Models\Consultant;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,6 +83,26 @@ class ConsultantsController extends Controller
             return response()->json([
                 'error' => $e->getMessage(),
                 'message' => 'Something went wrong in UserController.destroy'
+            ], 400);
+        }
+    }
+
+    public function uploadPhoto(Request $request, FilesHandler $filesHandler) {
+        $user = User::where('id', Auth::user()->id)->first();
+        $consultant = Consultant::where('user_id', $user->id)->first();
+
+        try {
+            $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
+            $consultant->save();
+
+            return response()->json([
+                'message' => 'Consultant photo successfully updated'
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong in ConsultantController.uploadPhoto'
             ], 400);
         }
     }

@@ -15,29 +15,15 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
 class QuestionnairesController extends Controller
 {
 
-    public function index(QuestionnairesFilter $questionnairesFilter, Request $request): JsonResource
+    public function index(QuestionnairesFilter $questionnairesFilter): JsonResource
     {
-        //TODO:не смог сделать фильтр через скоуп, возникла проблема с использованием whereRaw в скоупе.
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
 
-        if ($request->query('dateBetween') == null) {
-            return QuestionnairesResource::collection(Questionnaire::where('consultant_id', $consultant->id)->with('questions')->orderBy('updated_at', 'desc')->filter($questionnairesFilter)->paginate(6));
-        }
-
-        $dateStart = Carbon::parse(Str::before($request->query('dateBetween'), ','))->format('Y-m-d');
-        $dateEnd = Carbon::parse(Str::after($request->query('dateBetween'), ','))->format('Y-m-d');
-
-        return QuestionnairesResource::collection(Questionnaire::where('consultant_id', $consultant->id)->with('questions')
-                ->whereRaw('DATE(updated_at) >= ?', [$dateStart])
-                ->whereRaw('DATE(updated_at) <= ?', [$dateEnd])
-                ->orderBy('updated_at', 'desc')
-                ->filter($questionnairesFilter)
-                ->paginate(6));
+        return QuestionnairesResource::collection(Questionnaire::where('consultant_id', $consultant->id)->with('questions')->orderBy('updated_at', 'desc')->filter($questionnairesFilter)->paginate(6));
     }
 
     public function store(StoreQuestionnairesRequest $request): JsonResponse
