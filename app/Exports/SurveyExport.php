@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class SurveyExport implements FromCollection, WithHeadings
+class SurveyExport implements FromQuery, WithHeadings
 {
     use Exportable;
     private $id;
@@ -27,10 +27,10 @@ class SurveyExport implements FromCollection, WithHeadings
             'Date',
         ];
     }
-    public function collection()
+    public function query()
     {
         // return Questionnaire::query()->whereId($this->id)->with('questions')->orderBy('updated_at', 'desc');
-        return Questionnaire::where($this->id)->with('questions')->first();
+        return Questionnaire::query()->whereId($this->id)->with('questions')->orderBy('updated_at', 'desc');
     }
 
 }

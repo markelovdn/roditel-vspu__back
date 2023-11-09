@@ -18,7 +18,7 @@ class WebinarFactory extends Factory
     {
         return [
             'title' => fake()->text(),
-            'date' => fake()->date(),
+            'date' => fake()->dateTimeBetween('25.10.2023', '01.02.2024'),
             'time_start' => fake()->time(),
             'time_end' => fake()->time(),
             'logo' => 'https://markelovdn.ru/webinars/lectors_photo/test.png',
