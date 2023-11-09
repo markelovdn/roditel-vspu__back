@@ -18,6 +18,7 @@ use App\Models\SelectedOption;
 use App\Models\Specialization;
 use App\Models\User;
 use App\Models\WebinarCategory;
+use App\Models\WebinarQuestion;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -157,15 +158,15 @@ class DatabaseSeeder extends Seeder
         \App\Models\Parented::factory(10)->create();
         \App\Models\Consultant::factory(10)->create();
         \App\Models\Children::factory(10)->create();
-        \App\Models\WebinarQuestion::factory(10)->create();
+        // \App\Models\WebinarQuestion::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
         OptionOther::factory(1)->create();
         SelectedOption::factory(1)->create();
         \App\Models\Consultation::factory(10)->create();
         \App\Models\ConsultationMessage::factory(10)->create();
-        \App\Models\WebinarPartisipant::factory(10)->create();
         \App\Models\Lector::factory(10)->create();
-        \App\Models\Webinar::factory(10)->has(Lector::factory(2))->create();
+        \App\Models\Webinar::factory(10)->has(Lector::factory(2))->has(WebinarQuestion::factory(2), 'questions')->create();
+        \App\Models\WebinarPartisipant::factory(10)->create();
 
         User::insert(
             [

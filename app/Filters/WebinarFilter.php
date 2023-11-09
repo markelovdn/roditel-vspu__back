@@ -17,6 +17,7 @@ class WebinarFilter extends QueryFilter {
     }
 
     public function actual($actual = null){
+        $a = Carbon::now()->format('Y-m-d');
         return $this->builder->when($actual, function($query) use($actual) {
             $query->where('date', $actual === 'yes' ? ">=" : "<", Carbon::now()->format('Y-m-d'));
         });

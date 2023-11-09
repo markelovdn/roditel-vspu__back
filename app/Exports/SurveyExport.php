@@ -3,10 +3,13 @@
 namespace App\Exports;
 
 use App\Models\Questionnaire;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class SurveyExport implements FromQuery
+class SurveyExport implements FromQuery, WithHeadings
 {
     use Exportable;
     private $id;
@@ -16,10 +19,18 @@ class SurveyExport implements FromQuery
         $this->id = $id;
     }
 
+    public function headings(): array
+    {
+        return [
+            '#',
+            'User',
+            'Date',
+        ];
+    }
     public function query()
     {
-        //TODO:сделать нормальную выгрузку с вопросами и ответами
-        return Questionnaire::with('questions')->where('id', $this->id)->first();
+        // return Questionnaire::query()->whereId($this->id)->with('questions')->orderBy('updated_at', 'desc');
+        return Questionnaire::query()->whereId($this->id)->with('questions')->orderBy('updated_at', 'desc');
     }
 
 }
