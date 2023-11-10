@@ -158,7 +158,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Parented::factory(10)->create();
         \App\Models\Consultant::factory(10)->create();
         \App\Models\Children::factory(10)->create();
-        // \App\Models\WebinarQuestion::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
         OptionOther::factory(1)->create();
         SelectedOption::factory(1)->create();
@@ -241,11 +240,6 @@ class DatabaseSeeder extends Seeder
             'number' => '585',
         ]);
 
-        DB::table('consultation_user')->insert([
-            "consultation_id" => 1,
-            "user_id" => 1
-        ]);
-
         DB::table('users')
             ->whereIn('id', DB::table('parenteds')->select('user_id'))
             ->update(['role_id' => Role::where('code', Role::PARENTED)->first()->id]);
@@ -271,6 +265,16 @@ class DatabaseSeeder extends Seeder
         DB::table('parented_questionnaire')->insert([
             'parented_id' => 21,
             'questionnaire_id' => 1
+        ]);
+
+        DB::table('consultations')->insert([
+            "title" => "test",
+            "user_id" => 94
+        ]);
+
+        DB::table('consultation_user')->insert([
+            ["consultation_id" => 21, "user_id" => 94],
+            ["consultation_id" => 21, "user_id" => 93],
         ]);
     }
 }

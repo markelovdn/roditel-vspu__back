@@ -13,7 +13,7 @@ class ConsultationsController extends Controller
      */
     public function index()
     {
-        return Consultation::with('users')->get();
+        return Consultation::with('users')->where('user_id', auth()->user()->id)->get();
     }
 
     /**

@@ -47,7 +47,7 @@ Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->on
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/users", UsersController::class)->only('update', 'show'); //S
     Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
-    Route::apiResource("/consultations", ConsultationsController::class); //подумать над переделать в сторону шалоу с юзером там же будут методы с сообщениями по аналогии с анкетами
+    Route::apiResource("/users.consultations", ConsultationsController::class)->shallow(); //подумать над переделать в сторону шалоу с юзером там же будут методы с сообщениями по аналогии с анкетами
     Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->only('store', 'destroy');
 
     Route::middleware('consultant')->group(function () {
