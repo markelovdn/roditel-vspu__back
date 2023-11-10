@@ -269,12 +269,39 @@ class DatabaseSeeder extends Seeder
 
         DB::table('consultations')->insert([
             "title" => "test",
-            "user_id" => 94
+            "user_id" => 94,
+            "closed" => false,
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
 
         DB::table('consultation_user')->insert([
             ["consultation_id" => 21, "user_id" => 94],
             ["consultation_id" => 21, "user_id" => 93],
+        ]);
+
+        DB::table('consultation_messages')->insert([
+            ["consultation_id" => 21,
+            "user_id" => 93,
+            "text" => "У меня проблемы с детьми, что делать?",
+            "readed" => true,
+            "created_at" => now(),
+            "updated_at" => now()
+        ],
+        ["consultation_id" => 21,
+            "user_id" => 94,
+            "text" => "Сколько у вас детей?",
+            "readed" => true,
+            "created_at" => now(),
+            "updated_at" => now()
+        ],
+        ["consultation_id" => 21,
+            "user_id" => 93,
+            "text" => "12",
+            "readed" => false,
+            "created_at" => now(),
+            "updated_at" => now()
+        ],
         ]);
     }
 }

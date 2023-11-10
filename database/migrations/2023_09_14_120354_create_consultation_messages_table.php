@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('consultation_id')->constrained('consultations', 'id');
             $table->foreignId('user_id')->constrained('users', 'id');
             $table->text('text');
-            $table->boolean('is_answered');
+            $table->boolean('readed')->default(false);
             $table->timestamps();
         });
     }

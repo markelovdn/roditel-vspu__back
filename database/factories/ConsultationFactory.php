@@ -19,6 +19,7 @@ class ConsultationFactory extends Factory
     {
         return [
             'title' => fake()->title(),
+            'closed' => fake()->boolean(),
             'user_id' => User::factory()
         ];
     }
