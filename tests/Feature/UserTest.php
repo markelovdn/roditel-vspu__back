@@ -31,8 +31,7 @@ class UserTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->has('data'));
+            ->assertJson(fn (AssertableJson $json) => $json->has('data'));
     }
 
     // public function test_store_user_as_consultant(): void
