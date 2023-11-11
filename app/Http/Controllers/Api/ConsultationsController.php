@@ -10,6 +10,7 @@ use App\Http\Resources\ConsultationResource;
 use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Models\Parented;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class ConsultationsController extends Controller
         return ConsultationResource::collection(Consultation::with('users', 'messages')->where('user_id', auth()->user()->id)->get());
     }
 
-    public function store(StoreConsultationRequest $request)
+    public function store(StoreConsultationRequest $request): JsonResponse
     {
         $parented = Parented::with('user')->where('user_id', auth()->user()->id)->first();
         if (!$parented) {
@@ -79,29 +80,51 @@ class ConsultationsController extends Controller
         }
     }
 
-    public function show(int $id)
+    public function show(int $id): JsonResource
     {
         return ConsultationResource::collection(Consultation::with('users', 'messages')
         ->where('user_id', Auth::user()->id)
         ->where('id', $id)->get());
     }
 
-    public function update(UpdateConsultationRequest $request, string $id)
+    public function update(UpdateConsultationRequest $request, string $id): JsonResponse
     {
-        $user = Parented::where('user_id', auth()->user()->id)->first();
-        if (!$user) {
+        $parented = Parented::with('user')->where('user_id', auth()->user()->id)->first();
+        if (!$parented) {
             return response()->json([
-                'message' => 'Only a parent can update a consultation'
+                'message' => 'Only a parent can request a consultation'
             ], 404);
         }
 
-        try {
-            $consultation = Consultation::find($id);
+        $consultation = Consultation::find($id);
+        $oldConsultant = Consultant::with('user')->where('id', '!=', $consultation->user_id)->first();
+        $newConsultant = Consultant::with('user')->where('id', $request->consultantId)->first();
 
+        try {
             $consultation->title = $request->title;
             $consultation->closed = $request->closed;
+            $consultation->user_id = $parented->user->id;
+            $consultation->category_id = $request->categoryId;
 
             $consultation->save();
+
+            $consultation->users()->detach($oldConsultant->user->id);
+            $consultation->users()->attach($newConsultant->user->id);
+            $consultation->users()->attach($parented->user->id);
+
+            if ($request->allConsultants) {
+                $consultants = Consultant::all();
+                foreach ($consultants as $consultant) {
+                    $consultation->users()->attach($consultant->user->id);
+
+                    $consultation->messages()->insert([
+                        'consultation_id' => $consultation->id,
+                        'user_id' => $parented->user->id,
+                        'text' => $request->messageText,
+                        'readed' => false
+                    ]);
+                }
+            }
 
             return response()->json([
                 'message' => 'Consultation successfully udated'
@@ -109,13 +132,12 @@ class ConsultationsController extends Controller
 
         } catch (\Exception $e) {
             return response()->json([
-                'error' => $e->getMessage(),
                 'message' => 'Something went wrong in ConsultantationsController.update'
             ], 400);
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         try {
             Consultation::destroy($id);
