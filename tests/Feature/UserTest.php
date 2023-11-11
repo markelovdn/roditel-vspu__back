@@ -28,6 +28,7 @@ class UserTest extends TestCase
         Auth::login($admin);
 
         $response = $this->get('/api/users');
+        // $response->dd();
 
         $response
             ->assertStatus(200)

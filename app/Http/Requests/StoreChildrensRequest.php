@@ -23,7 +23,6 @@ class StoreChildrensRequest extends FormRequest
     {
         return [
             'age' => ['required', 'numeric'],
-            'parentedId' => ['required', 'numeric'],
         ];
     }
 }

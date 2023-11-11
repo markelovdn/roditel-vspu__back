@@ -23,6 +23,10 @@ class StoreConsultationRequest extends FormRequest
     {
         return [
             'title' => ['string'],
+            'consultantId' => ['required', 'string'],
+            'allConsultants' => ['boolean'],
+            'messageText' => ['string'],
+            "categoryId" => ['numeric', 'exists:consultation_categories,id']
         ];
     }
 }

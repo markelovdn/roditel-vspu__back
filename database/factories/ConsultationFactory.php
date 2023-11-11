@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ConsultationCategory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +21,8 @@ class ConsultationFactory extends Factory
         return [
             'title' => fake()->title(),
             'closed' => fake()->boolean(),
-            'user_id' => User::factory()
+            'user_id' => User::factory(),
+            'category_id' => fake()->numberBetween(1, 5),
         ];
     }
 }
