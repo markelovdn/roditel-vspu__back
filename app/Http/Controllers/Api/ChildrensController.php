@@ -26,8 +26,10 @@ class ChildrensController extends Controller
 
     public function store(StoreChildrensRequest $request): JsonResponse
     {
+        $parented = Parented::where('user_id', Auth::user()->id)->first();
+
         if ($request->age >= 18 ||
-            count(Children::where('parented_id', $request->parentedId)->get()) > Parented::MAX_QUANTITY_CHILDRENS)
+            count(Children::where('parented_id', $parented->id)->get()) >= Parented::MAX_QUANTITY_CHILDRENS)
         {
             return response()->json([
                 'error' => 'The child\'s age is not suitable for adding, or the number of added children is more than six'
@@ -38,7 +40,7 @@ class ChildrensController extends Controller
 
         try {
             $children->age = $request->age;
-            $children->parented_id = $request->parentedId;
+            $children->parented_id = $parented->id;
 
             $children->save();
 

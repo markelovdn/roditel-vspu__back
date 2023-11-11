@@ -22,7 +22,7 @@ class ConsultationMessageFactory extends Factory
             'consultation_id' => Consultation::factory(),
             'user_id' => User::factory(),
             'text' => fake()->text(),
-            'is_answered' => fake()->numberBetween(1,2)
+            'readed' => fake()->boolean()
         ];
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ChildrensController;
 use App\Http\Controllers\Api\ConsultantContractController;
 use App\Http\Controllers\Api\ConsultantReportsController;
 use App\Http\Controllers\Api\ConsultantsController;
+use App\Http\Controllers\Api\ConsultationCategoryController;
 use App\Http\Controllers\Api\ConsultationsController;
 use App\Http\Controllers\Api\LectorController;
 use App\Http\Controllers\Api\ParentedsController;
@@ -47,20 +48,21 @@ Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->on
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/users", UsersController::class)->only('update', 'show'); //S
     Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
-    Route::apiResource("/users.consultations", ConsultationsController::class)->shallow(); //подумать над переделать в сторону шалоу с юзером там же будут методы с сообщениями по аналогии с анкетами
     Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->only('store', 'destroy');
+    Route::apiResource("/users.consultations", ConsultationsController::class)->shallow()->except('dstroy');
+    Route::apiResource("consultationCategories", ConsultationCategoryController::class)->only('index');
+
+    Route::middleware('parented')->group(function () {
+        Route::apiResource("/parenteds", ParentedsController::class)->only('update', 'show'); //S
+        Route::apiResource("/parented.children", ChildrensController::class)->shallow(); //S
+        Route::apiResource("/question.selectedOptions", SelectedOptionController::class)->shallow()->except('index'); //S
+    });
 
     Route::middleware('consultant')->group(function () {
         Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'destroy'); //S
         Route::post("/uploadPhotoConsultant", [ConsultantsController::class, 'uploadPhoto']);
         Route::apiResource("/consultant.reports", ConsultantReportsController::class)->shallow(); //S
         Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow();
-    });
-
-    Route::middleware('parented')->group(function () {
-        Route::apiResource("/parenteds", ParentedsController::class)->only('update', 'show'); //S
-        Route::apiResource("/parented.children", ChildrensController::class)->shallow(); //S
-        Route::apiResource("/question.selectedOptions", SelectedOptionController::class)->shallow()->except('index'); //S
     });
 
     Route::middleware('admin')->group(function () {
@@ -77,6 +79,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/professions", ProfessionsController::class)->except('index'); //S
         Route::apiResource("/regions", RegionsController::class)->except('index'); //S
         Route::apiResource("/contracts", ConsultantContractController::class);
+
     });
 });
 

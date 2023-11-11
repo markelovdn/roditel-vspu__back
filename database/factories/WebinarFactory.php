@@ -21,7 +21,7 @@ class WebinarFactory extends Factory
             'date' => fake()->dateTimeBetween('25.10.2023', '01.02.2024'),
             'time_start' => fake()->time(),
             'time_end' => fake()->time(),
-            'logo' => 'https://markelovdn.ru/webinars/logo/_logo.png',
+            'logo' => 'https://markelovdn.ru/storage/webinars/logo/_logo.jpg',
             'video_link' =>fake()->url(),
             'webinar_category_id' => fake()->randomElement([1,3]),
         ];

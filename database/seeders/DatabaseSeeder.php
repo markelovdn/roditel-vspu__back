@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Consultant;
 use App\Models\ConsultantReport;
+use App\Models\ConsultationCategory;
 use App\Models\Contract;
 use App\Models\Lector;
 use App\Models\Option;
@@ -153,6 +154,14 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Тестовая категория 3'],
         ]);
 
+        DB::table('consultation_categories')->insert([
+            ["title" => "дошкольники"],
+            ["title" => "младшие школьники"],
+            ["title" => "средние школьники"],
+            ["title" => "старшие школьники"],
+            ["title" => "дети с инвалидностью"],
+        ]);
+
         \App\Models\User::factory(10)->create();
         \App\Models\Contract::factory(10)->create();
         \App\Models\Parented::factory(10)->create();
@@ -269,12 +278,40 @@ class DatabaseSeeder extends Seeder
 
         DB::table('consultations')->insert([
             "title" => "test",
-            "user_id" => 94
+            "user_id" => 94,
+            "closed" => false,
+            "category_id" => 1,
+            "created_at" => now(),
+            "updated_at" => now()
         ]);
 
         DB::table('consultation_user')->insert([
             ["consultation_id" => 21, "user_id" => 94],
             ["consultation_id" => 21, "user_id" => 93],
+        ]);
+
+        DB::table('consultation_messages')->insert([
+            ["consultation_id" => 21,
+            "user_id" => 93,
+            "text" => "У меня проблемы с детьми, что делать?",
+            "readed" => true,
+            "created_at" => now(),
+            "updated_at" => now()
+        ],
+        ["consultation_id" => 21,
+            "user_id" => 94,
+            "text" => "Сколько у вас детей?",
+            "readed" => true,
+            "created_at" => now(),
+            "updated_at" => now()
+        ],
+        ["consultation_id" => 21,
+            "user_id" => 93,
+            "text" => "12",
+            "readed" => false,
+            "created_at" => now(),
+            "updated_at" => now()
+        ],
         ]);
     }
 }

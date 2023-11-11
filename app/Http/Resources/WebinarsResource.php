@@ -17,6 +17,7 @@ class WebinarsResource extends JsonResource
     {
 
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'logo' => $this->logo,
             'date' => Carbon::parse($this->date)->format('d.m.Y'),
