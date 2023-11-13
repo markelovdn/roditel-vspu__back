@@ -21,6 +21,7 @@ class ConsultationResource extends JsonResource
             "closed" => $this->closed === 0 ? false : true,
             "createdAt" => Carbon::parse($this->created_at)->format('d.m.Y'),
             "updatedAt" => Carbon::parse($this->updated_at)->format('d.m.Y'),
+            "specializationId" => SpecializationsResource::collection($this->whenLoaded('specializations')),
             "users" => UserResource::collection($this->whenLoaded('users')),
             "messages" => ConsultationMessagesResource::collection($this->whenLoaded('messages'))
         ];

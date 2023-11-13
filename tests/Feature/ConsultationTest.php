@@ -2,6 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Http\Resources\ConsultationResource;
+use App\Models\Consultant;
+use App\Models\Consultation;
+use App\Models\Parented;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -23,4 +27,49 @@ class ConsultationTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_store()
+    {
+        $parented = Parented::first();
+        $user = User::where('id', $parented->user_id)->first();
+        $consultant = Consultant::first();
+
+        $request = [
+            'title' => 'Test Consultation',
+            'specializationId' => 1,
+            'consultantId' => $consultant->id,
+            'messageText' => 'Test message',
+            'allConsultants' => true
+        ];
+
+        Auth::login($user);
+        $response = $this->postJson('/api/users/' . $user->id . '/consultations', $request);
+        // $response->dd();
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'message' => 'Consultation successfully added'
+            ]);
+    }
+
+    public function test_destroy(): void
+    {
+        $parented = Parented::first();
+        $user = User::where('id', $parented->user_id)->first();
+        Auth::login($user);
+
+        // Test case 1: Successful deletion
+        $consultation = Consultation::factory()->create([
+            'user_id' => $user->id,
+            'specialization_id' => 1,
+            'title' => 'Test Consultation',
+            'closed' => false,
+        ]);
+        $response = $this->json('DELETE', '/api/consultations/' . $consultation->id);
+        $response->assertStatus(200)
+            ->assertJson([
+                'message' => 'Consultation successfully deleted'
+            ]);
+    }
+
 }

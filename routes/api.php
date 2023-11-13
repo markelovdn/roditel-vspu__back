@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ConsultantContractController;
 use App\Http\Controllers\Api\ConsultantReportsController;
 use App\Http\Controllers\Api\ConsultantsController;
 use App\Http\Controllers\Api\ConsultationCategoryController;
+use App\Http\Controllers\Api\ConsultationMessagesController;
 use App\Http\Controllers\Api\ConsultationsController;
 use App\Http\Controllers\Api\LectorController;
 use App\Http\Controllers\Api\ParentedsController;
@@ -50,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
     Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->only('store', 'destroy');
     Route::apiResource("/users.consultations", ConsultationsController::class)->shallow()->except('dstroy');
+    Route::apiResource("/consultations.messages", ConsultationMessagesController::class)->shallow();
     Route::apiResource("consultationCategories", ConsultationCategoryController::class)->only('index');
 
     Route::middleware('parented')->group(function () {

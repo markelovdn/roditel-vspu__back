@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->boolean('closed')->default(false);
             $table->foreignId('user_id')->constrained('users', 'id');
-            $table->foreignId('category_id')->constrained('consultation_categories', 'id');
+            $table->foreignId('specialization_id')->constrained('specializations', 'id');
             $table->softDeletes();
             $table->timestamps();
         });
