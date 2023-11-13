@@ -154,14 +154,6 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Тестовая категория 3'],
         ]);
 
-        DB::table('consultation_categories')->insert([
-            ["title" => "дошкольники"],
-            ["title" => "младшие школьники"],
-            ["title" => "средние школьники"],
-            ["title" => "старшие школьники"],
-            ["title" => "дети с инвалидностью"],
-        ]);
-
         \App\Models\User::factory(10)->create();
         \App\Models\Contract::factory(10)->create();
         \App\Models\Parented::factory(10)->create();
@@ -278,9 +270,9 @@ class DatabaseSeeder extends Seeder
 
         DB::table('consultations')->insert([
             "title" => "test",
-            "user_id" => 94,
+            "user_id" => 93,
             "closed" => false,
-            "category_id" => 1,
+            "specialization_id" => 1,
             "created_at" => now(),
             "updated_at" => now()
         ]);

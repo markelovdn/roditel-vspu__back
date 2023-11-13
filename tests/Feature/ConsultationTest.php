@@ -36,7 +36,7 @@ class ConsultationTest extends TestCase
 
         $request = [
             'title' => 'Test Consultation',
-            'categoryId' => 1,
+            'specializationId' => 1,
             'consultantId' => $consultant->id,
             'messageText' => 'Test message',
             'allConsultants' => true
@@ -52,15 +52,24 @@ class ConsultationTest extends TestCase
             ]);
     }
 
-    public function testShowConsultation()
+    public function test_destroy(): void
     {
-        $user = User::where('id', 93)->first();
+        $parented = Parented::first();
+        $user = User::where('id', $parented->user_id)->first();
         Auth::login($user);
-        $consultation = Consultation::where('user_id', $user->id)->first();
-        $response = $this->get('/api/consultations/'.$consultation->id);
 
+        // Test case 1: Successful deletion
+        $consultation = Consultation::factory()->create([
+            'user_id' => $user->id,
+            'specialization_id' => 1,
+            'title' => 'Test Consultation',
+            'closed' => false,
+        ]);
+        $response = $this->json('DELETE', '/api/consultations/' . $consultation->id);
         $response->assertStatus(200)
-        ->assertJsonFragment(["title" => $consultation->title]);;
-
+            ->assertJson([
+                'message' => 'Consultation successfully deleted'
+            ]);
     }
+
 }

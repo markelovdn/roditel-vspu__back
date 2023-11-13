@@ -22,7 +22,7 @@ class ConsultationFactory extends Factory
             'title' => fake()->title(),
             'closed' => fake()->boolean(),
             'user_id' => User::factory(),
-            'category_id' => fake()->numberBetween(1, 5),
+            'specialization_id' => fake()->numberBetween(1, 5),
         ];
     }
 }

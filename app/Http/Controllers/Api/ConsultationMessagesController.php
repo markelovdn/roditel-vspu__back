@@ -4,22 +4,21 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ConsultationMessagesResource;
+use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Models\ConsultationMessage;
+use App\Models\Parented;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConsultationMessagesController extends Controller
 {
-
-    public function index()
-    {
-        return ConsultationMessage::get();
-    }
 
     public function store(Request $request)
     {
         try {
             $user = auth()->user();
+            $consultant = Consultant::where('user_id', $user->id)->first();
 
             $messages = ConsultationMessage::where('consultation_id', $request->consultationId)
             ->where('user_id', '!=', $user->id)->get();
@@ -36,6 +35,13 @@ class ConsultationMessagesController extends Controller
             $message->consultation_id = $request->consultationId;
             $message->save();
 
+            if ($consultant) {
+                DB::table('consultation_user')
+                ->where('consultation_id', $request->consultationId)
+                ->where('user_id', '!=', $user->id)
+                ->delete();
+            }
+
             return response()->json([
                 'message' => 'Message successfully added'
             ], 200);
@@ -47,18 +53,11 @@ class ConsultationMessagesController extends Controller
         }
     }
 
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         return ConsultationMessagesResource::collection(ConsultationMessage::where('id', $id)->where('user_id', auth()->user()->id)->get());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         try {
