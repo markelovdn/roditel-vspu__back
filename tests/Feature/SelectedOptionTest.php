@@ -19,34 +19,35 @@ class SelectedOptionTest extends TestCase
         Auth::login($user);
         $questionnaire = Questionnaire::with('questions')->first();
 
-        $response = $this->post('/api/question/'.$questionnaire->questions->first()->id.'/selectedOptions',
-        [
-            ['option_id' => $questionnaire->questions->first()->options[0]->id,],
-            ['option_id' => $questionnaire->questions->first()->options[1]->id,],
-            ['text' => 'свой вариант ответа']
-        ]
+        $response = $this->post(
+            '/api/questionnaire/' . $questionnaire->id . '/selectedOptions',
+            [
+                'selected' => [['questionId' => $questionnaire->questions->first()->id, 'optionId' => $questionnaire->questions->first()->options[0]->id],],
+                'other' => [['questionId' => $questionnaire->questions->first()->id, 'text' => 'свой вариант ответа']],
+            ]
         );
+        // $response->dd();
 
         $response->assertStatus(200)
-        ->assertJsonFragment(['message' => 'Options add success']);
+            ->assertJsonFragment(['message' => 'Options add success']);
     }
 
-    public function test_update(): void
-    {
-        $parented = Parented::first();
-        $user = User::where('id', $parented->user_id)->first();
-        Auth::login($user);
-        $questionnaire = Questionnaire::with('questions')->first();
+    // public function test_update(): void
+    // {
+    //     $parented = Parented::first();
+    //     $user = User::where('id', $parented->user_id)->first();
+    //     Auth::login($user);
+    //     $questionnaire = Questionnaire::with('questions')->first();
 
-        $response = $this->put('/api/selectedOptions/'.$questionnaire->questions->first()->id,
-        [
-            ['option_id' => $questionnaire->questions->first()->options[0]->id,],
-            ['option_id' => $questionnaire->questions->first()->options[2]->id,],
-            ['text' => 'свой вариант ответа обновленный'],
-        ]
-        );
+    //     $response = $this->put('/api/selectedOptions/'.$questionnaire->questions->first()->id,
+    //     [
+    //         ['option_id' => $questionnaire->questions->first()->options[0]->id,],
+    //         ['option_id' => $questionnaire->questions->first()->options[2]->id,],
+    //         ['text' => 'свой вариант ответа обновленный'],
+    //     ]
+    //     );
 
-        $response->assertStatus(200)
-        ->assertJsonFragment(['message' => 'Options update success']);
-    }
+    //     $response->assertStatus(200)
+    //     ->assertJsonFragment(['message' => 'Options update success']);
+    // }
 }

@@ -30,8 +30,7 @@ class ParentedsController extends Controller
     {
         $parented = Parented::where('user_id', Auth::user()->id)->first();
 
-        if ($parented->id != $id)
-        {
+        if ($parented->id != $id) {
             return response()->json([
                 'message' => 'You have\'t permissions'
             ], 400);
@@ -44,8 +43,7 @@ class ParentedsController extends Controller
     {
         $parented = Parented::where('user_id', Auth::user()->id)->first();
 
-        if ($parented->id != $id)
-        {
+        if ($parented->id != $id) {
             return response()->json([
                 'message' => 'You have\'t permissions'
             ], 400);
@@ -72,7 +70,6 @@ class ParentedsController extends Controller
             return response()->json([
                 'message' => 'Parent successfully deleted'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Something went wrong in ParentedController.destroy'
