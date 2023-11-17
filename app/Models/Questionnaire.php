@@ -14,19 +14,23 @@ class Questionnaire extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function consultant(): BelongsTo {
+    public function consultant(): BelongsTo
+    {
         return $this->belongsTo(Consultant::class);
     }
 
-    public function questions(): BelongsToMany {
+    public function questions(): BelongsToMany
+    {
         return $this->belongsToMany(Question::class)->with('options', 'optionOther');
     }
 
-    public function parented(): BelongsToMany {
+    public function parented(): BelongsToMany
+    {
         return $this->belongsToMany(Parented::class)->with('user', 'children');
     }
 
-     public function scopeFilter(Builder $builder, QueryFilter $filter){
+    public function scopeFilter(Builder $builder, QueryFilter $filter)
+    {
         return $filter->apply($builder);
     }
 }

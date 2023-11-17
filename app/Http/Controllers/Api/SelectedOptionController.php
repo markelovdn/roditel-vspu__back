@@ -6,14 +6,35 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSelectedOptionsRequest;
 use App\Models\OptionOther;
+use App\Models\Question;
+use App\Models\Questionnaire;
 use App\Models\SelectedOption;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SelectedOptionController extends Controller
 {
 
-    public static function index()
+    public static function index($id)
     {
+        $userId = Auth::user()->id;
+        $questionIds = DB::table('question_questionnaire')
+            ->where('questionnaire_id', $id)
+            ->pluck('question_id')
+            ->toArray();
+        $selectedOption = DB::table('selected_options')
+            ->whereIn('question_id', $questionIds)
+            ->pluck('option_id')
+            ->toArray();
+        $questionnaire = Questionnaire::with([
+            'questions' => function ($query) use ($selectedOption) {
+                $query->with(['options' => function ($query) use ($selectedOption) {
+                    $query->whereIn('option_id', $selectedOption);
+                }]);
+            }
+        ])->find($id);
+
+        return $questionnaire;
     }
 
     public function store(StoreSelectedOptionsRequest $request, $questionId)
@@ -30,9 +51,8 @@ class SelectedOptionController extends Controller
             }
 
             foreach ($request->other as $item) {
-                $OptionOther = new OptionOther();
+                $OptionOther = OptionOther::where('question_id', $item['questionId'])->first();
                 $OptionOther->text = $item['text'];
-                $OptionOther->question_id = $item['questionId'];
                 $OptionOther->user_id = $user;
                 $OptionOther->save();
             }

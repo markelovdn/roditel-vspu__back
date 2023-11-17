@@ -59,7 +59,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('parented')->group(function () {
         Route::apiResource("/parenteds", ParentedsController::class)->only('update', 'show'); //S
         Route::apiResource("/parented.children", ChildrensController::class)->shallow(); //S
-        Route::apiResource("/questionnaire.selectedOptions", SelectedOptionController::class)->shallow()->only('store'); //S
+        Route::apiResource("/questionnaire.selectedOptions", SelectedOptionController::class)->shallow()->only('index', 'store'); //S
     });
 
     Route::middleware('consultant')->group(function () {
