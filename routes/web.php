@@ -9,4 +9,4 @@ use Illuminate\Support\Facades\Route;
 //     ], 400);
 // })->where('any','.*');
 
-Route::get('/surveyExport/{id}', [FilesExport::class, 'surveyExport']);
+// Route::get('/surveyExport/{id}', [FilesExport::class, 'surveyExport']);

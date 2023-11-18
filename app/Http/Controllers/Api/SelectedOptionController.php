@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DomainService\FilesExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSelectedOptionsRequest;
@@ -9,8 +10,10 @@ use App\Models\OptionOther;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\SelectedOption;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class SelectedOptionController extends Controller
 {
@@ -37,7 +40,7 @@ class SelectedOptionController extends Controller
         return $questionnaire;
     }
 
-    public function store(StoreSelectedOptionsRequest $request, $questionId)
+    public function store(StoreSelectedOptionsRequest $request, $questionnaireId)
     {
         $user = Auth::user()->id;
 
@@ -64,6 +67,14 @@ class SelectedOptionController extends Controller
                 $OptionOther->save();
             }
 
+            $questionnaire = Questionnaire::find($questionnaireId);
+
+            $fileUrl = config('filesystems.disks.public.url') . '/consultants/questionnaires/' . Str::replace(' ', '_', $questionnaire->title) . '_' . Carbon::now()->format('d.m.Y') . '.xlsx';
+
+            $questionnaire->file_url = $fileUrl;
+            $questionnaire->save();
+
+            FilesExport::surveyExport($fileUrl, $questionnaire->id);
 
             return response()->json([
                 'message' => 'Options add success'
