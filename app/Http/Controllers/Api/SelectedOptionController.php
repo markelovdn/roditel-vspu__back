@@ -52,6 +52,13 @@ class SelectedOptionController extends Controller
 
             foreach ($request->other as $item) {
                 $OptionOther = OptionOther::where('question_id', $item['questionId'])->first();
+                if (!$OptionOther) {
+                    $OptionOther = new OptionOther();
+                    $OptionOther->text = $item['text'];
+                    $OptionOther->question_id = $item['questionId'];
+                    $OptionOther->user_id = $user;
+                    $OptionOther->save();
+                }
                 $OptionOther->text = $item['text'];
                 $OptionOther->user_id = $user;
                 $OptionOther->save();
