@@ -2,16 +2,13 @@
 
 namespace App\Exports;
 
-use App\Models\Question;
 use App\Models\Questionnaire;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class SurveyExport implements FromQuery, WithMapping
+class SurveyExport implements FromView
 {
     use Exportable;
     private $id;
@@ -20,63 +17,29 @@ class SurveyExport implements FromQuery, WithMapping
     {
         $this->id = $id;
     }
-    public function query()
+    public function view(): View
     {
         $id = $this->id;
-        // Здесь вы можете определить запрос для получения данных анкеты с вопросами и ответами
-        return Question::query()->whereHas('questionnaire', function ($query) use ($id) {
-            $query->where('questionnaire_id', '=', $id);
-        })->with('options')->orderBy('updated_at', 'desc');
-    }
-    /**
-     * @param Question $question
-     */
-    public function map($question): array
-    {
-        $num = 0;
 
-        return [
-            $num + 1,
-            $question->text,
-            $question->options->implode('text', ','),
+        $questionIds = DB::table('question_questionnaire')
+            ->where('questionnaire_id', $id)
+            ->pluck('question_id')
+            ->toArray();
+        $selectedOption = DB::table('selected_options')
+            ->whereIn('question_id', $questionIds)
+            ->pluck('option_id')
+            ->toArray();
 
-        ];
+        $questionnaire = Questionnaire::query()->where('id', $id)->with([
+            'questions' => function ($query) use ($selectedOption) {
+                $query->with(['options' => function ($query) use ($selectedOption) {
+                    $query->whereIn('option_id', $selectedOption);
+                }]);
+            }
+        ])->first();
+
+        return view('exports.survey', [
+            'questionnaire' => $questionnaire
+        ]);
     }
 }
-
-
-// class SurveyExport implements FromQuery, WithMapping
-// {
-//     use Exportable;
-//     private $id;
-
-//     public function __construct(int $id)
-//     {
-//         $this->id = $id;
-//     }
-
-//     /**
-//      * @param Question $question
-//      */
-//     public function map($question): array
-//     {
-//         return [
-//             $question->text,
-//             ['asd', 'asd'],
-//         ];
-//     }
-//     public function query()
-//     {
-//         $id = $this->id;
-//         // return Questionnaire::query()->whereId($this->id)->with('questions')->orderBy('updated_at', 'desc');
-//         // return Question::query()->whereId($this->id)->with('questions')->orderBy('updated_at', 'desc');
-
-//         $a = Question::query()->whereHas('questionnaire', function ($query) use ($id) {
-//             $query->where('questionnaire_id', '=', $id);
-//         })->with('options')->orderBy('updated_at', 'desc');
-
-//         return Question::query()->whereHas('questionnaire', function ($query) use ($id) {
-//             $query->where('questionnaire_id', '=', $id);
-//         })->with('options')->orderBy('updated_at', 'desc');
-//     }
-// }

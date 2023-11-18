@@ -1,23 +1,21 @@
-@if (empty($survey))
-@json('You do not have access to this survey')
-@endif
 <table>
     <thead>
     <tr>
-        <th>Пол</th>
-        <th>ФИО</th>
-        <th>Дата рождения</th>
-        <th>Претендует на гып</th>
-        <th>Тренер</th>
+        <th>Вопрос</th>
+        <th>Ответы</th>
     </tr>
     </thead>
     <tbody>
+        @foreach ($questionnaire->questions as $question)
         <tr>
-            <td>{{$survey->title}}</td>
-            <td>{{$survey->title}}</td>
-            <td>{{$survey->title}}</td>
-            <td>{{$survey->title}}</td>
-            <td>{{$survey->title}}</td>
+            <td>{{$question->text}}</td>
+            @foreach ($question->options as $option)
+                <td>{{$option->text}}</td>
+            @endforeach
+            @if ($question->optionOther)
+                <td>{{$question->optionOther->text}}</td>
+            @endif
         </tr>
+        @endforeach
     </tbody>
 </table>
