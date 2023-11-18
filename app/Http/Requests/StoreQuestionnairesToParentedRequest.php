@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSelectedOptionsRequest extends FormRequest
+class StoreQuestionnairesToParentedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,8 @@ class StoreSelectedOptionsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'selected' => ['array'],
-            'selected.*.questionId' => ['required', 'numeric'],
-            'selected.*.optionId' => ['required', 'numeric'],
-            'other' => ['array'],
-            'other.*.questionId' => ['required', 'numeric'],
-            'other.*.text' => ['required', 'string'],
+            'questionnaireId' => ['required', 'numeric'],
+            'parentedId' => ['required', 'numeric'],
         ];
     }
 }
