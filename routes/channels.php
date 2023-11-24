@@ -6,15 +6,16 @@ use Illuminate\Support\Facades\Broadcast;
 //     return (int) $user->id === (int) $id;
 // });
 
-// Broadcast::channel('App.Models.Consultation.{id}', function ($user, $id) {
-//     $consultation = App\Models\Consultation::find($id);
-//     if ($consultation && $consultation->users()->where('user_id', $user->id)->exists()) {
-//         return true;
-//     }
-//     return false;
-// });
-
-Broadcast::channel('consultation.{id}', function () {
-    // return (int) $user->id === (int) $id;
-    return true;
+Broadcast::channel('App.Models.Consultation.{id}', function ($id) {
+    // $consultation = App\Models\Consultation::find($id);
+    // if ($consultation && $consultation->users()->where('user_id', $user->id)->exists()) {
+    //     return true;
+    // }
+    // return false;
+    return $id === 21;
 });
+
+// Broadcast::channel('Consultation.93', function () {
+//     // return (int) $user->id === (int) $id;
+//     return true;
+// });
