@@ -25,6 +25,6 @@ class ConsultationEvent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new PrivateChannel('App.Models.Consultation.' . $this->id);
+        return new PrivateChannel('Consultation.' . $this->id);
     }
 }
