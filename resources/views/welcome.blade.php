@@ -1,18 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-    </head>
-    <body class="antialiased">
-        <form action="/api/login" method="POST">
-            @csrf
-            <input style="border: 1px solid black" name="email">
-            <input style="border: 1px solid black" name="password">
-            <input style="border: 1px solid black" type="submit">
-        </form>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    Welcome
+</body>
 </html>
