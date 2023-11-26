@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ConsultationEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMessageFromSocketRequest;
 use App\Http\Resources\ConsultationMessagesResource;
 use App\Models\Consultant;
 use App\Models\Consultation;
@@ -21,7 +23,7 @@ class ConsultationMessagesController extends Controller
             $consultant = Consultant::where('user_id', $user->id)->first();
 
             $messages = ConsultationMessage::where('consultation_id', $request->consultationId)
-            ->where('user_id', '!=', $user->id)->get();
+                ->where('user_id', '!=', $user->id)->get();
 
             foreach ($messages as $message) {
                 $message->readed = true;
@@ -37,10 +39,17 @@ class ConsultationMessagesController extends Controller
 
             if ($consultant) {
                 DB::table('consultation_user')
-                ->where('consultation_id', $request->consultationId)
-                ->where('user_id', '!=', $user->id)
-                ->delete();
+                    ->where('consultation_id', $request->consultationId)
+                    ->where('user_id', '!=', $user->id)
+                    ->delete();
             }
+
+            event(
+                new ConsultationEvent(
+                    $request->consultationId,
+                    $request->text
+                )
+            );
 
             return response()->json([
                 'message' => 'Message successfully added'
@@ -64,7 +73,7 @@ class ConsultationMessagesController extends Controller
             $user = auth()->user();
 
             $messages = ConsultationMessage::where('consultation_id', $request->consultationId)
-            ->where('user_id', '!=', $user->id)->get();
+                ->where('user_id', '!=', $user->id)->get();
 
             foreach ($messages as $message) {
                 $message->readed = true;
@@ -72,9 +81,9 @@ class ConsultationMessagesController extends Controller
             }
 
             $message = ConsultationMessage::where('id', $id)
-            ->where('consultation_id', $request->consultationId)
-            ->where("user_id", $user->id)
-            ->first();
+                ->where('consultation_id', $request->consultationId)
+                ->where("user_id", $user->id)
+                ->first();
 
             $message->text = $request->text;
             $message->user_id = $user->id;
@@ -100,12 +109,11 @@ class ConsultationMessagesController extends Controller
             return response()->json([
                 'message' => 'Record successfully deleted'
             ], 200);
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => $e->getMessage(),
-            'message' => 'Something went wrong in MessageController.destroy'
-        ], 400);
-    }
-
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+                'message' => 'Something went wrong in MessageController.destroy'
+            ], 400);
+        }
     }
 }
