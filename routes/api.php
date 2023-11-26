@@ -49,11 +49,6 @@ Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']);
 Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->only('index', 'show'); //S
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/messages', function (Request $request) {
-        App\Events\ConsultationEvent::dispatch(93, $request->all());
-    });
-
-
     Route::apiResource("/users", UsersController::class)->only('update', 'show'); //S
     Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
     Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->only('store', 'destroy');
