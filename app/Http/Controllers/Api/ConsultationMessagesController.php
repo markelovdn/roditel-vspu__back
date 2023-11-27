@@ -62,7 +62,7 @@ class ConsultationMessagesController extends Controller
             event(
                 new ConsultationEvent(
                     $request->consultationId,
-                    $request->text
+                    ConsultationMessagesResource::collection(ConsultationMessage::where('id', $message->id)->where('user_id', auth()->user()->id)->get())
                 )
             );
 
