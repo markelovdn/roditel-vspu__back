@@ -38,10 +38,25 @@ class ConsultationMessagesController extends Controller
             $message->save();
 
             if ($consultant) {
+                //TODO: проверить на владельца консультации
+                $consultation = Consultation::find($request->consultationId);
+
+                $parented = DB::table('consultation_user')
+                    ->where('consultation_id', $request->consultationId)
+                    ->where('owner', '=', true)
+                    ->first();
+
+                $consultant = DB::table('consultation_user')
+                    ->where('consultation_id', $request->consultationId)
+                    ->where('user_id', '=', $user->id)
+                    ->first();
+
                 DB::table('consultation_user')
                     ->where('consultation_id', $request->consultationId)
-                    ->where('user_id', '!=', $user->id)
                     ->delete();
+
+
+                $consultation->users()->attach([$consultant->user_id => ['owner' => false], $parented->user_id => ['owner' => true]]);
             }
 
             event(
