@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('consultation_id')->constrained('consultations', 'id');
             $table->foreignId('user_id')->constrained('users', 'id');
+            $table->boolean('owner')->default(false);
             $table->timestamps();
         });
     }

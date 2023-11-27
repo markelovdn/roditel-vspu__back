@@ -14,7 +14,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('answer_before');
             $table->date('status')->nullable();
-            $table->string('file_url')->nullable();
+            $table->string('file_url', 500)->nullable();
             $table->foreignId('consultant_id')->constrained('consultants', 'id')->onDelete('cascade')->require();
             $table->softDeletes();
             $table->timestamps();

@@ -260,8 +260,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Questionnaire::factory(1)
-        ->has(Question::factory()->has(Option::factory(3))->count(3))
-        ->create();
+            ->has(Question::factory()->has(Option::factory(3))->count(3))
+            ->create();
 
         DB::table('parented_questionnaire')->insert([
             'parented_id' => 21,
@@ -278,32 +278,35 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('consultation_user')->insert([
-            ["consultation_id" => 21, "user_id" => 94],
-            ["consultation_id" => 21, "user_id" => 93],
+            ["consultation_id" => 21, "user_id" => 94, "owner" => false],
+            ["consultation_id" => 21, "user_id" => 93, "owner" => true],
         ]);
 
         DB::table('consultation_messages')->insert([
-            ["consultation_id" => 21,
-            "user_id" => 93,
-            "text" => "У меня проблемы с детьми, что делать?",
-            "readed" => true,
-            "created_at" => now(),
-            "updated_at" => now()
-        ],
-        ["consultation_id" => 21,
-            "user_id" => 94,
-            "text" => "Сколько у вас детей?",
-            "readed" => true,
-            "created_at" => now(),
-            "updated_at" => now()
-        ],
-        ["consultation_id" => 21,
-            "user_id" => 93,
-            "text" => "12",
-            "readed" => false,
-            "created_at" => now(),
-            "updated_at" => now()
-        ],
+            [
+                "consultation_id" => 21,
+                "user_id" => 93,
+                "text" => "У меня проблемы с детьми, что делать?",
+                "readed" => true,
+                "created_at" => now(),
+                "updated_at" => now()
+            ],
+            [
+                "consultation_id" => 21,
+                "user_id" => 94,
+                "text" => "Сколько у вас детей?",
+                "readed" => true,
+                "created_at" => now(),
+                "updated_at" => now()
+            ],
+            [
+                "consultation_id" => 21,
+                "user_id" => 93,
+                "text" => "12",
+                "readed" => false,
+                "created_at" => now(),
+                "updated_at" => now()
+            ],
         ]);
     }
 }

@@ -71,5 +71,4 @@ class ConsultationTest extends TestCase
                 'message' => 'Consultation successfully deleted'
             ]);
     }
-
 }
