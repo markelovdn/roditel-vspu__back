@@ -35,36 +35,35 @@ class ConsultationsController extends Controller
 
         try {
 
-        $consultation = new Consultation();
-        $consultation->title = $request->title;
-        $consultation->closed = false;
-        $consultation->user_id = $parented->user->id;
-        $consultation->specialization_id = $request->specializationId;
+            $consultation = new Consultation();
+            $consultation->title = $request->title;
+            $consultation->closed = false;
+            $consultation->user_id = $parented->user->id;
+            $consultation->specialization_id = $request->specializationId;
 
-        $consultation->save();
+            $consultation->save();
 
-        $messageData = [
-            'consultation_id' => $consultation->id,
-            'user_id' => $parented->user->id,
-            'text' => $request->messageText,
-            'readed' => false,
-        ];
-
-        if ($request->allConsultants) {
-            $consultants = Consultant::with('user')->where('specialization_id', $request->specializationId)->get();
-            $consultation->users()->attach($consultants->pluck('user.id')->toArray());
+            $messageData = [
+                'consultation_id' => $consultation->id,
+                'user_id' => $parented->user->id,
+                'text' => $request->messageText,
+                'readed' => false,
+            ];
             $consultation->messages()->insert($messageData);
 
-        } else {
-            $consultant = Consultant::with('user')->where('id', $request->consultantId)->first();
-            $consultation->users()->attach([$consultant->user->id, $parented->user->id]);
-            $consultation->messages()->insert($messageData);
-        }
+            if ($request->allConsultants) {
+                $consultants = Consultant::with('user')->where('specialization_id', $request->specializationId)->get();
+                foreach ($consultants as $consultant) {
+                    $consultation->users()->attach([$consultant->user->id => ['owner' => false], $parented->user->id => ['owner' => true]]);
+                }
+            } else {
+                $consultant = Consultant::with('user')->where('id', $request->consultantId)->first();
+                $consultation->users()->attach([$consultant->user->id => ['owner' => false], $parented->user->id => ['owner' => true]]);
+            }
 
-        return response()->json([
-            'message' => 'Consultation successfully added'
-        ], 200);
-
+            return response()->json([
+                'message' => 'Consultation successfully added'
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -87,7 +86,6 @@ class ConsultationsController extends Controller
             return response()->json([
                 'message' => 'Consultation successfully deleted'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),

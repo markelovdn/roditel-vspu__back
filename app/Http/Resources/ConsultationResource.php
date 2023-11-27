@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Consultant;
+use App\Models\ConsultationMessage;
+use App\Models\Parented;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,6 +18,8 @@ class ConsultationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $consultationMessages = ConsultationMessage::where('consultation_id', $this->id)->get();
+
         return [
             "id" => $this->id,
             "title" => $this->title,
@@ -23,7 +28,8 @@ class ConsultationResource extends JsonResource
             "updatedAt" => Carbon::parse($this->updated_at)->timestamp,
             "specializationId" => SpecializationsResource::collection($this->whenLoaded('specializations')),
             "users" => UserResource::collection($this->whenLoaded('users')),
-            "messages" => ConsultationMessagesResource::collection($this->whenLoaded('messages'))
+            "messages" => ConsultationMessagesResource::collection($this->whenLoaded('messages')),
+            "isActive" => count($consultationMessages) > 1 ? true : false
         ];
     }
 }
