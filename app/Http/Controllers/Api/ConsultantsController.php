@@ -16,9 +16,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ConsultantsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->paginate(9));
+        if ($request->all) {
+            return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->get());
+        } else {
+            return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->paginate(9));
+        }
     }
 
     public function store(StoreConsultantRequest $request, FilesHandler $filesHandler)
@@ -34,7 +38,6 @@ class ConsultantsController extends Controller
             return response()->json([
                 'message' => 'Data successfully added'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -61,7 +64,6 @@ class ConsultantsController extends Controller
             $consultant->save();
 
             return ConsultantShowResource::collection(Consultant::where('id', $id)->with('user', 'specialization', 'profession')->get());
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -78,7 +80,6 @@ class ConsultantsController extends Controller
             return response()->json([
                 'message' => 'Record successfully deleted'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -87,7 +88,8 @@ class ConsultantsController extends Controller
         }
     }
 
-    public function uploadPhoto(Request $request, FilesHandler $filesHandler) {
+    public function uploadPhoto(Request $request, FilesHandler $filesHandler)
+    {
         $user = User::where('id', Auth::user()->id)->first();
         $consultant = Consultant::where('user_id', $user->id)->first();
 
@@ -98,7 +100,6 @@ class ConsultantsController extends Controller
             return response()->json([
                 'message' => 'Consultant photo successfully updated'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
