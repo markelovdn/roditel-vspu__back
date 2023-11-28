@@ -19,4 +19,11 @@ class ConsultationMessage extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function mapInto($data)
+    {
+        // Логика преобразования данных
+
+        return $this; // или возвращайте объект, с которым вы хотите работать
+    }
 }

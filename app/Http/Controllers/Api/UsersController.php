@@ -8,6 +8,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UserByTokenRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Children;
 use App\Models\Consultant;
 use App\Models\Parented;
 use App\Models\Role;
@@ -37,6 +38,7 @@ class UsersController extends Controller
 
     public function update(UserUpdateRequest $request, int $id, FilesHandler $filesHandler): JsonResponse
     {
+        //TODO: рефакторинг
         $user = User::where('id', Auth::user()->id)->first();
         $consultant = Consultant::where('user_id', $user->id)->first();
         $parented = Parented::where('user_id', $user->id)->first();
@@ -52,21 +54,48 @@ class UsersController extends Controller
 
 
             if ($consultant) {
-                // $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
                 $consultant->description = $request->description;
                 $consultant->specialization_id = $request->specializationId;
                 $consultant->profession_id = $request->professionId;
 
                 $consultant->save();
             } else {
+
                 $parented->region_id = $request->regionId;
                 $parented->save();
+
+                foreach ($request->childrens as $children) {
+                    if (isset($children['id'])) {
+                        if ($children['age'] >= 18) {
+                            return response()->json([
+                                'error' => 'The child\'s age is not suitable for adding'
+                            ], 300);
+                        }
+
+                        $child = Children::find($children['id']);
+                        $child->age = $children['age'];
+                        $child->save();
+                    } else {
+
+                        if (
+                            $children['age'] >= 18 ||
+                            count(Children::where('parented_id', $parented->id)->get()) >= Parented::MAX_QUANTITY_CHILDRENS
+                        ) {
+                            return response()->json([
+                                'error' => 'The child\'s age is not suitable for adding, or the number of added children is more than six'
+                            ], 300);
+                        }
+                        $child = new Children();
+                        $child->parented_id = $parented->id;
+                        $child->age = $children['age'];
+                        $child->save();
+                    }
+                }
             }
 
             return response()->json([
                 'message' => 'User data successfully updated'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -82,7 +111,6 @@ class UsersController extends Controller
             return response()->json([
                 'message' => 'Record successfully deleted'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -91,12 +119,12 @@ class UsersController extends Controller
         }
     }
 
-    public function getUserByToken() {
-            $user = auth('sanctum')->user();
+    public function getUserByToken()
+    {
+        $user = auth('sanctum')->user();
 
         $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
         return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), FALSE)]);
-
     }
 }
