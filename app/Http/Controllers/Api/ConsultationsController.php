@@ -61,7 +61,7 @@ class ConsultationsController extends Controller
                     $consultation->users()->attach([$consultant->user->id => ['owner' => false], $parented->user->id => ['owner' => true]]);
                 }
             } else {
-                $consultant = Consultant::with('user')->where('id', $request->consultantId)->first();
+                $consultant = Consultant::with('user')->where('user_id', $request->consultantId)->first();
                 $consultation->users()->attach([$consultant->user->id => ['owner' => false], $parented->user->id => ['owner' => true]]);
             }
 
