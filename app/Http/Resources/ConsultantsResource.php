@@ -14,23 +14,23 @@ class ConsultantsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $data = [
-            'user' => [
-                'id' => $this->user->id,
-                'firstName' => $this->user->first_name,
-                'secondName' => $this->user->second_name,
-                'surName' => $this->user->patronymic,
-            ],
-            "specialization" => [
-                "id" => $this->specialization->id,
-                "title" => $this->specialization->title,
-            ],
-        ];
-
         if ($request->all) {
+            $data = [
+                'userId' => $this->user->id,
+                'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
+                "specialization" => [
+                    "id" => $this->specialization->id,
+                    "title" => $this->specialization->title,
+                ],
+            ];
             return $data;
         }
-
+        $data['user'] = [
+            'id' => $this->user->id,
+            'firstName' => $this->user->first_name,
+            'secondName' => $this->user->second_name,
+            'surName' => $this->user->patronymic,
+        ];
         $data['photo'] = $this->photo;
         $data['description'] = $this->description;
         $data['profession'] = [
