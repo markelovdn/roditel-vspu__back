@@ -21,7 +21,7 @@ class ConsultationsController extends Controller
 
     public function index(): JsonResource
     {
-        $consultations = DB::table('consultation_user')->where('user_id', auth()->user()->id)->pluck('id')->toArray();
+        $consultations = DB::table('consultation_user')->where('user_id', auth()->user()->id)->pluck('consultation_id')->toArray();
         return ConsultationResource::collection(Consultation::with('users', 'messages')->whereIn('id', $consultations)->get());
     }
 
