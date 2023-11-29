@@ -36,10 +36,14 @@ class ConsultationsController extends Controller
         try {
 
             $consultation = new Consultation();
-            $consultation->title = $request->title;
+            $consultation->title = "Завяка ";
             $consultation->closed = false;
             $consultation->user_id = $parented->user->id;
             $consultation->specialization_id = $request->specializationId;
+
+            $consultation->save();
+
+            $consultation->title .= $consultation->id;
 
             $consultation->save();
 
