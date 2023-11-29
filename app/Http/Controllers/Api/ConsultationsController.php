@@ -21,7 +21,8 @@ class ConsultationsController extends Controller
 
     public function index(): JsonResource
     {
-        return ConsultationResource::collection(Consultation::with('users', 'messages')->where('user_id', auth()->user()->id)->get());
+        $consultations = DB::table('consultation_user')->where('user_id', auth()->user()->id)->pluck('id')->toArray();
+        return ConsultationResource::collection(Consultation::with('users', 'messages')->whereIn('id', $consultations)->get());
     }
 
     public function store(StoreConsultationRequest $request): JsonResponse
