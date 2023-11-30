@@ -39,7 +39,13 @@ class ConsultationMessagesController extends Controller
 
             if ($consultant) {
                 //TODO: проверить на владельца консультации
-                $consultation = Consultation::find($request->consultationId);
+                $consultation = Consultation::where('user_id', auth()->user()->id)->find($request->consultationId);
+
+                if (!$consultation) {
+                    return response()->json([
+                        'message' => 'No access to consultation'
+                    ], 423);
+                }
 
                 $parented = DB::table('consultation_user')
                     ->where('consultation_id', $request->consultationId)
@@ -71,9 +77,8 @@ class ConsultationMessagesController extends Controller
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => $e->getMessage(),
                 'message' => 'Something went wrong in MessageController.store'
-            ], 400);
+            ], 423);
         }
     }
 
