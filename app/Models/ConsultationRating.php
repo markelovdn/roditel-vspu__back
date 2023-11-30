@@ -10,6 +10,12 @@ class ConsultationRating extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'consultation_id',
+        'rating_question_id',
+        'rating_answer',
+    ];
+
     public function rating(): BelongsTo
     {
         return $this->belongsTo(RatingQuestion::class);

@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ConsultantReportsController;
 use App\Http\Controllers\Api\ConsultantsController;
 use App\Http\Controllers\Api\ConsultationCategoryController;
 use App\Http\Controllers\Api\ConsultationMessagesController;
+use App\Http\Controllers\Api\ConsultationRatingController;
 use App\Http\Controllers\Api\ConsultationsController;
 use App\Http\Controllers\Api\LectorController;
 use App\Http\Controllers\Api\ParentedsController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Api\WebinarPartisipantController;
 use App\Http\Controllers\Api\WebinarQuestionsController;
 use App\Http\Controllers\Api\WebinarsController;
 use App\Http\Controllers\Api\WebinarProgramController;
+use App\Models\ConsultationRating;
 use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/parenteds", ParentedsController::class)->only('update', 'show'); //S
         Route::apiResource("/parented.children", ChildrensController::class)->shallow(); //S
         Route::apiResource("/questionnaire.selectedOptions", SelectedOptionController::class)->shallow()->only('index', 'store'); //S
+        Route::apiResource("/consultationRatings", ConsultationRatingController::class)->only('store'); //S
     });
 
     Route::middleware('consultant')->group(function () {
