@@ -39,7 +39,7 @@ class ConsultationMessagesController extends Controller
 
             if ($consultant) {
                 //TODO: проверить на владельца консультации
-                $consultation = Consultation::where('user_id', auth()->user()->id)->where('id', $request->consultationId)->with('users')->first();
+                $consultation = Consultation::where('id', $request->consultationId)->with('users')->first();
 
                 if (!DB::table('consultation_user')->where('user_id', auth()->user()->id)->where('consultation_id', $request->consultationId)->first()) {
                     return response()->json([
