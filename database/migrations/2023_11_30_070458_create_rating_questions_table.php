@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('rating_questions', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->timestamps();
+            $table->string('type')->default('number');
         });
     }
 

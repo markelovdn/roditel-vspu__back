@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConsultationRatingRequest;
 use App\Models\ConsultationRating;
+use App\Models\RatingQuestion;
 use Illuminate\Http\Request;
 
 class ConsultationRatingController extends Controller
@@ -27,5 +28,10 @@ class ConsultationRatingController extends Controller
         return response()->json([
             'message' => "Rating successfully created!",
         ]);
+    }
+
+    public function getRatingCollection()
+    {
+        return RatingQuestion::all();
     }
 }
