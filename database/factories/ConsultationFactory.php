@@ -23,6 +23,8 @@ class ConsultationFactory extends Factory
             'closed' => fake()->boolean(),
             'user_id' => User::factory(),
             'specialization_id' => fake()->numberBetween(1, 5),
+            'created_at' => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
+            'updated_at' => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
         ];
     }
 }

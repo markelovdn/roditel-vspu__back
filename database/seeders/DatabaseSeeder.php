@@ -270,17 +270,69 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('consultations')->insert([
-            "title" => "test",
-            "user_id" => 93,
-            "closed" => false,
-            "specialization_id" => 1,
-            "created_at" => now(),
-            "updated_at" => now()
+            [
+                "title" => "test",
+                "user_id" => 93,
+                "closed" => false,
+                "specialization_id" => 1,
+                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
+                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
+            ],
+            [
+                "title" => "test2",
+                "user_id" => 93,
+                "closed" => false,
+                "specialization_id" => 1,
+                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
+                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
+            ],
+            [
+                "title" => "test3",
+                "user_id" => 93,
+                "closed" => false,
+                "specialization_id" => 1,
+                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
+                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
+            ],
+            [
+                "title" => "test4",
+                "user_id" => 93,
+                "closed" => false,
+                "specialization_id" => 1,
+                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
+                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
+            ],
+            [
+                "title" => "test5",
+                "user_id" => 93,
+                "closed" => false,
+                "specialization_id" => 1,
+                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
+                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
+            ],
+            [
+                "title" => "test6",
+                "user_id" => 93,
+                "closed" => false,
+                "specialization_id" => 1,
+                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
+                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
+            ]
         ]);
 
         DB::table('consultation_user')->insert([
             ["consultation_id" => 21, "user_id" => 94, "owner" => false],
             ["consultation_id" => 21, "user_id" => 93, "owner" => true],
+            ["consultation_id" => 22, "user_id" => 94, "owner" => false],
+            ["consultation_id" => 22, "user_id" => 93, "owner" => true],
+            ["consultation_id" => 23, "user_id" => 94, "owner" => false],
+            ["consultation_id" => 23, "user_id" => 93, "owner" => true],
+            ["consultation_id" => 24, "user_id" => 94, "owner" => false],
+            ["consultation_id" => 24, "user_id" => 93, "owner" => true],
+            ["consultation_id" => 25, "user_id" => 94, "owner" => false],
+            ["consultation_id" => 25, "user_id" => 93, "owner" => true],
+            ["consultation_id" => 26, "user_id" => 94, "owner" => false],
+            ["consultation_id" => 26, "user_id" => 93, "owner" => true],
         ]);
 
         DB::table('consultation_messages')->insert([
