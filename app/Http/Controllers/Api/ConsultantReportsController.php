@@ -21,12 +21,10 @@ class ConsultantReportsController extends Controller
 
     public function index(Request $request): JsonResource
     {
-        //TODO:не смог сделать фильтр через скоуп, возникла проблема с использованием whereRaw в скоупе.
-
         if ($request->query('dateBetween') == null) {
             return ConsultantReportsResource::collection(
                 ConsultantReport::where('consultant_id', Auth::user()->consultant->id)
-                ->orderBy('updated_at', 'desc')->paginate(6)
+                    ->orderBy('updated_at', 'desc')->paginate(6)
             );
         }
 
@@ -36,10 +34,10 @@ class ConsultantReportsController extends Controller
 
         return ConsultantReportsResource::collection(
             ConsultantReport::where('consultant_id', $consultant->id)
-            ->whereRaw('DATE(updated_at) >= ?', [$dateStart])
-            ->whereRaw('DATE(updated_at) <= ?', [$dateEnd])
-            ->orderBy('updated_at', 'desc')
-            ->paginate(6)
+                ->whereRaw('DATE(updated_at) >= ?', [$dateStart])
+                ->whereRaw('DATE(updated_at) <= ?', [$dateEnd])
+                ->orderBy('updated_at', 'desc')
+                ->paginate(6)
         );
     }
 
@@ -58,7 +56,6 @@ class ConsultantReportsController extends Controller
             return response()->json([
                 'message' => 'Report successfully added'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -72,7 +69,7 @@ class ConsultantReportsController extends Controller
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
         $reports = ConsultantReportsResource::collection(ConsultantReport::where('id', $id)->where('consultant_id', $consultant->id)->get());
 
-        return response()->json([ 'reports' => json_decode(json_encode((object) $reports), true) ], 200);
+        return response()->json(['reports' => json_decode(json_encode((object) $reports), true)], 200);
     }
 
     public function update(StoreConsultantReportsRequest $request, int $report, FilesHandler $filesHandler)
@@ -90,7 +87,6 @@ class ConsultantReportsController extends Controller
             return response()->json([
                 'message' => 'Report successfully updated'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -109,7 +105,6 @@ class ConsultantReportsController extends Controller
             return response()->json([
                 'message' => 'Report successfully deleted'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),

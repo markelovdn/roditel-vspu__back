@@ -14,7 +14,6 @@ class QuestionsController extends Controller
 {
     public static function store(array $questions, int $questionnairyId): void
     {
-        //TODO:сделать валидацию массива
         $questionnairy = Questionnaire::find($questionnairyId);
 
         foreach ($questions as $item) {
@@ -37,12 +36,10 @@ class QuestionsController extends Controller
 
     public static function update(array $questions, int $questionnairyId): void
     {
-        //TODO:сделать валидацию массива
         $questionnairy = Questionnaire::with('questions')->find($questionnairyId);
 
         foreach ($questions as $item) {
-            if (!isset($item['id']))
-            {
+            if (!isset($item['id'])) {
                 $question = new Question();
 
                 $question->text = $item['text'];

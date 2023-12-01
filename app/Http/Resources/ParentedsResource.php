@@ -14,6 +14,14 @@ class ParentedsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if ($request->all) {
+            $data = [
+                'userId' => $this->user->id,
+                'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
+            ];
+            return $data;
+        }
+
         return [
             'id' => $this->id,
             'regionId' => $this->region_id,

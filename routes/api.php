@@ -27,13 +27,12 @@ use App\Models\Questionnaire;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-//TODO:проработать таблицу консультации на предмет завершения консультации
-//TODO:реализовать оценку качества консультаций
-
 //AUTH
 Route::post('/login', [AuthController::class, 'login']); //S
 Route::post('/register', [AuthController::class, 'register']); //S
 Route::post('/logout', [AuthController::class, 'logout']); //S
+Route::post('/forgotPassword', [AuthController::class, 'sendToken']);
+Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
 
 //COLLECTIONS
 Route::apiResource("/specializations", SpecializationsController::class)->only('index'); //S
@@ -67,6 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/questionnaire.selectedOptions", SelectedOptionController::class)->shallow()->only('index', 'store'); //S
         Route::apiResource("/consultationRatings", ConsultationRatingController::class)->only('store'); //S
         Route::get("/getRatingQuestions", [ConsultationRatingController::class, 'getRatingCollection']);
+        Route::post('/getAllConsultantsForParented', [ConsultationsController::class, 'getAllConsultantsForParented']);
     });
 
     Route::middleware('consultant')->group(function () {
@@ -75,6 +75,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/consultant.reports", ConsultantReportsController::class)->shallow(); //S
         Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow()->only('update', 'store', 'destroy');
         Route::post('/setParentedToQuestionnaire', [QuestionnairesController::class, 'setParentedToQuestionnaire']);
+        Route::post('/closeConsultation', [ConsultationsController::class, 'closeConsultation']);
+        Route::post('/getAllParentedsForConsultant', [ConsultationsController::class, 'getAllParentedsForConsultant']);
     });
 
     Route::middleware('admin')->group(function () {
@@ -97,6 +99,3 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/api/documentation', function () {
     return view('vendor.l5-swagger.index');
 });
-
-Route::post('/forgotPassword', [AuthController::class, 'sendToken']);
-Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
