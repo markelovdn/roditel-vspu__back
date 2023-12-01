@@ -21,6 +21,7 @@ use App\Models\Specialization;
 use App\Models\User;
 use App\Models\WebinarCategory;
 use App\Models\WebinarQuestion;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -275,48 +276,24 @@ class DatabaseSeeder extends Seeder
                 "user_id" => 93,
                 "closed" => false,
                 "specialization_id" => 1,
-                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
-                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "title" => "test2",
                 "user_id" => 93,
                 "closed" => false,
                 "specialization_id" => 1,
-                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
-                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
+                "created_at" => now()->addDay(-3),
+                "updated_at" => now()->addDay(-3),
             ],
             [
                 "title" => "test3",
                 "user_id" => 93,
                 "closed" => false,
                 "specialization_id" => 1,
-                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
-                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
-            ],
-            [
-                "title" => "test4",
-                "user_id" => 93,
-                "closed" => false,
-                "specialization_id" => 1,
-                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
-                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
-            ],
-            [
-                "title" => "test5",
-                "user_id" => 93,
-                "closed" => false,
-                "specialization_id" => 1,
-                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
-                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
-            ],
-            [
-                "title" => "test6",
-                "user_id" => 93,
-                "closed" => false,
-                "specialization_id" => 1,
-                "created_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023'),
-                "updated_at" => fake()->dateTimeBetween('29.11.2023', '05.12.2023')
+                "created_at" => now()->addDay(-6),
+                "updated_at" => now()->addDay(-6),
             ]
         ]);
 
@@ -327,12 +304,6 @@ class DatabaseSeeder extends Seeder
             ["consultation_id" => 22, "user_id" => 93, "owner" => true],
             ["consultation_id" => 23, "user_id" => 94, "owner" => false],
             ["consultation_id" => 23, "user_id" => 93, "owner" => true],
-            ["consultation_id" => 24, "user_id" => 94, "owner" => false],
-            ["consultation_id" => 24, "user_id" => 93, "owner" => true],
-            ["consultation_id" => 25, "user_id" => 94, "owner" => false],
-            ["consultation_id" => 25, "user_id" => 93, "owner" => true],
-            ["consultation_id" => 26, "user_id" => 94, "owner" => false],
-            ["consultation_id" => 26, "user_id" => 93, "owner" => true],
         ]);
 
         DB::table('consultation_messages')->insert([
