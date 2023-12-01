@@ -14,7 +14,6 @@ class OptionsController extends Controller
 
     public static function store(array $options, array $other, int $questionId)
     {
-        //TODO:сделать валидацию массива
         $question = Question::find($questionId);
 
         if ($other['show'] === true) {
@@ -41,7 +40,6 @@ class OptionsController extends Controller
 
     public static function update(array $options, int $questionId)
     {
-        //TODO:сделать валидацию массива
         $question = Question::with('options')->find($questionId);
 
         foreach ($options as $item) {

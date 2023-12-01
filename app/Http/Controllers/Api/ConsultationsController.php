@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Filters\ConsultationFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConsultantRequest;
 use App\Http\Requests\StoreConsultationRequest;
 use App\Http\Requests\UpdateConsultationRequest;
+use App\Http\Resources\ConsultantsResource;
 use App\Http\Resources\ConsultationResource;
+use App\Http\Resources\ParentedsResource;
 use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Models\Parented;
@@ -19,10 +22,10 @@ use Illuminate\Support\Facades\DB;
 class ConsultationsController extends Controller
 {
 
-    public function index(): JsonResource
+    public function index(ConsultationFilter $filter): JsonResource
     {
         $consultations = DB::table('consultation_user')->where('user_id', auth()->user()->id)->pluck('consultation_id')->toArray();
-        return ConsultationResource::collection(Consultation::with('users', 'messages')->whereIn('id', $consultations)->get());
+        return ConsultationResource::collection(Consultation::with('users', 'messages')->whereIn('id', $consultations)->filter($filter)->get());
     }
 
     public function store(StoreConsultationRequest $request): JsonResponse
@@ -35,7 +38,6 @@ class ConsultationsController extends Controller
         }
 
         try {
-
             $consultation = new Consultation();
             $consultation->title = "Завяка ";
             $consultation->closed = false;
@@ -96,6 +98,50 @@ class ConsultationsController extends Controller
                 'error' => $e->getMessage(),
                 'message' => 'Something went wrong in ConsultationController.destroy'
             ], 400);
+        }
+    }
+
+    public function getAllConsultantsForParented(): JsonResource
+    {
+        $consultations = Consultation::where('user_id', auth()->user()->id)->pluck('id')->toArray();
+        $consultantUserId = DB::table('consultation_user')
+            ->whereIn('consultation_id', $consultations)
+            ->where('owner', false)
+            ->pluck('user_id')->toArray();
+
+        return ConsultantsResource::collection(Consultant::with('user')->whereIn('user_id', $consultantUserId)->get());
+    }
+
+    public function getAllParentedsForConsultant(): JsonResource
+    {
+        $consultables = DB::table('consultation_user')->where('user_id', auth()->user()->id)->pluck('consultation_id')->toArray();
+        $consultations = Consultation::where('id', $consultables)->pluck('id')->toArray();
+        $parentedUserId = DB::table('consultation_user')
+            ->whereIn('consultation_id', $consultations)
+            ->where('owner', true)
+            ->pluck('user_id')->toArray();
+
+        return ParentedsResource::collection(Parented::with('user')->whereIn('user_id', $parentedUserId)->get());
+    }
+
+    public function closeConsultation(Request $request): JsonResponse
+    {
+        $this->validate($request, [
+            'consultationId' => ['required', 'exists:consultations,id'],
+        ]);
+
+        $consultation = Consultation::where('id', $request->consultationId)
+            ->whereHas('users', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })
+            ->first();
+
+        if ($consultation) {
+            $consultation->closed = true;
+            $consultation->save();
+            return response()->json([
+                'message' => 'Consultation successfully closed'
+            ], 200);
         }
     }
 }
