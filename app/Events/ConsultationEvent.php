@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Models\Consultation;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -21,6 +23,11 @@ class ConsultationEvent implements ShouldBroadcast
     {
         $this->id = $id;
         $this->message = $message;
+    }
+
+    public function join(User $user, Consultation $consultation): array|bool
+    {
+        return $user->id === $consultation->user_id;
     }
 
     public function broadcastOn()

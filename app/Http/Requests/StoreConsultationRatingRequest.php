@@ -25,7 +25,7 @@ class StoreConsultationRatingRequest extends FormRequest
             'consultation_id' => ['required'],
             'ratings' => ['array'],
             'ratings.*.rating_question_id' => ['required'],
-            'ratings.*.rating_answer' => ['required']
+            'ratings.*.rating_answer' => []
         ];
     }
 }

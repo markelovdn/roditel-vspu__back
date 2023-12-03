@@ -10,8 +10,11 @@ use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Models\ConsultationMessage;
 use App\Models\Parented;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class ConsultationMessagesController extends Controller
 {
@@ -63,7 +66,8 @@ class ConsultationMessagesController extends Controller
 
                 $consultation->users()->attach([$consultant->user_id => ['owner' => false], $parented->user_id => ['owner' => true]]);
             }
-
+            // event(new DisconnectUser($userId));
+            $users = Broadcast::connection('redis');
             event(
                 new ConsultationEvent(
                     $request->consultationId,

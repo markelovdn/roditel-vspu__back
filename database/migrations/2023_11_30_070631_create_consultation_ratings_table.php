@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('consultation_id')->constrained('consultations');
             $table->foreignId('rating_question_id')->constrained('rating_questions');
-            $table->string('rating_answer');
+            $table->string('rating_answer')->nullable();
             $table->timestamps();
         });
     }
