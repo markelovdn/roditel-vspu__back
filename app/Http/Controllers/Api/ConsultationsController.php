@@ -13,6 +13,8 @@ use App\Http\Resources\ParentedsResource;
 use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Models\Parented;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -25,8 +27,24 @@ class ConsultationsController extends Controller
 
     public function index(ConsultationFilter $filter): JsonResource
     {
-        $consultations = DB::table('consultation_user')->where('user_id', auth()->user()->id)->pluck('consultation_id')->toArray();
-        return ConsultationResource::collection(Consultation::with('users', 'messages')->whereIn('id', $consultations)->filter($filter)->get());
+        $user = auth()->user();
+
+        $query = Consultation::with('users', 'messages')
+            ->when($user->role->code === Role::CONSULTANT, function ($query) use ($user) {
+                $specializationIds = Consultant::where('user_id', $user->id)->first()->specialization_id;
+                return $query->where(function ($query) use ($user, $specializationIds) {
+                    $query->where('specialization_id', $specializationIds)
+                        ->where('consultant_user_id', null)
+                        ->orWhere('consultant_user_id', $user->id);
+                });
+            })
+            ->when($user->role->code === Role::PARENTED, function ($query) use ($user) {
+                return $query->where('parented_user_id', $user->id);
+            });
+
+        $consultations = $query->filter($filter)->get();
+
+        return ConsultationResource::collection($consultations);
     }
 
     public function store(StoreConsultationRequest $request): JsonResponse
@@ -42,12 +60,16 @@ class ConsultationsController extends Controller
             $consultation = new Consultation();
             $consultation->title = "Завяка ";
             $consultation->closed = false;
-            $consultation->user_id = $parented->user->id;
+            $consultation->parented_user_id = $parented->user->id;
             $consultation->specialization_id = $request->specializationId;
 
-            $consultation->save();
-
-            $consultation->title .= $consultation->id;
+            if ($request->allConsultants) {
+                $consultation->consultant_user_id = null;
+            } else {
+                $consultant = Consultant::with('user')->where('user_id', $request->consultantId)->first();
+                $consultation->consultant_user_id = $consultant->user->id;
+                $consultation->users()->attach([$consultant->user->id => ['owner' => false], $parented->user->id => ['owner' => true]]);
+            }
 
             $consultation->save();
 
@@ -58,16 +80,6 @@ class ConsultationsController extends Controller
                 'readed' => false,
             ];
             $consultation->messages()->insert($messageData);
-
-            if ($request->allConsultants) {
-                $consultants = Consultant::with('user')->where('specialization_id', $request->specializationId)->get();
-                foreach ($consultants as $consultant) {
-                    $consultation->users()->attach([$consultant->user->id => ['owner' => false], $parented->user->id => ['owner' => true]]);
-                }
-            } else {
-                $consultant = Consultant::with('user')->where('user_id', $request->consultantId)->first();
-                $consultation->users()->attach([$consultant->user->id => ['owner' => false], $parented->user->id => ['owner' => true]]);
-            }
 
             return response()->json([
                 'message' => 'Consultation successfully added'
@@ -104,7 +116,7 @@ class ConsultationsController extends Controller
 
     public function getAllConsultantsForParented(): JsonResource
     {
-        $consultations = Consultation::where('user_id', auth()->user()->id)->pluck('id')->toArray();
+        $consultations = Consultation::where('parented_user_id', auth()->user()->id)->pluck('id')->toArray();
         $consultantUserId = DB::table('consultation_user')
             ->whereIn('consultation_id', $consultations)
             ->where('owner', false)

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->boolean('closed')->default(false);
-            $table->foreignId('user_id')->constrained('users', 'id');
+            $table->foreignId('parented_user_id')->constrained('users', 'id');
+            $table->foreignId('consultant_user_id')->nullable()->constrained('users', 'id');
             $table->foreignId('specialization_id')->constrained('specializations', 'id');
             $table->softDeletes();
             $table->timestamps();
