@@ -273,7 +273,8 @@ class DatabaseSeeder extends Seeder
         DB::table('consultations')->insert([
             [
                 "title" => "test",
-                "user_id" => 93,
+                "parented_user_id" => 93,
+                "consultant_user_id" => 94,
                 "closed" => false,
                 "specialization_id" => 1,
                 "created_at" => now(),
@@ -281,7 +282,8 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 "title" => "test2",
-                "user_id" => 93,
+                "parented_user_id" => 93,
+                "consultant_user_id" => 94,
                 "closed" => false,
                 "specialization_id" => 1,
                 "created_at" => now()->addDay(-3),
@@ -289,7 +291,8 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 "title" => "test3",
-                "user_id" => 93,
+                "parented_user_id" => 93,
+                "consultant_user_id" => 94,
                 "closed" => false,
                 "specialization_id" => 1,
                 "created_at" => now()->addDay(-6),

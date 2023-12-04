@@ -22,7 +22,7 @@ class ConsultationResource extends JsonResource
 
         return [
             "id" => $this->id,
-            "title" => $this->title,
+            "title" => $this->title . ' ' . $this->id,
             "closed" => $this->closed === 0 ? false : true,
             "createdAt" => Carbon::parse($this->created_at)->getTimestampMs(),
             "updatedAt" => Carbon::parse($this->updated_at)->getTimestampMs(),

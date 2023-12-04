@@ -25,10 +25,10 @@ class ConsultationEvent implements ShouldBroadcast
         $this->message = $message;
     }
 
-    public function join(User $user, Consultation $consultation): array|bool
-    {
-        return $user->id === $consultation->user_id;
-    }
+    // public function join(User $user, Consultation $consultation): array|bool
+    // {
+    //     return $user->id === $consultation->user_id;
+    // }
 
     public function broadcastOn()
     {

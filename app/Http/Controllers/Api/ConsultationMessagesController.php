@@ -33,47 +33,47 @@ class ConsultationMessagesController extends Controller
                 $message->save();
             }
 
-            $message = new ConsultationMessage();
-            $message->text = $request->text;
-            $message->user_id = $user->id;
-            $message->readed = false;
-            $message->consultation_id = $request->consultationId;
-            $message->save();
-
             if ($consultant) {
-                $consultation = Consultation::where('id', $request->consultationId)->with('users')->first();
+                $consultation = Consultation::where('id', $request->consultationId)
+                    ->where(function ($query) use ($consultant) {
+                        $query->where('consultant_user_id', $consultant->user->id)
+                            ->orWhereNull('consultant_user_id');
+                    })
+                    ->first();
 
-                if (!DB::table('consultation_user')->where('user_id', auth()->user()->id)->where('consultation_id', $request->consultationId)->first()) {
-                    return response()->json([
-                        'message' => 'No access to consultation'
-                    ], 423);
+                if ($consultation) {
+                    $consultation->consultant_user_id = $consultant->user->id;;
+                    $consultation->save();
+
+                    $message = new ConsultationMessage();
+                    $message->text = $request->text;
+                    $message->user_id = $user->id;
+                    $message->readed = false;
+                    $message->consultation_id = $request->consultationId;
+                    $message->save();
+
+                    event(
+                        new ConsultationEvent(
+                            $request->consultationId,
+                            new ConsultationMessagesResource(ConsultationMessage::where('id', $message->id)->where('user_id', auth()->user()->id)->first())
+                        )
+                    );
                 }
+            } else {
+                $message = new ConsultationMessage();
+                $message->text = $request->text;
+                $message->user_id = $user->id;
+                $message->readed = false;
+                $message->consultation_id = $request->consultationId;
+                $message->save();
 
-                $parented = DB::table('consultation_user')
-                    ->where('consultation_id', $request->consultationId)
-                    ->where('owner', '=', true)
-                    ->first();
-
-                $consultant = DB::table('consultation_user')
-                    ->where('consultation_id', $request->consultationId)
-                    ->where('user_id', '=', $user->id)
-                    ->first();
-
-                DB::table('consultation_user')
-                    ->where('consultation_id', $request->consultationId)
-                    ->delete();
-
-
-                $consultation->users()->attach([$consultant->user_id => ['owner' => false], $parented->user_id => ['owner' => true]]);
+                event(
+                    new ConsultationEvent(
+                        $request->consultationId,
+                        new ConsultationMessagesResource(ConsultationMessage::where('id', $message->id)->where('user_id', auth()->user()->id)->first())
+                    )
+                );
             }
-            // event(new DisconnectUser($userId));
-            $users = Broadcast::connection('redis');
-            event(
-                new ConsultationEvent(
-                    $request->consultationId,
-                    new ConsultationMessagesResource(ConsultationMessage::where('id', $message->id)->where('user_id', auth()->user()->id)->first())
-                )
-            );
 
             return response()->json([
                 'message' => 'Message successfully added'
