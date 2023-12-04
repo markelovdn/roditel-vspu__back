@@ -52,6 +52,8 @@ class ConsultationMessagesController extends Controller
                     $message->consultation_id = $request->consultationId;
                     $message->save();
 
+                    $consultation->users()->sync([$consultation->consultant_user_id => ['owner' => false], $consultation->parented_user_id => ['owner' => true]]);
+
                     event(
                         new ConsultationEvent(
                             $request->consultationId,

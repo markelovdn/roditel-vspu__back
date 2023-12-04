@@ -116,23 +116,14 @@ class ConsultationsController extends Controller
 
     public function getAllConsultantsForParented(): JsonResource
     {
-        $consultations = Consultation::where('parented_user_id', auth()->user()->id)->pluck('id')->toArray();
-        $consultantUserId = DB::table('consultation_user')
-            ->whereIn('consultation_id', $consultations)
-            ->where('owner', false)
-            ->pluck('user_id')->toArray();
+        $consultantUserId = Consultation::where('parented_user_id', auth()->user()->id)->pluck('consultant_user_id')->toArray();
 
         return ConsultantsResource::collection(Consultant::with('user')->whereIn('user_id', $consultantUserId)->get());
     }
 
     public function getAllParentedsForConsultant(): JsonResource
     {
-        $consultables = DB::table('consultation_user')->where('user_id', auth()->user()->id)->pluck('consultation_id')->toArray();
-        $consultations = Consultation::where('id', $consultables)->pluck('id')->toArray();
-        $parentedUserId = DB::table('consultation_user')
-            ->whereIn('consultation_id', $consultations)
-            ->where('owner', true)
-            ->pluck('user_id')->toArray();
+        $parentedUserId = Consultation::where('consultant_user_id', auth()->user()->id)->pluck('parented_user_id')->toArray();
 
         return ParentedsResource::collection(Parented::with('user')->whereIn('user_id', $parentedUserId)->get());
     }

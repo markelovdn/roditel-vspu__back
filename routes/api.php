@@ -28,51 +28,51 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //AUTH
-Route::post('/login', [AuthController::class, 'login']); //S
-Route::post('/register', [AuthController::class, 'register']); //S
-Route::post('/logout', [AuthController::class, 'logout']); //S
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('/forgotPassword', [AuthController::class, 'sendToken']);
 Route::post('/resetPassword', [AuthController::class, 'resetPassword']);
 
 //COLLECTIONS
-Route::apiResource("/specializations", SpecializationsController::class)->only('index'); //S
-Route::apiResource("/professions", ProfessionsController::class)->only('index'); //S
-Route::apiResource("/regions", RegionsController::class)->only('index'); //S
+Route::apiResource("/specializations", SpecializationsController::class)->only('index');
+Route::apiResource("/professions", ProfessionsController::class)->only('index');
+Route::apiResource("/regions", RegionsController::class)->only('index');
 
 //CONSULTANTS
-Route::apiResource("/consultants", ConsultantsController::class)->only('index'); //S
+Route::apiResource("/consultants", ConsultantsController::class)->only('index');
 
 //WEBINARS
-Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy'); //S
-Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->only('index', 'show'); //S
+Route::apiResource("/webinars", WebinarsController::class)->except('store', 'update', 'destroy');
+Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->only('index', 'show');
 Route::apiResource("/lectors", LectorController::class)->only('index', 'show');
-Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']); //S
-Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->only('index', 'show'); //S
+Route::get("/webinarLectors", [WebinarsController::class, 'getWebinarLectors']);
+Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->only('index', 'show');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource("/users", UsersController::class)->only('update', 'show'); //S
-    Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']); //S
+    Route::apiResource("/users", UsersController::class)->only('update', 'show');
+    Route::get("/getUserByToken", [UsersController::class, 'getUserByToken']);
     Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->only('store', 'destroy');
     Route::apiResource("/users.consultations", ConsultationsController::class)->shallow()->except('dstroy');
     Route::apiResource("/consultations.messages", ConsultationMessagesController::class)->shallow();
     Route::apiResource("consultationCategories", ConsultationCategoryController::class)->only('index');
     Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow()->except('update', 'store', 'destroy');
-    Route::get("/getRatingCollection", [ConsultationRatingController::class, 'getRatingCollection']); //S
+    Route::get("/getRatingCollection", [ConsultationRatingController::class, 'getRatingCollection']);
 
 
     Route::middleware('parented')->group(function () {
-        Route::apiResource("/parenteds", ParentedsController::class)->only('update', 'show'); //S
-        Route::apiResource("/parented.children", ChildrensController::class)->shallow(); //S
-        Route::apiResource("/questionnaire.selectedOptions", SelectedOptionController::class)->shallow()->only('index', 'store'); //S
-        Route::apiResource("/consultationRatings", ConsultationRatingController::class)->only('store'); //S
+        Route::apiResource("/parenteds", ParentedsController::class)->only('update', 'show');
+        Route::apiResource("/parented.children", ChildrensController::class)->shallow();
+        Route::apiResource("/questionnaire.selectedOptions", SelectedOptionController::class)->shallow()->only('index', 'store');
+        Route::apiResource("/consultationRatings", ConsultationRatingController::class)->only('store');
         Route::get("/getRatingQuestions", [ConsultationRatingController::class, 'getRatingCollection']);
         Route::post('/getAllConsultantsForParented', [ConsultationsController::class, 'getAllConsultantsForParented']);
     });
 
     Route::middleware('consultant')->group(function () {
-        Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'destroy'); //S
+        Route::apiResource("/consultants", ConsultantsController::class)->except('index', 'destroy');
         Route::post("/uploadPhotoConsultant", [ConsultantsController::class, 'uploadPhoto']);
-        Route::apiResource("/consultant.reports", ConsultantReportsController::class)->shallow(); //S
+        Route::apiResource("/consultant.reports", ConsultantReportsController::class)->shallow();
         Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow()->only('update', 'store', 'destroy');
         Route::post('/setParentedToQuestionnaire', [QuestionnairesController::class, 'setParentedToQuestionnaire']);
         Route::post('/closeConsultation', [ConsultationsController::class, 'closeConsultation']);
@@ -80,18 +80,18 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('admin')->group(function () {
-        Route::apiResource("/users", UsersController::class)->except('update', 'show'); //S
-        Route::apiResource("/parenteds", ParentedsController::class)->only('index', 'destroy'); //S
-        Route::apiResource("/consultants", ConsultantsController::class)->only('destroy'); //S
-        Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show'); //S
-        Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->except('index', 'show'); //S
+        Route::apiResource("/users", UsersController::class)->except('update', 'show');
+        Route::apiResource("/parenteds", ParentedsController::class)->only('index', 'destroy');
+        Route::apiResource("/consultants", ConsultantsController::class)->only('destroy');
+        Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show');
+        Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->except('index', 'show');
         Route::apiResource("/webinar.webinarPrograms", WebinarProgramController::class)->shallow()->except('index', 'show');
         Route::apiResource("/lectors", LectorController::class)->except('index', 'show');
         Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->except('store', 'destroy');
-        Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except('index', 'show'); //S
-        Route::apiResource("/specializations", SpecializationsController::class)->except('index'); //S
-        Route::apiResource("/professions", ProfessionsController::class)->except('index'); //S
-        Route::apiResource("/regions", RegionsController::class)->except('index'); //S
+        Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except('index', 'show');
+        Route::apiResource("/specializations", SpecializationsController::class)->except('index');
+        Route::apiResource("/professions", ProfessionsController::class)->except('index');
+        Route::apiResource("/regions", RegionsController::class)->except('index');
         Route::apiResource("/contracts", ConsultantContractController::class);
     });
 });
