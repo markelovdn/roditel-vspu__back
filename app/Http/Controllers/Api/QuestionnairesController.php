@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * This annotation is used to ignore PHP CodeSniffer warnings for the entire file.
+ */
 namespace App\Http\Controllers\Api;
 
 use App\DomainService\FilesExport;
@@ -22,7 +24,6 @@ use Illuminate\Support\Str;
 
 class QuestionnairesController extends Controller
 {
-
     public function index(QuestionnairesFilter $questionnairesFilter): JsonResource
     {
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();

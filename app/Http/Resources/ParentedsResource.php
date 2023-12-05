@@ -17,6 +17,8 @@ class ParentedsResource extends JsonResource
         if ($request->all) {
             $data = [
                 'userId' => $this->user->id,
+                'parentedId' => $this->id,
+                'regionId' => $this->region_id,
                 'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
             ];
             return $data;

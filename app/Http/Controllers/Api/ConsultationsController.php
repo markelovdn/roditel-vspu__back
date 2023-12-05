@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Filters\ConsultationFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreConsultantRequest;
 use App\Http\Requests\StoreConsultationRequest;
-use App\Http\Requests\UpdateConsultationRequest;
 use App\Http\Resources\ConsultantsResource;
 use App\Http\Resources\ConsultationResource;
 use App\Http\Resources\ParentedsResource;
@@ -14,13 +12,11 @@ use App\Models\Consultant;
 use App\Models\Consultation;
 use App\Models\Parented;
 use App\Models\Role;
-use App\Models\User;
+use App\Jobs\SendEmailNewConsultationForAll;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Queue;
 
 class ConsultationsController extends Controller
 {
@@ -65,21 +61,40 @@ class ConsultationsController extends Controller
 
             if ($request->allConsultants) {
                 $consultation->consultant_user_id = null;
+
+                $consultants = Consultant::with('user')->where('specialization_id', $request->specializationId)->get();
+
+                $consultation->save();
+
+                $messageData = [
+                    'consultation_id' => $consultation->id,
+                    'user_id' => $parented->user->id,
+                    'text' => $request->messageText,
+                    'readed' => false,
+                ];
+                $consultation->messages()->insert($messageData);
+
+                foreach ($consultants as $consultant) {
+                    Queue::push(new SendEmailNewConsultationForAll($consultant->user->email, $request->messageText, $parented->user));
+                }
             } else {
                 $consultant = Consultant::with('user')->where('user_id', $request->consultantId)->first();
                 $consultation->consultant_user_id = $consultant->user->id;
+
+                $consultation->save();
+
+                $messageData = [
+                    'consultation_id' => $consultation->id,
+                    'user_id' => $parented->user->id,
+                    'text' => $request->messageText,
+                    'readed' => false,
+                ];
+                $consultation->messages()->insert($messageData);
+
                 $consultation->users()->attach([$consultant->user->id => ['owner' => false], $parented->user->id => ['owner' => true]]);
+
+                Queue::push(new SendEmailNewConsultationForAll($consultant->user->email, $request->messageText, $parented->user));
             }
-
-            $consultation->save();
-
-            $messageData = [
-                'consultation_id' => $consultation->id,
-                'user_id' => $parented->user->id,
-                'text' => $request->messageText,
-                'readed' => false,
-            ];
-            $consultation->messages()->insert($messageData);
 
             return response()->json([
                 'message' => 'Consultation successfully added'
