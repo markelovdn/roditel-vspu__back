@@ -31,8 +31,8 @@ class WebinarPartisipantController extends Controller
             $webinarPartisipant->user_id = $request->userId;
 
             $webinarPartisipant->save();
-            $fileUrl = config('filesystems.disks.public.url') . '/parenteds/Sertificate.pdf';
-            FilesExport::webinarSertificateExport($fileUrl, $request->webinarId);
+            // $fileUrl = config('filesystems.disks.public.url') . '/parenteds/Sertificate.pdf';
+            // FilesExport::webinarSertificateExport($fileUrl, $request->webinarId);
 
             return response()->json([
                 'message' => 'User successfully added for webinar'
