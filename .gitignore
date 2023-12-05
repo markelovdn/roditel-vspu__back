@@ -19,3 +19,5 @@ yarn-error.log
 /.vscode
 laravel-echo-server.json
 laravel-echo-server.lock
+phpcs.xml
+settings.json

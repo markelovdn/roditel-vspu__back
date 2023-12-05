@@ -18,6 +18,7 @@ class ConsultantsResource extends JsonResource
             $data = [
                 'userId' => $this->user->id,
                 'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
+                "consultantId" => $this->id,
                 "specialization" => [
                     "id" => $this->specialization->id,
                     "title" => $this->specialization->title,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DomainService\FilesExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWebinarPartisipantRequest;
 use App\Models\WebinarPartisipant;
@@ -30,6 +31,8 @@ class WebinarPartisipantController extends Controller
             $webinarPartisipant->user_id = $request->userId;
 
             $webinarPartisipant->save();
+            // $fileUrl = config('filesystems.disks.public.url') . '/parenteds/Sertificate.pdf';
+            // FilesExport::webinarSertificateExport($fileUrl, $request->webinarId);
 
             return response()->json([
                 'message' => 'User successfully added for webinar'

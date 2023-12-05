@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Models\Consultation;
 use App\Models\Webinar;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -51,5 +52,22 @@ class ConsultationFilter extends QueryFilter
                 $query->where('user_id', $userId);
             });
         });
+    }
+
+    public function status($status = null)
+    {
+        $warning = Carbon::now()->subDays(Consultation::STATUS_WARNING_DAYS)->toDateTimeString();
+        $danger = Carbon::now()->subDays(Consultation::STATUS_DANGER_DAYS)->toDateTimeString();
+
+        return $this->builder
+            ->when($status === Consultation::STATUS_NEW, function ($query) use ($warning) {
+                $query->where('updated_at', '>', $warning);
+            })
+            ->when($status === Consultation::STATUS_WARNING, function ($query) use ($warning, $danger) {
+                $query->whereBetween('updated_at', [$danger, $warning]);
+            })
+            ->when($status === Consultation::STATUS_DANGER, function ($query) use ($danger) {
+                $query->whereDate('updated_at', '<=', $danger);
+            });
     }
 }

@@ -14,6 +14,12 @@ class Consultation extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public const STATUS_NEW = 'new';
+    public const STATUS_WARNING = 'warning';
+    public const STATUS_DANGER = 'danger';
+    public const STATUS_WARNING_DAYS = 3;
+    public const STATUS_DANGER_DAYS = 6;
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);

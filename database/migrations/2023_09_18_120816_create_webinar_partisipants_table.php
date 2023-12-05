@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('webinar_id')->constrained('webinars', 'id');
             $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->string('link_sertificate', 400)->nullable();
             $table->timestamps();
         });
     }

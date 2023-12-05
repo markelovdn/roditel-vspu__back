@@ -102,7 +102,7 @@ class AuthController extends Controller
         }
     }
 
-    public function sendToken (NewPasswordRequest $request)
+    public function sendToken(NewPasswordRequest $request)
     {
         $token = Str::random(64);
 
@@ -113,7 +113,6 @@ class AuthController extends Controller
                 'token' => $token,
                 'created_at' => Carbon::now()
             ]);
-
         } catch (Exception $e) {
             return response()->json('This email is not registered or the token has already been received at the specified email', 400);
         }
@@ -122,7 +121,7 @@ class AuthController extends Controller
         //     $message->to($request->email);
         //     $message->subject('Сброс пароля');
         // });
-        Mail::send('mail', ['url' => 'https://legion34.ru/resetPassword/'.$token], function ($message) use($request) {
+        Mail::send('resetPassword', ['url' => 'https://legion34.ru/resetPassword/' . $token], function ($message) use ($request) {
             $message->to($request->email);
             $message->subject('Сброс пароля');
         });
@@ -134,7 +133,6 @@ class AuthController extends Controller
     {
         try {
             $token = DB::table('password_reset_tokens')->where('token', $request->resetToken)->get()->firstOrFail();
-
         } catch (Exception $e) {
             return response()->json('This email is not registered or the token is expired', 400);
         }
