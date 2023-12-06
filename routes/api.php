@@ -67,6 +67,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/consultationRatings", ConsultationRatingController::class)->only('store');
         Route::get("/getRatingQuestions", [ConsultationRatingController::class, 'getRatingCollection']);
         Route::post('/getAllConsultantsForParented', [ConsultationsController::class, 'getAllConsultantsForParented']);
+        Route::post("/downloadSertificate", [WebinarPartisipantController::class, 'downloadSertificate']);
     });
 
     Route::middleware('consultant')->group(function () {
