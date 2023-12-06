@@ -14,6 +14,7 @@ class WebinarPartisipantsResource extends JsonResource
         return [
             'id' => $this->id,
             'userId' => $this->user_id,
+            'sertificateUrl' => $this->link_sertificate,
             'updatedAt' => Carbon::parse($this->updated_at)->format('d.m.Y'),
         ];
     }

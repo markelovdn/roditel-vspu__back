@@ -7,7 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWebinarPartisipantRequest;
 use App\Models\WebinarPartisipant;
 use App\Http\Resources\WebinarPartisipantsResource;
+use App\Models\Webinar;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 
 class WebinarPartisipantController extends Controller
 {
@@ -31,8 +35,6 @@ class WebinarPartisipantController extends Controller
             $webinarPartisipant->user_id = $request->userId;
 
             $webinarPartisipant->save();
-            // $fileUrl = config('filesystems.disks.public.url') . '/parenteds/Sertificate.pdf';
-            // FilesExport::webinarSertificateExport($fileUrl, $request->webinarId);
 
             return response()->json([
                 'message' => 'User successfully added for webinar'
@@ -59,5 +61,28 @@ class WebinarPartisipantController extends Controller
                 'message' => 'Something went wrong in WebinarPartisipantsController.destroy'
             ], 400);
         }
+    }
+
+    public function downloadSertificate(Request $request)
+    {
+        $webinar = Webinar::where('id', $request->webinarId)->first();
+
+        $a = Carbon::parse(now())->format('Y-m-d');
+        $b = $webinar->date;
+        $c = $b > $a;
+
+        if (!$webinar || $webinar->date > Carbon::parse(now())->format('Y-m-d')) {
+            return response()->json([
+                'error' => 'Webinar not found or download link not available'
+            ], 400);
+        }
+        $link_sertificate = FilesExport::webinarSertificateExport($request->webinarId);
+
+        DB::table('webinar_partisipants')
+            ->where('webinar_id', $request->webinarId)
+            ->where('user_id', $request->userId)
+            ->update(['link_sertificate' => $link_sertificate]);
+
+        return $link_sertificate;
     }
 }
