@@ -1,7 +1,9 @@
 <?php
+
 /**
  * This annotation is used to ignore PHP CodeSniffer warnings for the entire file.
  */
+
 namespace App\Http\Controllers\Api;
 
 use App\DomainService\FilesExport;
@@ -11,6 +13,7 @@ use App\Http\Requests\StoreQuestionnairesRequest;
 use App\Http\Requests\StoreQuestionnairesToParentedRequest;
 use App\Http\Requests\UpdateQuestionnairesRequest;
 use App\Http\Resources\QuestionnairesResource;
+use App\Jobs\SendEmailNewQuestionnaire;
 use App\Models\Consultant;
 use App\Models\Parented;
 use App\Models\Questionnaire;
@@ -20,6 +23,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
 
 class QuestionnairesController extends Controller
@@ -123,7 +127,7 @@ class QuestionnairesController extends Controller
 
     public function setParentedToQuestionnaire(StoreQuestionnairesToParentedRequest $request): JsonResponse
     {
-        $consultant = Consultant::where('user_id', Auth::user()->id)->first();
+        $consultant = Consultant::with('user')->where('user_id', Auth::user()->id)->first();
         if (!$consultant) {
             return response()->json([
                 'message' => 'Consultant not found'
@@ -135,6 +139,11 @@ class QuestionnairesController extends Controller
                 'parented_id' => $request->parentedId,
                 'questionnaire_id' => $request->questionnaireId,
             ]);
+
+            $parented = Parented::with('user')->where('id', $request->parentedId)->first();
+
+            Queue::push(new SendEmailNewQuestionnaire($parented->user->email, $consultant->user));
+
             return response()->json([
                 'message' => 'Questionnaire successfully added to parented'
             ], 200);

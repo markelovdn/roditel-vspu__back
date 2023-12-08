@@ -5,6 +5,11 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\DB;
 
+Broadcast::channel('NotificationChannel.{id}', function ($user, $id) {
+
+    return $user->id === $id ? true : false;
+});
+
 Broadcast::channel('Consultation.{id}', function ($user, $id) {
 
     if ($user->role->code === Role::PARENTED) {
