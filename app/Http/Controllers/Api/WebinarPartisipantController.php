@@ -67,10 +67,6 @@ class WebinarPartisipantController extends Controller
     {
         $webinar = Webinar::where('id', $request->webinarId)->first();
 
-        $a = Carbon::parse(now())->format('Y-m-d');
-        $b = $webinar->date;
-        $c = $b > $a;
-
         if (!$webinar || $webinar->date > Carbon::parse(now())->format('Y-m-d')) {
             return response()->json([
                 'error' => 'Webinar not found or download link not available'

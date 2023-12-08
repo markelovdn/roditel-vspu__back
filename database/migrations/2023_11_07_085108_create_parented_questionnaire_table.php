@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('parented_id')->constrained('parenteds');
             $table->foreignId('questionnaire_id')->constrained('questionnaires');
+            $table->boolean('answered')->default(false);
+            $table->boolean('readed')->default(false);
             $table->timestamps();
         });
     }

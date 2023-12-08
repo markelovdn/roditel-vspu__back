@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\ConsultationMessagesController;
 use App\Http\Controllers\Api\ConsultationRatingController;
 use App\Http\Controllers\Api\ConsultationsController;
 use App\Http\Controllers\Api\LectorController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ParentedsController;
 use App\Http\Controllers\Api\ProfessionsController;
 use App\Http\Controllers\Api\QuestionnairesController;
@@ -22,9 +23,6 @@ use App\Http\Controllers\Api\WebinarPartisipantController;
 use App\Http\Controllers\Api\WebinarQuestionsController;
 use App\Http\Controllers\Api\WebinarsController;
 use App\Http\Controllers\Api\WebinarProgramController;
-use App\Models\ConsultationRating;
-use App\Models\Questionnaire;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //AUTH
@@ -58,6 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("consultationCategories", ConsultationCategoryController::class)->only('index');
     Route::apiResource("/consultant.questionnaires", QuestionnairesController::class)->shallow()->except('update', 'store', 'destroy');
     Route::get("/getRatingCollection", [ConsultationRatingController::class, 'getRatingCollection']);
+    Route::apiResource("/notifications", NotificationController::class);
 
 
     Route::middleware('parented')->group(function () {

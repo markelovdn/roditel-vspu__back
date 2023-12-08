@@ -10,12 +10,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendEmailNewConsultationForAll implements ShouldQueue
+class SendEmailAnsweredToQuestionnaire implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $email;
-    protected $messageText;
     protected $parented;
 
 
@@ -25,10 +24,9 @@ class SendEmailNewConsultationForAll implements ShouldQueue
      * @param string $email
      * @param string $messageText
      */
-    public function __construct($email, $messageText, $parented)
+    public function __construct($email, $parented)
     {
         $this->email = $email;
-        $this->messageText = $messageText;
         $this->parented = $parented;
     }
 
@@ -39,9 +37,9 @@ class SendEmailNewConsultationForAll implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::send('newConsultationForAll', ['textMessage' => $this->messageText, 'parented' => $this->parented], function ($message) {
+        Mail::send('newAnsweredToQuestionnaire', ['parented' => $this->parented, 'email' => $this->email], function ($message) {
             $message->to($this->email);
-            $message->subject('Новая заявка на консультацию');
+            $message->subject('Ответы на анкету');
         });
     }
 }

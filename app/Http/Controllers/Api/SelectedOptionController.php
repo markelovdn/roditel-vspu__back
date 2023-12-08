@@ -6,13 +6,17 @@ use App\DomainService\FilesExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSelectedOptionsRequest;
+use App\Jobs\SendEmailAnsweredToQuestionnaire;
+use App\Models\Consultant;
 use App\Models\OptionOther;
+use App\Models\Parented;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\SelectedOption;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
 
 class SelectedOptionController extends Controller
@@ -76,6 +80,15 @@ class SelectedOptionController extends Controller
 
             FilesExport::surveyExport($fileUrl, $questionnaire->id);
 
+            $parented = Parented::with('user')->where('user_id', $user)->first();
+            DB::table('parented_questionnaire')
+                ->where('parented_id', $parented->id)
+                ->update(['answered' => true]);
+
+            $consultant = Consultant::with('user')->where('id', $questionnaire->consultant_id)->first();
+
+            Queue::push(new SendEmailAnsweredToQuestionnaire($consultant->user->email, $parented->user));
+
             return response()->json([
                 'message' => 'Options add success'
             ], 200);
@@ -85,40 +98,4 @@ class SelectedOptionController extends Controller
             ], 400);
         }
     }
-
-    // public function update(StoreSelectedOptionsRequest $request, $questionId)
-    // {
-    //     $user = Auth::user()->id;
-    //     $selectedOption = SelectedOption::where('question_id', $questionId)->where('user_id', $user)->delete();
-
-    //     try {
-    //         foreach ($request->request as $item) {
-
-    //             if (isset($item['option_id']))
-    //             {
-    //                 $selectedOption = new SelectedOption();
-    //                 $selectedOption->question_id = $questionId;
-    //                 $selectedOption->option_id = $item['option_id'];
-    //                 $selectedOption->user_id = $user;
-    //                 $selectedOption->save();
-
-    //             } else {
-    //                 $OptionOther = OptionOther::where('question_id', $questionId)->where('user_id', $user)->first();
-    //                 $OptionOther->text = $item['text'];
-    //                 $OptionOther->question_id = $questionId;
-    //                 $OptionOther->user_id = $user;
-    //                 $OptionOther->save();
-    //             }
-
-    //         }
-    //         return response()->json([
-    //             'message' => 'Options update success'
-    //         ], 200);
-
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'error' => 'Something went wrong in SelecteOptionController.store'
-    //         ], 400);
-    //     }
-    // }
 }

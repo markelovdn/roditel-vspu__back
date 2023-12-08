@@ -267,7 +267,10 @@ class DatabaseSeeder extends Seeder
 
         DB::table('parented_questionnaire')->insert([
             'parented_id' => 21,
-            'questionnaire_id' => 1
+            'questionnaire_id' => 1,
+            'answered' => false,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('consultations')->insert([

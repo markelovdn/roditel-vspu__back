@@ -2,19 +2,17 @@
 
 namespace App\Events;
 
-use App\Models\Consultation;
-use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ConsultationEvent implements ShouldBroadcast
+class NotificationEvent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels, Queueable;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $id;
     public $message;
@@ -25,8 +23,15 @@ class ConsultationEvent implements ShouldBroadcast
         $this->message = $message;
     }
 
-    public function broadcastOn()
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return array<int, \Illuminate\Broadcasting\Channel>
+     */
+    public function broadcastOn(): array
     {
-        return new PrivateChannel('Consultation.' . $this->id);
+        return [
+            new PrivateChannel('NotificationChannel' . $this->id),
+        ];
     }
 }
