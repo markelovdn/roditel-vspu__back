@@ -56,10 +56,7 @@ class NotificationController extends Controller
             }
 
             if ($parented && request()->query('questionnaires') == true) {
-                Questionnaire::whereHas('parented', function ($query) use ($parented) {
-                    $query->where('parented_id', $parented->id)
-                        ->where('answered', false);
-                })->update(['answered' => true]);
+                DB::table('parented_questionnaire')->where('parented_id', $parented->id)->where('answered', false)->update(['answered' => true]);
             }
 
             if ($consultant && request()->query('questionnaires') == true) {
