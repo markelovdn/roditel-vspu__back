@@ -93,6 +93,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/professions", ProfessionsController::class)->except('index');
         Route::apiResource("/regions", RegionsController::class)->except('index');
         Route::apiResource("/contracts", ConsultantContractController::class);
+        Route::get("/getConsultantsForAdmin", [ConsultantsController::class, 'getConsultantsForAdmin']);
     });
 });
 

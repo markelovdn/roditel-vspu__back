@@ -107,4 +107,9 @@ class ConsultantsController extends Controller
             ], 400);
         }
     }
+
+    public function getConsultantsForAdmin()
+    {
+        return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession', 'contract')->get());
+    }
 }
