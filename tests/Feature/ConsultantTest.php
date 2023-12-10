@@ -20,9 +20,10 @@ class ConsultantTest extends TestCase
     public function test_index_consultants(): void
     {
         $response = $this->get('/api/consultants');
+        // $response->dd();
 
         $response->assertStatus(200)
-                 ->assertJsonIsObject();
+            ->assertJsonIsObject();
     }
 
     public function test_store_consultant(): void
@@ -38,7 +39,7 @@ class ConsultantTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-        ->assertJson(fn (AssertableJson $json) =>
+            ->assertJson(fn (AssertableJson $json) =>
             $json->has('message'));
     }
 
@@ -47,12 +48,12 @@ class ConsultantTest extends TestCase
         $consultant = Consultant::first();
         $user = User::where('id', $consultant->user_id)->first();
         Auth::login($user);
-        
-        $response = $this->get('/api/consultants/'.Consultant::find(1)->id);
+
+        $response = $this->get('/api/consultants/' . Consultant::find(1)->id);
 
         $response->assertStatus(200)
-                 ->assertJson(fn (AssertableJson $json) =>
-                        $json->has('data'));;
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->has('data'));;
     }
 
     public function test_update_consultant(): void
@@ -62,7 +63,7 @@ class ConsultantTest extends TestCase
         $user = User::where('id', $consultant->user_id)->first();
         Auth::login($user);
 
-        $response = $this->put('api/consultants/'.Consultant::where('user_id', $user->id)->first()->id, [
+        $response = $this->put('api/consultants/' . Consultant::where('user_id', $user->id)->first()->id, [
             'photo' => UploadedFile::fake()->image('photo.jpg'),
             'description' => 'новое описание консультанта',
             'specializationId' => Specialization::find(1)->id,
@@ -75,7 +76,7 @@ class ConsultantTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-        ->assertJson(fn (AssertableJson $json) =>
+            ->assertJson(fn (AssertableJson $json) =>
             $json->has('data'));
     }
 
@@ -87,7 +88,7 @@ class ConsultantTest extends TestCase
 
         $consultant = Consultant::first();
 
-        $response = $this->delete('/api/consultants/'.$consultant->id);
+        $response = $this->delete('/api/consultants/' . $consultant->id);
         // $response->dd();
 
         $this->assertSoftDeleted($consultant);
