@@ -16,20 +16,19 @@ class ConsultantsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // $auth = User::where('id', auth()->user()->id)->first();
 
-        // if ($auth && $auth->role->code == Role::ADMIN) {
-        //     $data = [
-        //         'userId' => $this->user->id,
-        //         'consultantId' => $this->id,
-        //         'photo' => $this->photo,
-        //         'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
-        //         'phone' => $this->user->phone,
-        //         'specializationTitle' => $this->specialization->title,
-        //         'contractNumber' => $this->contract->number ?? null
-        //     ];
-        //     return $data;
-        // }
+        if (auth()->user() && User::where('id', auth()->user()->id)->first()->role->code == Role::ADMIN) {
+            $data = [
+                'userId' => $this->user->id,
+                'consultantId' => $this->id,
+                'photo' => $this->photo,
+                'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
+                'phone' => $this->user->phone,
+                'specializationTitle' => $this->specialization->title,
+                'contractNumber' => $this->contract->number ?? null
+            ];
+            return $data;
+        }
 
         if ($request->all) {
             $data = [

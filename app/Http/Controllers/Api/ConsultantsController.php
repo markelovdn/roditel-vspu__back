@@ -6,9 +6,11 @@ use App\DomainService\FilesHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConsultantRequest;
 use App\Http\Requests\UpdateConsultantRequest;
+use App\Http\Requests\UpdateContractNumberRequest;
 use App\Http\Resources\ConsultantShowResource;
 use App\Http\Resources\ConsultantsResource;
 use App\Models\Consultant;
+use App\Models\Contract;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -110,6 +112,30 @@ class ConsultantsController extends Controller
 
     public function getConsultantsForAdmin()
     {
-        return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession', 'contract')->get());
+        return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession', 'contract')->paginate(10));
+    }
+
+    public function updateContractNumber(UpdateContractNumberRequest $request, string $consultantId)
+    {
+        try {
+            $contract = Contract::where('consultant_id', $consultantId)->first();
+
+            if (!$contract) {
+                $contract = new Contract();
+                $contract->consultant_id = $consultantId;
+                $contract->number = $request->contractNumber;
+                $contract->save();
+            }
+            $contract->number = $request->contractNumber;
+            $contract->save();
+
+            return response()->json([
+                'message' => 'Contract number successfully updated'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in ConsultantController.updateContractNumber'
+            ], 400);
+        }
     }
 }

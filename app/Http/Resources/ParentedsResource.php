@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,6 +22,16 @@ class ParentedsResource extends JsonResource
                 'parentedId' => $this->id,
                 'regionId' => $this->region_id,
                 'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
+            ];
+            return $data;
+        }
+
+        if (auth()->user() && User::where('id', auth()->user()->id)->first()->role->code == Role::ADMIN) {
+            $data = [
+                'userId' => $this->user->id,
+                'parentedId' => $this->id,
+                'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
+                'email' => $this->user->email,
             ];
             return $data;
         }

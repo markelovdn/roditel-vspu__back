@@ -41,7 +41,7 @@ class ConsultationFilter extends QueryFilter
     public function actual($closed = null)
     {
         return $this->builder->when($closed, function ($query) use ($closed) {
-            $query->where('closed', $closed === 'true' ? "=" : "<", 1);
+            $query->where('closed', $closed === 'yes' ? "=" : "<", 1);
         });
     }
 
