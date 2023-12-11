@@ -18,7 +18,7 @@ class ParentedsController extends Controller
 
     public function index(): JsonResource
     {
-        return ParentedsResource::collection(Parented::with('childrens', 'user')->get());
+        return ParentedsResource::collection(Parented::with('childrens', 'user')->paginate(10));
     }
 
     public function store()
