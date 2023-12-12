@@ -26,6 +26,7 @@ class ConsultationResource extends JsonResource
             "title" => $this->title . ' ' . $this->id,
             "closed" => $this->closed === 0 ? false : true,
             "createdAt" => Carbon::parse($this->created_at)->getTimestampMs(),
+            "createdAt" => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             "updatedAt" => Carbon::parse($this->updated_at)->getTimestampMs(),
             "specialization" => new SpecializationsResource(Specialization::find($this->specialization_id)),
             "users" => UserResource::collection($this->whenLoaded('users')),
