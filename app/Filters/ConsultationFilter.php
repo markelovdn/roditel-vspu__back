@@ -38,10 +38,10 @@ class ConsultationFilter extends QueryFilter
         });
     }
 
-    public function actual($closed = null)
+    public function actual($actual = null)
     {
-        return $this->builder->when($closed, function ($query) use ($closed) {
-            $query->where('closed', $closed === 'yes' ? "=" : "<", 1);
+        return $this->builder->when($actual, function ($query) use ($actual) {
+            $query->where('closed', $actual === 'yes' ? "=" : ">", 0);
         });
     }
 
