@@ -19,7 +19,9 @@ class WebinarsController extends Controller
 
     public function index(WebinarFilter $webinarFilter)
     {
-        return WebinarsResource::collection(Webinar::with('webinarCategory', 'lectors')->filter($webinarFilter)->paginate(4));
+        return WebinarsResource::collection(Webinar::with('webinarCategory', 'lectors')->filter($webinarFilter)
+            ->orderBy('date', 'desc')
+            ->paginate(4));
     }
 
     public function store(StoreWebinarRequest $request,  FilesHandler $filesHandler)
@@ -44,7 +46,6 @@ class WebinarsController extends Controller
             return response()->json([
                 'message' => 'Data webinar successfully added'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
@@ -80,7 +81,6 @@ class WebinarsController extends Controller
             return response()->json([
                 'message' => 'Data webinar successfully update'
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Something went wrong in WebinarsController.update'
@@ -104,13 +104,13 @@ class WebinarsController extends Controller
         // }
     }
 
-    public function getWebinarLectors() {
+    public function getWebinarLectors()
+    {
         $lectors = DB::table('webinar_lectors')
-        ->select('lector_name')
-        ->get();
+            ->select('lector_name')
+            ->get();
         $res = [];
-        foreach ($lectors as $lector)
-        {
+        foreach ($lectors as $lector) {
             array_push($res, $lector->lector_name);
         }
 
