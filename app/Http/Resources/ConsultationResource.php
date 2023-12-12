@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\Consultant;
 use App\Models\ConsultationMessage;
 use App\Models\Parented;
+use App\Models\Specialization;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -26,7 +27,7 @@ class ConsultationResource extends JsonResource
             "closed" => $this->closed === 0 ? false : true,
             "createdAt" => Carbon::parse($this->created_at)->getTimestampMs(),
             "updatedAt" => Carbon::parse($this->updated_at)->getTimestampMs(),
-            "specializationId" => SpecializationsResource::collection($this->whenLoaded('specializations')),
+            "specialization" => new SpecializationsResource(Specialization::find($this->specialization_id)),
             "users" => UserResource::collection($this->whenLoaded('users')),
             "messages" => ConsultationMessagesResource::collection($this->whenLoaded('messages')),
             "isActive" => count($consultationMessages) > 1 ? true : false

@@ -27,7 +27,7 @@ class ConsultationsController extends Controller
 
         $query = Consultation::with('users', 'messages')
             ->when($user->role->code === Role::CONSULTANT, function ($query) use ($user) {
-                $specializationIds = Consultant::where('user_id', $user->id)->first()->specialization_id;
+                $specializationIds = Consultant::with('specializations')->where('user_id', $user->id)->first()->specialization_id;
                 return $query->where(function ($query) use ($user, $specializationIds) {
                     $query->where('specialization_id', $specializationIds)
                         ->where('consultant_user_id', null)
