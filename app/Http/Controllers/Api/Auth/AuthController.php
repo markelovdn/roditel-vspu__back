@@ -53,6 +53,11 @@ class AuthController extends Controller
             $token = $user->createToken('user_token')->plainTextToken;
             $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
+            Mail::send('newConsultant', ['user' => $request->first_name . ' ' . $request->patronymic . ' ' . $request->second_name, 'email' => $request->email], function ($message) use ($request) {
+                $message->to(User::where('role_id', Role::where('code', Role::ADMIN)->first()->id)->first()->email);
+                $message->subject('Регистрация нового консультанта');
+            });
+
             return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), false), 'token' => $token], 200);
         } catch (\Exception $e) {
             return response()->json([
