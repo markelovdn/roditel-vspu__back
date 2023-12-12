@@ -36,7 +36,8 @@ class ConsultationsController extends Controller
             })
             ->when($user->role->code === Role::PARENTED, function ($query) use ($user) {
                 return $query->where('parented_user_id', $user->id);
-            });
+            })
+            ->orderBy('created_at', 'desc');
 
         $consultations = $query->filter($filter)->get();
 
