@@ -15,12 +15,16 @@ class NotificationEvent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $id;
-    public $message;
+    public $messages;
+    public $questionnaires;
+    public $count;
 
-    public function __construct($id, $message)
+    public function __construct($id, $messages, $questionnaires, $count)
     {
         $this->id = $id;
-        $this->message = $message;
+        $this->messages = $messages;
+        $this->questionnaires = $questionnaires;
+        $this->count = $count;
     }
 
     /**
@@ -31,7 +35,7 @@ class NotificationEvent
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('NotificationChannel' . $this->id),
+            new PrivateChannel('NotificationEvent' . $this->id),
         ];
     }
 }
