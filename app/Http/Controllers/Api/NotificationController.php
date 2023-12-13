@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\NotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NotificationResource;
 use App\Models\Consultant;
@@ -37,10 +38,21 @@ class NotificationController extends Controller
             $questionnaires = DB::table('parented_questionnaire')->whereIn('questionnaire_id', $questionnairesConsultant)->where('answered', true)->where('readed', false)->count();
         }
 
+        $count = $messages + $questionnaires;
+
+        event(
+            new NotificationEvent(
+                $user->id,
+                $messages,
+                $questionnaires,
+                $count
+            )
+        );
+
         return json_encode([
             'messages' => $messages,
             'questionnaires' => $questionnaires,
-            'count' =>  $messages + $questionnaires
+            'count' =>  $count
         ]);
     }
 
