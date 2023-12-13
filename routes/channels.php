@@ -5,10 +5,10 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\DB;
 
-// Broadcast::channel('NotificationEvent.{id}', function ($user, $id) {
+Broadcast::channel('Notification.{id}', function ($user, $id) {
 
-//     return $user->id === $id ? true : false;
-// });
+    return $user->id == $id ? true : false;
+});
 
 Broadcast::channel('Consultation.{id}', function ($user, $id) {
 
