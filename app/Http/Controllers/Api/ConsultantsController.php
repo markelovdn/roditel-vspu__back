@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\DomainService\FilesHandler;
+use App\Filters\ConsultantFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConsultantRequest;
 use App\Http\Requests\UpdateConsultantRequest;
@@ -18,12 +19,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ConsultantsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, ConsultantFilter $filter)
     {
         if ($request->all) {
             return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->get());
         } else {
-            return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->paginate(9));
+            return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->filter($filter)->paginate(9));
         }
     }
 
