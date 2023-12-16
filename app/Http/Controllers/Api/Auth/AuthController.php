@@ -121,12 +121,8 @@ class AuthController extends Controller
         } catch (Exception $e) {
             return response()->json('This email is not registered or the token has already been received at the specified email', 400);
         }
-        //TODO::исправить
-        // Mail::send('mail', ['url' => env('APP_URL').'/resetPassword/'.$token], function ($message) use($request) {
-        //     $message->to($request->email);
-        //     $message->subject('Сброс пароля');
-        // });
-        Mail::send('resetPassword', ['url' => 'https://legion34.ru/resetPassword/' . $token], function ($message) use ($request) {
+
+        Mail::send('mail', ['url' => env('APP_URL') . '/resetPassword/' . $token], function ($message) use ($request) {
             $message->to($request->email);
             $message->subject('Сброс пароля');
         });
