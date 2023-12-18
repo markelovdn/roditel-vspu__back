@@ -18,7 +18,7 @@ class WebinarCategoriesTest extends TestCase
     {
         $response = $this->get('/api/webinarCategories');
 
-        $response->assertStatus(200)->assertJsonFragment(["title" => "Тестовая категория"]);
+        $response->assertStatus(200)->assertJsonFragment(["title" => "Родителеьский университет"]);
     }
 
     public function test_store(): void
@@ -39,7 +39,7 @@ class WebinarCategoriesTest extends TestCase
     public function test_show(): void
     {
         $webinar = WebinarCategory::first();
-        $response = $this->get('api/webinarCategories/'.$webinar->id);
+        $response = $this->get('api/webinarCategories/' . $webinar->id);
 
         $response
             ->assertStatus(200)
@@ -54,7 +54,7 @@ class WebinarCategoriesTest extends TestCase
 
         $webinar = WebinarCategory::first();
 
-        $response = $this->put('api/webinarCategories/'.$webinar->id,[
+        $response = $this->put('api/webinarCategories/' . $webinar->id, [
             'title' => fake()->title(),
         ]);
 

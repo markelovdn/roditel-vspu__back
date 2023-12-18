@@ -26,8 +26,8 @@ class ConsultantFactory extends Factory
             ]),
             'description' => fake()->text(),
             'user_id' => User::factory(),
-            'specialization_id' => fake()->numberBetween(1,5),
-            'profession_id' => fake()->numberBetween(1,3),
+            'specialization_id' => fake()->numberBetween(1, 5),
+            'profession_id' => fake()->numberBetween(1, 2),
         ];
     }
 }
