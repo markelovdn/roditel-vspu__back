@@ -1,36 +1,46 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Console\Commands;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\Consultant;
-use App\Models\ConsultantReport;
-use App\Models\ConsultationCategory;
-use App\Models\Contract;
-use App\Models\Lector;
-use App\Models\Option;
-use App\Models\OptionOther;
 use App\Models\Profession;
-use App\Models\Question;
 use App\Models\RatingQuestion;
-use Illuminate\Database\Seeder;
 use App\Models\Role;
-use App\Models\SelectedOption;
 use App\Models\Specialization;
 use App\Models\User;
 use App\Models\WebinarCategory;
-use App\Models\WebinarQuestion;
-use Illuminate\Support\Facades\Date;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class DatabaseSeeder extends Seeder
+class dbStartData extends Command
 {
     /**
-     * Seed the application's database.
+     * The name and signature of the console command.
+     *
+     * @var string
      */
-    public function run(): void
+    protected $signature = 'db-start-data';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    public function handle()
     {
+        User::insert(
+            [
+                'first_name' => 'admin',
+                'second_name' => 'admin',
+                'patronymic' => 'admin',
+                'email' => 'admin@admin.ru',
+                'phone' => '+7 (000) 000 0000',
+                'role_id' => '1',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            ]
+        );
+
         DB::table('regions')->insert([
             ['code' => '1', 'title' => 'Республика Адыгея (Адыгея)'],
             ['code' => '2', 'title' => 'Республика Башкортостан '],
@@ -127,7 +137,6 @@ class DatabaseSeeder extends Seeder
             ['code' => 'admin', 'title' => 'Администратор'],
             ['code' => 'consultant', 'title' => 'Консультант'],
             ['code' => 'parented', 'name' => 'Родитель'],
-            ['code' => 'superadmin', 'name' => 'Супер администратор'],
         ]);
 
         Specialization::insert([
@@ -150,189 +159,6 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Школа ответсвенного родителя'],
         ]);
 
-        \App\Models\User::factory(10)->create();
-        \App\Models\Contract::factory(10)->create();
-        \App\Models\Parented::factory(10)->create();
-        \App\Models\Consultant::factory(10)->create();
-        \App\Models\Children::factory(10)->create();
-        \App\Models\ConsultantReport::factory(10)->create();
-        OptionOther::factory(1)->create();
-        SelectedOption::factory(1)->create();
-        \App\Models\Consultation::factory(10)->create();
-        \App\Models\ConsultationMessage::factory(10)->create();
-        \App\Models\Lector::factory(10)->create();
-        \App\Models\Webinar::factory(10)->has(Lector::factory(2))->has(WebinarQuestion::factory(2), 'questions')->create();
-        \App\Models\WebinarPartisipant::factory(10)->create();
-
-        User::insert(
-            [
-                'first_name' => 'test',
-                'second_name' => 'test',
-                'patronymic' => 'test',
-                'email' => 'test@test.ru',
-                'phone' => '+7 (111) 111 1111',
-                'role_id' => '3',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            ]
-        );
-
-        User::insert(
-            [
-                'first_name' => 'consultant',
-                'second_name' => 'consultant',
-                'patronymic' => 'consultant',
-                'email' => 'consultant@consultant.ru',
-                'phone' => '+7 (111) 111 1119',
-                'role_id' => '2',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            ]
-        );
-
-        User::insert(
-            [
-                'first_name' => 'admin',
-                'second_name' => 'admin',
-                'patronymic' => 'admin',
-                'email' => 'admin@admin.ru',
-                'phone' => '+7 (000) 000 0000',
-                'role_id' => '1',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            ]
-        );
-
-        User::insert(
-            [
-                'first_name' => 'super_admin',
-                'second_name' => 'super_admin',
-                'patronymic' => 'super_admin',
-                'email' => 'super_admin@super_admin.ru',
-                'phone' => '+7 (000) 000 0007',
-                'role_id' => '4',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            ]
-        );
-
-        Consultant::create([
-            'user_id' => '94',
-            'photo' => 'https://via.placeholder.com/354x472.png/0033aa?text=people+accusantium',
-            'specialization_id' => '1',
-            'profession_id' => '1',
-        ]);
-
-        ConsultantReport::create([
-            'file_url' => 'https://markelovdn.ru/storage/app/consultants/reports/Файл_1.xlsx',
-            'upload_status' => 'fail',
-            'consultant_id' => '21',
-        ]);
-
-
-        ConsultantReport::create([
-            'file_url' => 'https://markelovdn.ru/storage/app/consultants/reports/Файл_2.xlsx',
-            'upload_status' => 'success',
-            'consultant_id' => '21',
-        ]);
-
-        Contract::create([
-            'consultant_id' => '11',
-            'number' => '585',
-        ]);
-
-        DB::table('users')
-            ->whereIn('id', DB::table('parenteds')->select('user_id'))
-            ->update(['role_id' => Role::where('code', Role::PARENTED)->first()->id]);
-
-        DB::table('users')
-            ->whereIn('id', DB::table('consultants')->select('user_id'))
-            ->update(['role_id' => Role::where('code', Role::CONSULTANT)->first()->id]);
-
-        DB::table('parenteds')->insert([
-            'user_id' => User::where('email', 'test@test.ru')->first()->id,
-            'region_id' => 2
-        ]);
-
-        DB::table('childrens')->insert([
-            'age' => 6,
-            'parented_id' => 21
-        ]);
-
-        \App\Models\Questionnaire::factory(1)
-            ->has(Question::factory()->has(Option::factory(3))->count(3))
-            ->create();
-
-        DB::table('parented_questionnaire')->insert([
-            'parented_id' => 21,
-            'questionnaire_id' => 1,
-            'answered' => false,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-
-        DB::table('consultations')->insert([
-            [
-                "title" => "test",
-                "parented_user_id" => 93,
-                "consultant_user_id" => 94,
-                "closed" => false,
-                "specialization_id" => 1,
-                "created_at" => now(),
-                "updated_at" => now()
-            ],
-            [
-                "title" => "test2",
-                "parented_user_id" => 93,
-                "consultant_user_id" => 94,
-                "closed" => false,
-                "specialization_id" => 1,
-                "created_at" => now()->addDay(-3),
-                "updated_at" => now()->addDay(-3),
-            ],
-            [
-                "title" => "test3",
-                "parented_user_id" => 93,
-                "consultant_user_id" => 94,
-                "closed" => false,
-                "specialization_id" => 1,
-                "created_at" => now()->addDay(-6),
-                "updated_at" => now()->addDay(-6),
-            ]
-        ]);
-
-        DB::table('consultation_user')->insert([
-            ["consultation_id" => 21, "user_id" => 94, "owner" => false],
-            ["consultation_id" => 21, "user_id" => 93, "owner" => true],
-            ["consultation_id" => 22, "user_id" => 94, "owner" => false],
-            ["consultation_id" => 22, "user_id" => 93, "owner" => true],
-            ["consultation_id" => 23, "user_id" => 94, "owner" => false],
-            ["consultation_id" => 23, "user_id" => 93, "owner" => true],
-        ]);
-
-        DB::table('consultation_messages')->insert([
-            [
-                "consultation_id" => 21,
-                "user_id" => 93,
-                "text" => "У меня проблемы с детьми, что делать?",
-                "readed" => true,
-                "created_at" => now(),
-                "updated_at" => now()
-            ],
-            [
-                "consultation_id" => 21,
-                "user_id" => 94,
-                "text" => "Сколько у вас детей?",
-                "readed" => true,
-                "created_at" => now(),
-                "updated_at" => now()
-            ],
-            [
-                "consultation_id" => 21,
-                "user_id" => 93,
-                "text" => "12",
-                "readed" => false,
-                "created_at" => now(),
-                "updated_at" => now()
-            ],
-        ]);
-
         DB::table('rating_questions')->insert([
             ["title" => "Удовлетворены ли Вы качеством оказанной услуги? Соответствовало ли содержание консультации имеющейся проблеме, помог ли консультант Межрегиональной службы консультирования родителей ВГСПУ?", "type" => RatingQuestion::RATING_NUMBER],
             ["title" => "Удовлетворены ли Вы условиями предоставления услуги (оценивается доступность для людей с ОВЗ, доступность записи, время ожидания от момента обращения, возможность выбора формата оказания услуги)?", "type" => RatingQuestion::RATING_NUMBER],
@@ -341,7 +167,5 @@ class DatabaseSeeder extends Seeder
             ["title" => "Есть ли у Вас жалобы на работу Межрегиональной службы консультирования родителей ВГСПУ?", "type" => RatingQuestion::RATING_TEXT],
             ["title" => "Есть ли у Вас предложения и пожелания по улучшению работы Межрегиональной службы консультирования родителей ВГСПУ?", "type" => RatingQuestion::RATING_TEXT],
         ]);
-
-        \App\Models\ConsultationRating::factory(3)->create();
     }
 }

@@ -18,7 +18,7 @@ class WebinarCategoriesTest extends TestCase
     {
         $response = $this->get('/api/webinarCategories');
 
-        $response->assertStatus(200)->assertJsonFragment(["title" => "Родителеьский университет"]);
+        $response->assertStatus(200)->assertJsonFragment(["title" => "Родительский университет"]);
     }
 
     public function test_store(): void
