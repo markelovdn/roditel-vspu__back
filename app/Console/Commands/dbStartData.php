@@ -2,11 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Lector;
 use App\Models\Profession;
 use App\Models\RatingQuestion;
 use App\Models\Role;
 use App\Models\Specialization;
 use App\Models\User;
+use App\Models\Webinar;
 use App\Models\WebinarCategory;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -29,17 +31,6 @@ class dbStartData extends Command
 
     public function handle()
     {
-        User::insert(
-            [
-                'first_name' => 'admin',
-                'second_name' => 'admin',
-                'patronymic' => 'admin',
-                'email' => 'admin@admin.ru',
-                'phone' => '+7 (000) 000 0000',
-                'role_id' => '1',
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            ]
-        );
 
         DB::table('regions')->insert([
             ['code' => '1', 'title' => 'Республика Адыгея (Адыгея)'],
@@ -167,5 +158,108 @@ class dbStartData extends Command
             ["title" => "Есть ли у Вас жалобы на работу Межрегиональной службы консультирования родителей ВГСПУ?", "type" => RatingQuestion::RATING_TEXT],
             ["title" => "Есть ли у Вас предложения и пожелания по улучшению работы Межрегиональной службы консультирования родителей ВГСПУ?", "type" => RatingQuestion::RATING_TEXT],
         ]);
+
+        Webinar::insert([
+            [
+                'title' => 'Родительский университет: «Дополнительное образование детей как ресурс созидания Человека Культуры»',
+                'date' => '21.11.2022',
+                'time_start' => '14:00',
+                'time_end' => '16:00',
+                'logo' => 'https://psyho.legion34.ru/storage/webinars/logo/evdokimovaes_s.jpg',
+                'cost' => 0.00,
+                'video_link' => 'https://cpm1.eduopenru.ru/cont/webinar/rns1114.mp4',
+                'webinar_category_id' => 2,
+
+            ],
+            [
+                'title' => 'Родительский университет: Говорить с ребенком о духовном. О чем и как?',
+                'date' => '21.11.2022',
+                'time_start' => '14:00',
+                'time_end' => '16:00',
+                'logo' => 'https://psyho.legion34.ru/storage/webinars/logo/evdokimovaes_s.jpg',
+                'cost' => 0.00,
+                'video_link' => 'https://cpm1.eduopenru.ru/cont/webinar/rns1114.mp4',
+                'webinar_category_id' => 2,
+
+            ],
+            [
+                'title' => 'Если ребенок просит Вашего внимания и общения – давайте ему в руки гаджет (вредный совет)
+                ',
+                'date' => '16.10.2023',
+                'time_start' => '15:00',
+                'time_end' => '16:00',
+                'logo' => 'https://psyho.legion34.ru/storage/webinars/logo/_logo.jpg',
+                'cost' => 0.00,
+                'video_link' => 'https://vspu.ktalk.ru/9778017?pinCode=8279',
+                'webinar_category_id' => 1,
+
+            ],
+            [
+                'title' => 'Успешная социализация современных детей',
+                'date' => '24.04.23',
+                'time_start' => '16:00',
+                'time_end' => '17:00',
+                'logo' => 'https://psyho.legion34.ru/storage/webinars/logo/_logo.jpg',
+                'cost' => 0.00,
+                'video_link' => 'https://vspu.ktalk.ru/vl57j09spmav?pinCode=3578',
+                'webinar_category_id' => 1,
+
+            ],
+        ]);
+
+        Lector::insert([
+            [
+                'lector_name' => 'Евдокимова Елена Сергеевна',
+                'lector_description' => 'к.п.н., доцент кафедры педагогики, руководитель Волгоградского регионального отделения Всероссийского центра гуманной педагогики, руководитель НИЛ проблем образования родителей ВГСПУ, инициатор и руководитель проекта «Родительский Университет»',
+                'lector_department' => 'ВГСПУ',
+                'lector_photo' => 'https://psyho.legion34.ru/storage/webinars/lectors_photo/evdokimovaes_s.jpg',
+            ],
+            [
+                'lector_name' => 'Додокина Наталья Викторовна',
+                'lector_description' => 'к.п.н., старший воспитатель МКДОУ «Центр развития ребенка-детский сад № 12 «Сказка» городского округа город Фролово',
+                'lector_department' => 'МКДОУ «Центр развития ребенка-детский сад № 12 «Сказка» городского округа город Фролово',
+                'lector_photo' => '',
+            ],
+            [
+                'lector_name' => 'Беловолова Алия Сафаровна',
+                'lector_description' => 'заместитель директора по работе с родителями, руководитель психологической службы образовательного комплекса «Поколение», г. Волгоград - специалисты Межрегиональной службы консультирования родителей ФГБОУ ВО «ВГСПУ»',
+                'lector_department' => 'Психологическая служба образовательного комплекса «Поколение», г. Волгоград',
+                'lector_photo' => '',
+            ],
+            [
+                'lector_name' => 'Руднева Инна Александровна',
+                'lector_description' => 'кандидат педагогических наук, доцент, доцент кафедры социальной педагогики ВГСПУ, председатель Волгоградской городской общественной организации сопровождения многодетных семей',
+                'lector_department' => 'ВГСПУ',
+                'lector_photo' => '',
+            ]
+        ]);
+
+        DB::table('lector_webinar')->insert([
+            ['lector_id' => 1, 'webinar_id' => 1],
+            ['lector_id' => 1, 'webinar_id' => 2],
+            ['lector_id' => 2, 'webinar_id' => 3],
+            ['lector_id' => 3, 'webinar_id' => 3],
+            ['lector_id' => 4, 'webinar_id' => 4],
+        ]);
+
+        DB::table('webinar_questions')->insert([
+            ['question_text' => 'Вопросы оптимального времени взаимодействия ребенка с гаджетами и социальными сетями, профилактика зависимостей', 'webinar_id' => 3],
+            ['question_text' => 'поло-возрастные задачи социализации детей', 'webinar_id' => 4],
+            ['question_text' => 'институты социализации ребенка: семья, школа, референтные группы', 'webinar_id' => 4],
+            ['question_text' => 'каковы особенности социализации современных детей в условиях цифровизации', 'webinar_id' => 4],
+            ['question_text' => 'как родителям помочь ребенку успешно социализироваться', 'webinar_id' => 4],
+        ]);
+
+        User::insert(
+            [
+                'first_name' => 'admin',
+                'second_name' => 'admin',
+                'patronymic' => 'admin',
+                'email' => 'admin@admin.ru',
+                'phone' => '+7 (000) 000 0000',
+                'role_id' => '1',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            ]
+        );
     }
 }
