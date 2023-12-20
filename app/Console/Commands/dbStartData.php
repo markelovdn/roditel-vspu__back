@@ -162,7 +162,7 @@ class dbStartData extends Command
         Webinar::insert([
             [
                 'title' => 'Родительский университет: «Дополнительное образование детей как ресурс созидания Человека Культуры»',
-                'date' => '21.11.2022',
+                'date' => '2022-11-21',
                 'time_start' => '14:00',
                 'time_end' => '16:00',
                 'logo' => 'https://psyho.legion34.ru/storage/webinars/logo/evdokimovaes_s.jpg',
@@ -173,7 +173,7 @@ class dbStartData extends Command
             ],
             [
                 'title' => 'Родительский университет: Говорить с ребенком о духовном. О чем и как?',
-                'date' => '21.11.2022',
+                'date' => '2022-11-21',
                 'time_start' => '14:00',
                 'time_end' => '16:00',
                 'logo' => 'https://psyho.legion34.ru/storage/webinars/logo/evdokimovaes_s.jpg',
@@ -185,7 +185,7 @@ class dbStartData extends Command
             [
                 'title' => 'Если ребенок просит Вашего внимания и общения – давайте ему в руки гаджет (вредный совет)
                 ',
-                'date' => '16.10.2023',
+                'date' => '2023-10-16',
                 'time_start' => '15:00',
                 'time_end' => '16:00',
                 'logo' => 'https://psyho.legion34.ru/storage/webinars/logo/_logo.jpg',
@@ -196,7 +196,7 @@ class dbStartData extends Command
             ],
             [
                 'title' => 'Успешная социализация современных детей',
-                'date' => '24.04.23',
+                'date' => '2023-04-24',
                 'time_start' => '16:00',
                 'time_end' => '17:00',
                 'logo' => 'https://psyho.legion34.ru/storage/webinars/logo/_logo.jpg',
