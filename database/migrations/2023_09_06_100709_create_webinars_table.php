@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('webinars', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->require();
+            $table->string('title', 500)->require();
             $table->date('date')->nullable();
             $table->time('time_start')->nullable();
             $table->time('time_end')->nullable();
             $table->string('logo')->nullable();
-            $table->decimal('cost', 19,2)->default(0);
+            $table->decimal('cost', 19, 2)->default(0);
             $table->string('video_link')->nullable();
             $table->foreignId('webinar_category_id')->constrained('webinar_categories', 'id');
             $table->timestamps();
