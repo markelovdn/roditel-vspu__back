@@ -255,7 +255,7 @@ class dbStartData extends Command
                 'first_name' => 'admin',
                 'second_name' => 'admin',
                 'patronymic' => 'admin',
-                'email' => 'admin@admin.ru',
+                'email' => 'spc@vspu.ru',
                 'phone' => '+7 (000) 000 0000',
                 'role_id' => '1',
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
