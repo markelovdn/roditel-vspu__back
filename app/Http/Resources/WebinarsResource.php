@@ -17,6 +17,8 @@ class WebinarsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $registered = false;
+
         if (Auth::guard('sanctum')->user()) {
             $registered = DB::table('webinar_partisipants')->where('webinar_id', $this->id)->where('user_id', Auth::guard('sanctum')->user()->id)->exists();
         };
