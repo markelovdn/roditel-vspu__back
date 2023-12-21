@@ -162,6 +162,10 @@ class ConsultationsController extends Controller
             return response()->json([
                 'message' => 'Consultation successfully closed'
             ], 200);
+        } else {
+            return response()->json([
+                'message' => 'You can\'t close this consultation'
+            ], 400);
         }
     }
 }

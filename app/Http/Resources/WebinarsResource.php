@@ -24,6 +24,7 @@ class WebinarsResource extends JsonResource
             'timeStart' => Carbon::parse($this->time_start)->format('H.i'),
             'timeEnd' => Carbon::parse($this->time_end)->format('H.i'),
             'cost' => $this->cost,
+            'videoLink' => $this->video_link,
             'webinarCategory' => [
                 'title' => $this->webinarCategory->title
             ],
