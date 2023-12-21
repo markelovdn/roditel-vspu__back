@@ -76,6 +76,7 @@ class SelectedOptionController extends Controller
             $fileUrl = config('filesystems.disks.public.url') . '/consultants/questionnaires/' . Str::replace(' ', '_', $questionnaire->title) . '_' . Carbon::now()->format('d.m.Y') . '.xlsx';
 
             $questionnaire->file_url = $fileUrl;
+            $questionnaire->status = Carbon::now();
             $questionnaire->save();
 
             FilesExport::surveyExport($fileUrl, $questionnaire->id);
