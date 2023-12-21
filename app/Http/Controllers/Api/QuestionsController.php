@@ -37,6 +37,7 @@ class QuestionsController extends Controller
     public static function update(array $questions, int $questionnairyId): void
     {
         $questionnairy = Questionnaire::with('questions')->find($questionnairyId);
+        $questionnairy->questions()->detach();
 
         foreach ($questions as $item) {
             if (!isset($item['id'])) {
@@ -58,7 +59,7 @@ class QuestionsController extends Controller
                 $question->answer_type = $item['type'];
                 $question->save();
 
-                $questionnairy->questions()->sync($question->id);
+                $questionnairy->questions()->attach($question->id);
 
                 OptionsController::update($item['options'], $question->id);
             }
