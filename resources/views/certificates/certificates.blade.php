@@ -48,10 +48,10 @@
                 {{$parented->first_name}} {{$parented->patronymic}} {{$parented->second_name}}
             </div>
             <div style="font-size: 18px;">принял(а) участие в просветительском мероприятии для родительского сообщества</div>
-            <div style="font-size: 22px; font-weight: bold; margin-top: 20px;">{{$webinar->title}}</div>
+            <div style="font-size: 22px; font-weight: bold; margin: 10px;">{{$webinar->title}}</div>
             <div style="font-size: 18px;">г. Волгоград, {{$webinarDate}}</div>
         </div>
-        <footer style="width: 100%; margin-top: 70px">
+        <footer style="width: 100%; margin-top: 30px">
             <div style="font-size: 14px; float: left; width: 35%; margin-left: 20px; inline-block">
                 декан факультета психолого-педагогического и социального образования
             </div>
