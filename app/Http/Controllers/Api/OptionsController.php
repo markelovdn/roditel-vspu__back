@@ -41,6 +41,7 @@ class OptionsController extends Controller
     public static function update(array $options, int $questionId)
     {
         $question = Question::with('options')->find($questionId);
+        $question->options()->detach();
 
         foreach ($options as $item) {
             if (!isset($item['id'])) {
@@ -56,7 +57,7 @@ class OptionsController extends Controller
                 $option->text = $item['text'];
                 $option->save();
 
-                $question->options()->sync($option->id);
+                $question->options()->attach($option->id);
             }
         }
     }
