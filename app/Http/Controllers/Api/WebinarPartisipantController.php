@@ -79,6 +79,8 @@ class WebinarPartisipantController extends Controller
             ->where('user_id', $request->userId)
             ->update(['link_sertificate' => $link_sertificate]);
 
-        return $link_sertificate;
+        return response()->json([
+            'linkSertificate' => $link_sertificate
+        ]);
     }
 }
