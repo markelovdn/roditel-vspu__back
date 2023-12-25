@@ -16,7 +16,7 @@ class UserResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): Array
+    public function toArray(Request $request): array
     {
         $parented = Parented::where('user_id', Auth::user()->id)->first();
         $consultant = Consultant::where('user_id', Auth::user()->id)->first();
@@ -27,7 +27,7 @@ class UserResource extends JsonResource
                 'firstName' => $this->first_name,
                 'secondName' => $this->second_name,
                 'surName' => $this->patronymic,
-                'fullName' => "$this->first_name $this->second_name $this->patronymic",
+                'fullName' => "$this->second_name $this->first_name $this->patronymic",
                 'email' => $this->email,
                 'phone' => $this->phone,
                 'ragionId' => $parented->region_id,
@@ -35,15 +35,15 @@ class UserResource extends JsonResource
                     'id' => $this->role->id,
                     'code' => $this->role->code,
                     'title' => $this->role->title,
-                    ]
-                ];
-        } else if($consultant) {
+                ]
+            ];
+        } else if ($consultant) {
             return [
                 'id' => $this->id,
                 'firstName' => $this->first_name,
                 'secondName' => $this->second_name,
                 'surName' => $this->patronymic,
-                'fullName' => "$this->first_name $this->second_name $this->patronymic",
+                'fullName' => "$this->second_name $this->first_name $this->patronymic",
                 'email' => $this->email,
                 'phone' => $this->phone,
                 'specializationId' => $consultant->specialization_id,
@@ -54,25 +54,23 @@ class UserResource extends JsonResource
                     'id' => $this->role->id,
                     'code' => $this->role->code,
                     'title' => $this->role->title,
-                    ]
-                ];
+                ]
+            ];
         } else {
             return [
                 'id' => $this->id,
                 'firstName' => $this->first_name,
                 'secondName' => $this->second_name,
                 'surName' => $this->patronymic,
-                'fullName' => "$this->first_name $this->second_name $this->patronymic",
+                'fullName' => "$this->second_name $this->first_name $this->patronymic",
                 'email' => $this->email,
                 'phone' => $this->phone,
                 'role' => [
                     'id' => $this->role->id,
                     'code' => $this->role->code,
                     'title' => $this->role->title,
-                    ]
-                ];
+                ]
+            ];
         }
-
-
     }
 }

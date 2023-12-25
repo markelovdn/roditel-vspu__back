@@ -16,7 +16,6 @@ class LectorController extends Controller
     public function index(): JsonResource
     {
         return LectorResource::collection(Lector::get());
-
     }
 
     public function store(StoreLectorRequest $request, FilesHandler $filesHandler): JsonResponse
@@ -45,9 +44,17 @@ class LectorController extends Controller
         }
     }
 
-    public function show(int $id): JsonResource
+    public function show(int $id): JsonResponse
     {
-        return LectorResource::collection(Lector::where('id', $id)->get());
+        $lector = Lector::where('id', $id)->first();
+
+        return response()->json([
+            'id' => $lector->id,
+            'lectorName' => $lector->lector_name,
+            'lectorDescription' => $lector->lector_description,
+            'lectorDepartment' => $lector->lector_department,
+            'lectorPhoto' => $lector->lector_photo
+        ], 200);
     }
 
     public function update(UpdateLectorRequest $request, int $id, FilesHandler $filesHandler): JsonResponse
