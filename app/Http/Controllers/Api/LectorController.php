@@ -53,7 +53,7 @@ class LectorController extends Controller
             'lectorName' => $lector->lector_name,
             'lectorDescription' => $lector->lector_description,
             'lectorDepartment' => $lector->lector_department,
-            'lectorPhoto' => $lector->lector_photo
+            'lectorPhotoURL' => $lector->lector_photo
         ], 200);
     }
 
