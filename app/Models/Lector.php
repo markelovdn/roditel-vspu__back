@@ -12,8 +12,8 @@ class Lector extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function webinar(): BelongsToMany {
+    public function webinar(): BelongsToMany
+    {
         return $this->BelongsToMany(Webinar::class);
     }
-
 }

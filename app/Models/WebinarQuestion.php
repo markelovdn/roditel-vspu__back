@@ -10,7 +10,14 @@ class WebinarQuestion extends Model
 {
     use HasFactory;
 
-    public function webinar(): BelongsTo {
+    protected $fillable = [
+        'id',
+        'webinar_id',
+        'question_text',
+    ];
+
+    public function webinar(): BelongsTo
+    {
         return $this->belongsTo(Webinar::class);
     }
 }
