@@ -21,7 +21,7 @@ class LectorController extends Controller
     public function store(StoreLectorRequest $request, FilesHandler $filesHandler): JsonResponse
     {
         if ($request->hasFile('photo')) {
-            $lectorPhoto = $filesHandler->uploadLectorPhoto($request->photo, $request->lectorName);
+            $lectorPhoto = $filesHandler->uploadLectorPhoto($request->photo, $request->name);
         } else {
             $lectorPhoto = "";
         }
@@ -53,14 +53,14 @@ class LectorController extends Controller
             'lectorName' => $lector->lector_name,
             'lectorDescription' => $lector->lector_description,
             'lectorDepartment' => $lector->lector_department,
-            'lectorPhoto' => $lector->lector_photo
+            'lectorPhotoURL' => $lector->lector_photo
         ], 200);
     }
 
     public function update(UpdateLectorRequest $request, int $id, FilesHandler $filesHandler): JsonResponse
     {
         if ($request->hasFile('photo')) {
-            $lectorPhoto = $filesHandler->uploadLectorPhoto($request->photo, $request->lectorName);
+            $lectorPhoto = $filesHandler->uploadLectorPhoto($request->photo, $request->name);
         } else {
             $lectorPhoto = "";
         }

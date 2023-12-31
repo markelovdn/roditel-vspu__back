@@ -9,6 +9,7 @@ use App\Http\Requests\StoreWebinarRequest;
 use App\Http\Requests\UpdateWebinarRequest;
 use App\Http\Resources\WebinarsResource;
 use App\Models\Webinar;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
@@ -26,14 +27,13 @@ class WebinarsController extends Controller
 
     public function store(StoreWebinarRequest $request,  FilesHandler $filesHandler)
     {
-        //TODO::сделать заглушку для логотипа
-        //TODO::переформатировать время и дату
-
         $webinar = new Webinar();
+        $questions = json_decode($request->questions, true);
+        $lectorsId = json_decode($request->lectors, true);
 
         try {
             $webinar->title = $request->title;
-            $webinar->date = $request->date;
+            $webinar->date = Carbon::parse($request->date)->format('Y-m-d');
             $webinar->time_start = $request->timeStart;
             $webinar->time_end = $request->timeEnd;
             $webinar->logo = $request->logo ? $filesHandler->uploadWebinarLogo($request->logo) : "";
@@ -42,6 +42,25 @@ class WebinarsController extends Controller
             $webinar->webinar_category_id = $request->webinarCategoryId;
 
             $webinar->save();
+
+            if ($questions) {
+                $questions = array_map(function ($question) {
+                    return [
+                        'question_text' => $question['questionText'],
+                    ];
+                }, $questions);
+
+                $webinar->questions()->createMany($questions);
+            }
+
+            if ($lectorsId) {
+                $lectorsId = array_map(function ($lectorId) {
+                    return [
+                        'lector_id' => $lectorId
+                    ];
+                }, $lectorsId);
+                $webinar->lectors()->attach($lectorsId);
+            }
 
             return response()->json([
                 'message' => 'Data webinar successfully added'

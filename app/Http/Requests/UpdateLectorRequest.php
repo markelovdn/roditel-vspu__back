@@ -21,11 +21,16 @@ class UpdateLectorRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => ['string'],
             'description' => ['string'],
             'department' => ['string'],
-            'photo' => ['image:jpg,jpeg,png'],
         ];
+
+        if ($this->hasFile('photo')) {
+            $rules['photo'] = ['image:jpg,jpeg,png'];
+        }
+
+        return $rules;
     }
 }

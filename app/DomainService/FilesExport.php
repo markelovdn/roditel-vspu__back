@@ -2,10 +2,13 @@
 
 namespace App\DomainService;
 
+use App\BusinessProcesses\GetWebinarRegNumber;
 use App\Exports\SurveyExport;
+use App\Exports\WebinarPartisipantsExport;
 use App\Exports\WebinarSertificateExport;
 use App\Models\Parented;
 use App\Models\Webinar;
+use App\Models\WebinarPartisipant;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,24 +28,13 @@ class FilesExport
     public static function webinarSertificateExport($id)
     {
         $webinar = Webinar::query()->where('id', $id)->first();
-        $parented = Parented::with('user')->where('user_id', auth()->user()->id)->first()->user;
 
-        $webinarDate = Carbon::parse($webinar->date)->format('d.m.Y') . ' г.';
-
-        $firstLetters = strpos($webinar->title, ':') ? explode(':', $webinar->title)[0] : explode(' ', $webinar->title)[0];
-        $numberOfParticipant = DB::table('webinar_partisipants')
-            ->where('webinar_id', $id)
-            ->pluck('user_id')
-            ->search(auth()->user()->id);
-
-        $webinarRegNumber = implode('', array_map(function ($word) {
-            return mb_strtoupper(mb_substr(trim($word), 0, 1));
-        }, explode(' ', $firstLetters))) . $webinar->id . '-' . Carbon::parse($webinar->date)->format('dmy') . '-' . $numberOfParticipant;
+        $webinarRegNumber = WebinarPartisipant::where('webinar_id', $webinar->id)->where('user_id', auth()->user()->id)->first()->sertificate_number;
 
         $html = View::make('certificates.certificates', [
             'webinar' => $webinar,
-            'webinarDate' => $webinarDate,
-            'parented' => $parented,
+            'webinarDate' => Carbon::parse($webinar->date)->format('d.m.Y') . ' г.',
+            'parented' => Parented::with('user')->where('user_id', auth()->user()->id)->first()->user,
             'webinarRegNumber' => $webinarRegNumber
         ])->render();
 
@@ -62,6 +54,16 @@ class FilesExport
         $path = storage_path('/app/public' . $filePath . $fileName);
 
         File::put($path, $dompdf->output());
+
+        return config('filesystems.disks.public.url') . $filePath . $fileName;
+    }
+
+    public static function webinarPartisipantsExport($id)
+    {
+        $filePath = '/webinars/';
+        $fileName = 'webinar_participants_' . $id . '.xls';
+
+        Excel::store(new WebinarPartisipantsExport($id), $filePath . $fileName, 'public');
 
         return config('filesystems.disks.public.url') . $filePath . $fileName;
     }
