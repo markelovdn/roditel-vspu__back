@@ -58,8 +58,8 @@ jobs:
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2
         with:
-          server: ${{ secrets.SERVER_HOST_TW }}
-          port: ${{ secrets.SERVER_PORT_TW }}
-          username: ${{ secrets.SERVER_USERNAME_TW }}
-          password: ${{ secrets.SERVER_PASSWORD_TW }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: 22
           post-deploy-commands: "cd /var/www/roditel-vspu__back && git pull origin main"
