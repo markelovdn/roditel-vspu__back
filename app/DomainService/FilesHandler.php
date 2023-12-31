@@ -4,6 +4,7 @@ namespace App\DomainService;
 
 use App\Models\Consultant;
 use App\Models\ConsultantReport;
+use App\Models\Webinar;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -32,17 +33,18 @@ class FilesHandler
 
     public function uploadWebinarLogo(object $file): string
     {
-        // $file->openFile()->fread($file->getSize());
         $img = Image::make($file)->resize($this->resize, null, function ($constraint) {
             $constraint->aspectRatio();
         });
 
+        $webinar = Webinar::all()->count() + 1;
+
         $filecontent = $img->stream();
 
-        $filePath = '/webinars/';
+        $filePath = '/webinars/logo/';
 
-        if (Storage::disk('public')->put($filePath . '_logo.' . $file->extension(), $filecontent->__toString())) {
-            return config('filesystems.disks.public.url') . $filePath . '_logo.' . $file->extension();
+        if (Storage::disk('public')->put($filePath . $webinar . '_logo.' . $file->extension(), $filecontent->__toString())) {
+            return config('filesystems.disks.public.url') . $filePath . $webinar . '_logo.' . $file->extension();
         }
 
         return response()->json(['error' => 'Uploaded logo error'], 400);

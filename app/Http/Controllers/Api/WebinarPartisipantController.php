@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\BusinessProcesses\GetWebinarRegNumber;
 use App\DomainService\FilesExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWebinarPartisipantRequest;
 use App\Models\WebinarPartisipant;
 use App\Http\Resources\WebinarPartisipantsResource;
+use App\Models\User;
 use App\Models\Webinar;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,19 +22,21 @@ class WebinarPartisipantController extends Controller
         return WebinarPartisipantsResource::collection(WebinarPartisipant::where('webinar_id', $webinarId)->get());
     }
 
-    public function store(StoreWebinarPartisipantRequest $request)
+    public function store(StoreWebinarPartisipantRequest $request, User $user)
     {
         $webinarPartisipant = new WebinarPartisipant();
+        $webinar = Webinar::where('id', $request->webinarId)->first();
 
-        if (!$webinarPartisipant->isUnique($request->webinarId, $request->userId)) {
+        if (!$webinarPartisipant->isUnique($request->webinarId, $request->userId) || $user->isAdmin()) {
             return response()->json([
-                'error' => 'The participant is already registered'
+                'error' => 'The participant cannot be registered'
             ], 400);
         }
 
         try {
             $webinarPartisipant->webinar_id = $request->webinarId;
             $webinarPartisipant->user_id = $request->userId;
+            $webinarPartisipant->sertificate_number = GetWebinarRegNumber::execute($webinar);
 
             $webinarPartisipant->save();
 
@@ -81,6 +85,16 @@ class WebinarPartisipantController extends Controller
 
         return response()->json([
             'linkSertificate' => $link_sertificate
+        ]);
+    }
+
+    public function dowloadWebinarPartisipants(Request $request)
+    {
+        $webinar = Webinar::where('id', $request->webinarId)->first();
+        $linkFileParticipant = FilesExport::webinarPartisipantsExport($request->webinarId);
+
+        return response()->json([
+            'linkFilesPartisipant' => $linkFileParticipant
         ]);
     }
 }

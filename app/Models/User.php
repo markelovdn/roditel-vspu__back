@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -80,27 +81,34 @@ class User extends Authenticatable
         return $this->hasMany(WebinarPartisipant::class);
     }
 
-    public function selectedOptions(): HasMany {
+    public function selectedOptions(): HasMany
+    {
         return $this->hasMany(SelectedOption::class);
     }
 
-    public function registrationAs(object $user, $request): void {
+    public function registrationAs(object $user, $request): void
+    {
 
         $role = new Role();
 
         $role->isConsultant($user->id) ?
-         Consultant::insert([
-            'user_id' => $user->id,
-            'specialization_id' => $request->specialization_id,
-            'profession_id' => $request->profession_id,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]) :
-        Parented::insert([
-            'user_id' => $user->id,
-            'region_id' => $request->region_id,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+            Consultant::insert([
+                'user_id' => $user->id,
+                'specialization_id' => $request->specialization_id,
+                'profession_id' => $request->profession_id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]) :
+            Parented::insert([
+                'user_id' => $user->id,
+                'region_id' => $request->region_id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+    }
+
+    public function isAdmin(): bool
+    {
+        return Auth::check() && Auth::user()->role->code == Role::ADMIN;
     }
 }

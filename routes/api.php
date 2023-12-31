@@ -89,6 +89,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/lectors", LectorController::class)->except('index', 'show');
         Route::post("/updateLector/{id}", [LectorController::class, 'update']);
         Route::apiResource("/webinar.webinarPartisipants", WebinarPartisipantController::class)->shallow()->except('store', 'destroy');
+        Route::post('/dowloadWebinarPartisipants', [WebinarPartisipantController::class, 'dowloadWebinarPartisipants']);
         Route::apiResource("/webinarCategories", WebinarCategoriesController::class)->except('index', 'show');
         Route::apiResource("/specializations", SpecializationsController::class)->except('index');
         Route::apiResource("/professions", ProfessionsController::class)->except('index');
