@@ -1,4 +1,4 @@
-name: Execute Commands on Server
+name: Deploy
 
 on:
   push:
@@ -22,4 +22,5 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
           cd /var/www/roditel-vspu__back
+          git config --global --add safe.directory /var/www/roditel-vspu__back
           git pull origin main
