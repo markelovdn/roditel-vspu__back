@@ -22,4 +22,4 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
           cd /var/www/roditel-vspu__back
-          touch example.txt
+          git pull origin main
