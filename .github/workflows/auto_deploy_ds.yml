@@ -1,4 +1,4 @@
-name: auto_deploy
+name: auto_deploy_develop_server
 
 on:
   pull_request:

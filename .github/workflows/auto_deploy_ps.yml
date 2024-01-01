@@ -1,0 +1,41 @@
+name: auto_deploy_production_server
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_PRODUCTION }}
+      - name: Install expect
+        run: sudo apt-get install -y expect
+
+      - name: Set environment variable
+        run: echo "PASSWORD=$PASSWORD_PRODUCTION" >> $GITHUB_ENV
+
+      - name: Connect to Server and Execute Commands
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT_PRODUCTION }} ${{ secrets.SSH_USERNAME_PRODUCTION }}@${{ secrets.SERVER_HOST_PRODUCTION }} << 'ENDSSH'
+          sudo -s -u www-data
+          expect -c '
+            spawn sudo -u www-data command_needing_password
+            expect "Password:"
+            send "$env(PASSWORD)\r"
+            interact
+          '
+          cd /var/www/back
+          git pull origin main
+          composer update
+          php artisan migrate
+          php artisan optimize:clear
