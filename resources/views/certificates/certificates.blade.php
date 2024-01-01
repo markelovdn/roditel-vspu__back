@@ -47,7 +47,7 @@
             <div style="font-size: 18px; font-weight: bold; margin-top: 10px;">
                 {{$parented->first_name}} {{$parented->patronymic}} {{$parented->second_name}}
             </div>
-            <div style="font-size: 18px;">принял(а) участие в просветительском мероприятии для родительского сообщества2</div>
+            <div style="font-size: 18px;">принял(а) участие в просветительском мероприятии для родительского сообщества</div>
             <div style="font-size: 22px; font-weight: bold; margin: 10px;">{{$webinar->title}}</div>
             <div style="font-size: 18px;">г. Волгоград, {{$webinarDate}}</div>
         </div>
