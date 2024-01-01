@@ -1,4 +1,4 @@
-name: Laravel
+name: auto_test
 
 on:
   push:
