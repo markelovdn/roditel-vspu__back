@@ -18,10 +18,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_PRODUCTION }}
-      - name: Install expect
-        run: sudo apt-get install -y expect
-
       - name: Connect to Server and Execute Commands
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT_PRODUCTION }} ${{ secrets.SSH_USERNAME_PRODUCTION }}@${{ secrets.SERVER_HOST_PRODUCTION }} << 'ENDSSH'
-          echo "${{ secrets.PASSWORD }}" | sudo -S -u www-data bash -c 'cd /var/www/back && git fetch origin main && git merge origin/main && git pull --no-rebase origin main && composer update && php artisan migrate && php artisan optimize:clear'
+          echo "${{ secrets.PASSWORD }}" | sudo -S -u www-data bash -c 'cd /var/www/back && git fetch origin main && git merge origin/main && composer update && php artisan migrate && php artisan optimize:clear'
