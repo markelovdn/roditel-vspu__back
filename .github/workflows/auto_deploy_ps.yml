@@ -21,19 +21,10 @@ jobs:
       - name: Install expect
         run: sudo apt-get install -y expect
 
-      - name: Set environment variable
-        run: echo "PASSWORD=$PASSWORD_PRODUCTION" >> $GITHUB_ENV
-
       - name: Connect to Server and Execute Commands
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT_PRODUCTION }} ${{ secrets.SSH_USERNAME_PRODUCTION }}@${{ secrets.SERVER_HOST_PRODUCTION }} << 'ENDSSH'
-          sudo -s -u www-data
-          expect -c '
-            spawn sudo -u www-data command_needing_password
-            expect "Password:"
-            send "$env(PASSWORD)\r"
-            interact
-          '
+          sudo -S -u www-data command_needing_password <<< "${{ secrets.PASSWORD }}"
           cd /var/www/back
           git pull origin main
           composer update
