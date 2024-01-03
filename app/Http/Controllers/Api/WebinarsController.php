@@ -9,6 +9,7 @@ use App\Http\Requests\StoreWebinarRequest;
 use App\Http\Requests\UpdateWebinarRequest;
 use App\Http\Resources\WebinarsResource;
 use App\Models\Webinar;
+use App\Models\WebinarQuestion;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -109,18 +110,15 @@ class WebinarsController extends Controller
 
     public function destroy(string $id)
     {
-        // try {
-        //     Webinar::destroy($id);
-        //     return response()->json([
-        //         'message' => 'Record webinar successfully deleted'
-        //     ], 200);
+        DB::transaction(function () use ($id) {
+            DB::table('lector_webinar')->where('webinar_id', $id)->delete();
+            WebinarQuestion::where('webinar_id', $id)->delete();
+            Webinar::destroy($id);
+        });
 
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         'error' => $e->getMessage(),
-        //         'message' => 'Something went wrong in WebinarsController.destroy'
-        //     ], 400);
-        // }
+        return response()->json([
+            'message' => 'Record webinar successfully deleted'
+        ], 200);
     }
 
     public function getWebinarLectors()
