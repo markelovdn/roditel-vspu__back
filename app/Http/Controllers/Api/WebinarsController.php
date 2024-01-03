@@ -75,7 +75,7 @@ class WebinarsController extends Controller
 
     public function show(string $id)
     {
-        return WebinarsResource::collection(Webinar::where('id', $id)->with('webinarCategory', 'questions', 'lectors')->get());;
+        return new WebinarsResource(Webinar::where('id', $id)->with('webinarCategory', 'questions', 'lectors')->first());
     }
 
     public function update(UpdateWebinarRequest $request, string $id, FilesHandler $filesHandler)
