@@ -28,6 +28,7 @@ class WebinarsController extends Controller
 
     public function store(StoreWebinarRequest $request,  FilesHandler $filesHandler)
     {
+        //TODO: сделать загрузку заглушки для логотипа вебинара
         $webinar = new Webinar();
         $questions = json_decode($request->questions, true);
         $lectorsId = json_decode($request->lectors, true);

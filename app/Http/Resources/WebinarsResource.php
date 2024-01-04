@@ -34,6 +34,7 @@ class WebinarsResource extends JsonResource
             'videoLink' => $this->video_link,
             'registered' => $registered,
             'webinarCategory' => [
+                'id' => $this->webinarCategory->id,
                 'title' => $this->webinarCategory->title
             ],
             'questions' => WebinarQuestionsResource::collection($this->questions),
