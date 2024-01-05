@@ -21,15 +21,20 @@ class UpdateWebinarRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'title' => ['string'],
             'date' => ['string'],
             'timeStart' => ['string'],
             'timeEnd' => ['string'],
-            'logo' => ['nullable', 'file', 'image:jpg,jpeg,png'],
             'cost' => ['numeric'],
             'videoLink' => ['string'],
             'webinarCategoryId' => ['numeric'],
         ];
+
+        if ($this->hasFile('logo')) {
+            $rules['logo'] = ['image:jpg,jpeg,png'];
+        }
+
+        return $rules;
     }
 }
