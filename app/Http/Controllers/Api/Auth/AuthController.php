@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
@@ -33,11 +34,11 @@ class AuthController extends Controller
     public function register(RegistrationRequest $request): JsonResponse
     {
         $user = new User();
-        $role = Role::where('code', $request->role_code)->first();
+        $role = Role::where('code', $request->roleCode)->first();
 
         try {
-            $user->first_name = $request->first_name;
-            $user->second_name = $request->second_name;
+            $user->first_name = $request->firstName;
+            $user->second_name = $request->secondName;
             $user->patronymic = $request->patronymic;
             $user->email = $request->email;
             $user->phone = $request->phone;

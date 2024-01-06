@@ -84,6 +84,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/parenteds", ParentedsController::class)->only('index', 'destroy');
         Route::apiResource("/consultants", ConsultantsController::class)->only('destroy');
         Route::apiResource("/webinars", WebinarsController::class)->except('index', 'show');
+        Route::post("/webinar/{id}", [WebinarsController::class, 'update']);
         Route::apiResource("/webinar.webinarQuestions", WebinarQuestionsController::class)->shallow()->except('index', 'show');
         Route::apiResource("/webinar.webinarPrograms", WebinarProgramController::class)->shallow()->except('index', 'show');
         Route::apiResource("/lectors", LectorController::class)->except('index', 'show');

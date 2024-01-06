@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class RegistrationRequest extends FormRequest
 {
@@ -22,13 +24,32 @@ class RegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'second_name' => ['required', 'string', 'max:45'],
-            'first_name' => ['required', 'string', 'max:45'],
+            'secondName' => ['required', 'string', 'max:45'],
+            'firstName' => ['required', 'string', 'max:45'],
             'patronymic' => ['required', 'string', 'max:45'],
             'email' => ['required', 'unique:users', 'max:50'],
             'phone' => ['unique:users', 'max:20'],
             'password' => ['required', 'string'],
-            'role_code' => ['required', 'string'],
+            'roleCode' => ['required', 'string'],
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors()->keys();
+
+        $formattedErrors = [];
+        foreach ($errors as $error) {
+            if ($error === 'email') {
+                $error = 'Данный Email уже зарегистрирован, попробуйте восстановить пароль';
+            } else {
+                $error = 'Данный номер телефона уже зарегистрирован';
+            }
+            $formattedErrors[] = $error;
+        }
+
+        throw new ValidationException($validator, response()->json([
+            'message' => $formattedErrors,
+        ], 422));
     }
 }

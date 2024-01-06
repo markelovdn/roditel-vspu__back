@@ -94,14 +94,14 @@ class User extends Authenticatable
         $role->isConsultant($user->id) ?
             Consultant::insert([
                 'user_id' => $user->id,
-                'specialization_id' => $request->specialization_id,
-                'profession_id' => $request->profession_id,
+                'specialization_id' => $request->specializationId,
+                'profession_id' => $request->professionId,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]) :
             Parented::insert([
                 'user_id' => $user->id,
-                'region_id' => $request->region_id,
+                'region_id' => $request->regionId,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
