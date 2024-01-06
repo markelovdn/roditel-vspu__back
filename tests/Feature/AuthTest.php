@@ -17,14 +17,14 @@ class AuthTest extends TestCase
         $role = Role::where('code', Role::CONSULTANT)->first();
         //codeception
         $response = $this->post('/api/register', [
-            'second_name' => 'Иван',
-            'first_name' => 'Иванов',
+            'secondName' => 'Иван',
+            'firstName' => 'Иванов',
             'patronymic' => 'Иванович',
             'email' => 'ivan@test.ru',
             'phone' => '+7 (000) 000-00-00',
-            'specialization_id' => 1,
-            'profession_id' => 1,
-            'role_code' => $role->code,
+            'specializationId' => 1,
+            'professionId' => 1,
+            'roleCode' => $role->code,
             'password' => '123123'
         ]);
 
@@ -37,7 +37,8 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_login_user() : void {
+    public function test_login_user(): void
+    {
         $response = $this->post('/api/login', [
             'email' => 'test@test.ru',
             'password' => 'password'
@@ -46,7 +47,8 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_login_incorrect_credentials() : void {
+    public function test_login_incorrect_credentials(): void
+    {
         $response = $this->post('/api/login', [
             'email' => 'test@test1.ru',
             'password' => 'password1'
