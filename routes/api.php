@@ -98,6 +98,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource("/contracts", ConsultantContractController::class);
         Route::get("/getConsultantsForAdmin", [ConsultantsController::class, 'getConsultantsForAdmin']);
         Route::put("/updateContractNumber/{consultantId}", [ConsultantsController::class, 'updateContractNumber']);
+        Route::get("/getConsultantsReports", [ConsultantReportsController::class, 'getConsultantsReports']);
     });
 });
 

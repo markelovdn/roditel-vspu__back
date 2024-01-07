@@ -112,4 +112,23 @@ class ConsultantReportsController extends Controller
             ], 400);
         }
     }
+
+    public function getConsultantsReports(Request $request)
+    {
+        if ($request->query('dateBetween') == null) {
+            return ConsultantReportsResource::collection(
+                ConsultantReport::orderBy('updated_at', 'desc')->paginate(6)
+            );
+        }
+
+        $dateStart = Carbon::parse(Str::before($request->query('dateBetween'), ','))->format('Y-m-d');
+        $dateEnd = Carbon::parse(Str::after($request->query('dateBetween'), ','))->format('Y-m-d');
+
+        return ConsultantReportsResource::collection(
+            ConsultantReport::whereRaw('DATE(updated_at) >= ?', [$dateStart])
+                ->whereRaw('DATE(updated_at) <= ?', [$dateEnd])
+                ->orderBy('updated_at', 'desc')
+                ->paginate(6)
+        );
+    }
 }
