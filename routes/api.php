@@ -101,7 +101,3 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get("/getConsultantsReports", [ConsultantReportsController::class, 'getConsultantsReports']);
     });
 });
-
-Route::get('/api/documentation', function () {
-    return view('vendor.l5-swagger.index');
-});
