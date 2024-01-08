@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\JsonResponse;
 
 class Parented extends Model
 {
@@ -19,7 +20,8 @@ class Parented extends Model
         'title',
     ];
 
-    public function childrens(): HasMany {
+    public function childrens(): HasMany
+    {
         return $this->hasMany(Children::class);
     }
 
@@ -33,17 +35,21 @@ class Parented extends Model
         return $this->belongsTo(Region::class);
     }
 
-    public function consultations(): HasMany {
+    public function consultations(): HasMany
+    {
         return $this->hasMany(Consultation::class)->with('parentedQuestion');
     }
 
-    public function parentedQuestions(): HasMany {
-        return $this->hasMany(ParentedQuestion::class);
-    }
-
-    public function questionnaires(): BelongsToMany {
+    public function questionnaires(): BelongsToMany
+    {
         return $this->belongsToMany(Questionnaire::class)->with('questions');
     }
 
-
+    public static function maxChildrens(int $parented_id): JsonResponse | bool
+    {
+        if (count(Children::where('parented_id', $parented_id)->get()) >= Parented::MAX_QUANTITY_CHILDRENS) {
+            return true;
+        }
+        return false;
+    }
 }
