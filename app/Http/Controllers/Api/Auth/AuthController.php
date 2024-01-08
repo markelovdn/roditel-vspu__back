@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\BusinessProcesses\SendingMail;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
@@ -33,19 +34,18 @@ class AuthController extends Controller
      */
     public function register(RegistrationRequest $request): JsonResponse
     {
-        $user = new User();
         $role = Role::where('code', $request->roleCode)->first();
 
         try {
-            $user->first_name = $request->firstName;
-            $user->second_name = $request->secondName;
-            $user->patronymic = $request->patronymic;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->role_id = $role->id;
-            $user->password = Hash::make($request->password);
-
-            $user->save();
+            $user = User::create([
+                'first_name' => $request->firstName,
+                'second_name' => $request->secondName,
+                'patronymic' => $request->patronymic,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'role_id' => $role->id,
+                'password' => Hash::make($request->password),
+            ]);
 
             Auth::login($user);
 
@@ -54,24 +54,16 @@ class AuthController extends Controller
             $token = $user->createToken('user_token')->plainTextToken;
             $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
-            Mail::send('newConsultant', ['user' => $request->first_name . ' ' . $request->patronymic . ' ' . $request->second_name, 'email' => $request->email], function ($message) use ($request) {
-                $message->to(User::where('role_id', Role::where('code', Role::ADMIN)->first()->id)->first()->email);
-                $message->subject('Регистрация нового консультанта');
-            });
+            SendingMail::newUser($user);
 
-            return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), false), 'token' => $token], 200);
+            return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), false), 'token' => $token]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => $e->getMessage(),
                 'message' => 'Something went wrong in AuthController.register'
             ], 400);
         }
     }
 
-    /**
-     * @param LoginRequest $request
-     * @return JsonResponse
-     */
     public function login(LoginRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -80,7 +72,6 @@ class AuthController extends Controller
             return response()->json('Credentials not match', 401);
         }
 
-        /** @var User $user */
         $user = $request->user();
         $userData = UserResource::collection(User::where('id', $user->id)->with('role')->get());
 
@@ -95,14 +86,13 @@ class AuthController extends Controller
             $accessToken = $request->bearerToken();
             $token = PersonalAccessToken::findToken($accessToken);
             if (!$token) {
-                return response()->json('Successful logout', 200);
+                return response()->json('Successful logout');
             }
             $token->delete();
 
-            return response()->json('Successful logout', 200);
+            return response()->json('Successful logout');
         } catch (\Exception $e) {
             return response()->json([
-                'error' => $e->getMessage(),
                 'message' => 'Something went wrong in AuthController.register'
             ], 400);
         }
@@ -128,7 +118,7 @@ class AuthController extends Controller
             $message->subject('Сброс пароля');
         });
 
-        return response()->json('Data send success', 200);
+        return response()->json('Data send success');
     }
 
     public function resetPassword(UpdatePasswordRequest $request): JsonResponse
@@ -146,6 +136,6 @@ class AuthController extends Controller
 
         DB::table('password_reset_tokens')->where(['token' => $request->resetToken])->delete();
 
-        return response()->json('Password updated success', 200);
+        return response()->json('Password updated success');
     }
 }
