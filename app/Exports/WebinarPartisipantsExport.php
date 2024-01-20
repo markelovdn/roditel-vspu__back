@@ -25,8 +25,11 @@ class WebinarPartisipantsExport implements FromView
         $id = $this->id;
 
         $participants = User::query()
-            ->where('webinar_partisipants.webinar_id', $id)
             ->join('webinar_partisipants', 'users.id', '=', 'webinar_partisipants.user_id')
+            ->join('parenteds', 'users.id', '=', 'parenteds.user_id')
+            ->join('regions', 'parenteds.region_id', '=', 'regions.id')
+            ->where('webinar_partisipants.webinar_id', $id)
+            ->select('users.*', 'regions.title as region_title')
             ->get();
 
         return view('webinarPartisipants', [
