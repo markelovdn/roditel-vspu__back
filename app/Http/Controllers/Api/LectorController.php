@@ -57,7 +57,7 @@ class LectorController extends Controller
         ], 200);
     }
 
-    public function update(UpdateLectorRequest $request, int $id, FilesHandler $filesHandler): JsonResponse
+    public function update(StoreLectorRequest $request, int $id, FilesHandler $filesHandler): JsonResponse
     {
         if ($request->hasFile('photo')) {
             $lectorPhoto = $filesHandler->uploadLectorPhoto($request->photo, $request->name);
@@ -67,8 +67,8 @@ class LectorController extends Controller
         $webinarLector = Lector::where('id', $id)->first();
         try {
             $webinarLector->lector_name = $request->name;
-            $webinarLector->lector_description = $request->description;
-            $webinarLector->lector_department = $request->department;
+            $webinarLector->lector_description = $request->description === 'null' ? "" : $request->description;
+            $webinarLector->lector_department = $request->department === 'null' ? "" : $request->department;
             $webinarLector->lector_photo = $lectorPhoto;
             $webinarLector->save();
 

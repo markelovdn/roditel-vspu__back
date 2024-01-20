@@ -22,9 +22,9 @@ class UpdateLectorRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => ['string'],
-            'description' => ['string'],
-            'department' => ['string'],
+            'name' => ['required', 'string'],
+            'description' => ['nullable', 'string'],
+            'department' => ['nullable', 'string'],
         ];
 
         if ($this->hasFile('photo')) {

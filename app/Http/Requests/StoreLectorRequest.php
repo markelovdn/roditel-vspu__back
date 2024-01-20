@@ -21,11 +21,16 @@ class StoreLectorRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => ['required', 'string'],
-            'description' => ['string'],
-            'department' => ['string'],
-            'photo' => ['image:jpg,jpeg,png'],
+            'description' => ['nullable', 'string'],
+            'department' => ['nullable', 'string'],
         ];
+
+        if ($this->hasFile('photo')) {
+            $rules['photo'] = ['image:jpg,jpeg,png'];
+        }
+
+        return $rules;
     }
 }
