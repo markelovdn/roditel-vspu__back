@@ -20,7 +20,12 @@ class ConsultationResource extends JsonResource
     public function toArray(Request $request): array
     {
         $consultationMessages = ConsultationMessage::where('consultation_id', $this->id)->get();
-        $region = Parented::with('region')->where('user_id', $consultationMessages->first()->user_id)->first();
+        if (count($consultationMessages) === 0) {
+            $region = "";
+        } else {
+            $region = Parented::with('region')->where('user_id', $consultationMessages->first()->user_id)->first();
+        }
+
 
         return [
 
