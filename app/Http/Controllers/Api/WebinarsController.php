@@ -92,6 +92,8 @@ class WebinarsController extends Controller
                 'title' => $webinar->webinarCategory->title
             ],
             'cost' => $webinar->cost,
+            'prefixSertificate' => $webinar->prefix_sertificate,
+            'numberSertificate' => $webinar->number_sertificate,
             'videoLink' => $webinar->video_link,
             'date' => Carbon::parse($webinar->date)->format('d.m.Y'),
             'timeStart' => Carbon::parse($webinar->time_start)->format('H:i'),
