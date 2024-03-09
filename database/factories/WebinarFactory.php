@@ -22,8 +22,10 @@ class WebinarFactory extends Factory
             'time_start' => fake()->time(),
             'time_end' => fake()->time(),
             'logo' => 'https://markelovdn.ru/storage/webinars/logo/_logo.jpg',
-            'video_link' =>fake()->url(),
-            'webinar_category_id' => fake()->randomElement([1,3]),
+            'video_link' => fake()->url(),
+            'prefix_sertificate' => fake()->text(),
+            'number_sertificate' => fake()->randomNumber(8, true),
+            'webinar_category_id' => fake()->randomElement([1, 3]),
         ];
     }
 }

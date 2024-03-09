@@ -27,6 +27,8 @@ class UpdateWebinarRequest extends FormRequest
             'timeStart' => ['string'],
             'timeEnd' => ['string'],
             'cost' => ['numeric'],
+            'prefixSertificate' => ['string'],
+            'numberSertificate' => ['numeric'],
             'videoLink' => ['string'],
             'webinarCategoryId' => ['numeric'],
         ];
