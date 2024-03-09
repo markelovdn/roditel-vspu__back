@@ -32,13 +32,15 @@ class WebinarsTest extends TestCase
         $admin = User::where('role_id', $role->id)->first();
         Auth::login($admin);
 
-        $response = $this->post('api/webinars',[
+        $response = $this->post('api/webinars', [
             'title' => fake()->title(),
             'date' => fake()->date(),
             'timeStart' => fake()->time(),
             'timeEnd' => fake()->time(),
             'logo' => UploadedFile::fake()->image('photo.jpg'),
             'cost' => 0.00,
+            'prefixSertificate' => fake()->text(),
+            'numberSertificate' => fake()->randomNumber(8, true),
             'videoLink' => fake()->url(),
             'webinarCategoryId' => $webinar->id,
         ]);
@@ -51,7 +53,7 @@ class WebinarsTest extends TestCase
     public function test_show_webinars(): void
     {
         $webinar = Webinar::first();
-        $response = $this->get('api/webinars/'.$webinar->id);
+        $response = $this->get('api/webinars/' . $webinar->id);
 
         $response
             ->assertStatus(200)
@@ -67,7 +69,7 @@ class WebinarsTest extends TestCase
 
         $webinar = Webinar::first();
 
-        $response = $this->put('api/webinars/'.$webinar->id,[
+        $response = $this->put('api/webinars/' . $webinar->id, [
             'title' => fake()->title(),
             'date' => fake()->date(),
             'timeStart' => fake()->time(),
@@ -94,16 +96,16 @@ class WebinarsTest extends TestCase
 
     // public function test_destroy_webinars(): void
     // {
-        // $role = Role::where('code', Role::ADMIN)->first();
-        // $admin = User::where('role_id', $role->id)->first();
-        // Auth::login($admin);
+    // $role = Role::where('code', Role::ADMIN)->first();
+    // $admin = User::where('role_id', $role->id)->first();
+    // Auth::login($admin);
 
-        // $webinar = Webinar::first();
-        // $response = $this->delete('api/webinars/'.$webinar->id);
+    // $webinar = Webinar::first();
+    // $response = $this->delete('api/webinars/'.$webinar->id);
 
-        // $this->assertModelMissing($webinar);
-        // $response
-        //     ->assertStatus(200)
-        //     ->assertJsonIsObject();
+    // $this->assertModelMissing($webinar);
+    // $response
+    //     ->assertStatus(200)
+    //     ->assertJsonIsObject();
     // }
 }

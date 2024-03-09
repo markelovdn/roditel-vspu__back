@@ -28,6 +28,8 @@ class StoreWebinarRequest extends FormRequest
             'timeEnd' => ['string'],
             'logo' => ['image:jpg,jpeg,png'],
             'cost' => ['numeric'],
+            'prefixSertificate' => ['required', 'string'],
+            'numberSertificate' => ['required', 'numeric'],
             'videoLink' => ['string'],
             'webinarCategoryId' => ['required', 'numeric'],
         ];

@@ -42,6 +42,8 @@ class WebinarsController extends Controller
             $webinar->time_end = $request->timeEnd;
             $webinar->logo = $request->logo ? $filesHandler->uploadWebinarLogo($request->logo) : "";
             $webinar->cost = $request->cost;
+            $webinar->prefix_sertificate = $request->prefixSertificate;
+            $webinar->number_sertificate = $request->numberSertificate;
             $webinar->video_link = $request->videoLink;
             $webinar->webinar_category_id = $request->webinarCategoryId;
 
@@ -118,6 +120,8 @@ class WebinarsController extends Controller
             }
 
             $webinar->cost = $request->cost;
+            $webinar->prefix_sertificate = $request->prefixSertificate;
+            $webinar->number_sertificate = $request->numberSertificate;
             $webinar->video_link = $request->videoLink;
             $webinar->webinar_category_id = $request->webinarCategoryId;
 
