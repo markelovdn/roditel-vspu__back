@@ -58,12 +58,17 @@ class ConsultationsController extends Controller
             $consultation->title = "Завяка ";
             $consultation->closed = false;
             $consultation->parented_user_id = $parented->user->id;
-            $consultation->specialization_id = $request->specializationId;
 
             if ($request->allConsultants) {
                 $consultation->consultant_user_id = null;
 
-                $consultants = Consultant::with('user')->where('specialization_id', $request->specializationId)->get();
+                // $consultants = Consultant::with('user')->where('specialization_id', $request->specializationId)->get();
+
+                $consultants = Consultant::with('user')
+                    ->whereHas('specializations', function ($query) use ($request) {
+                        $query->whereIn('specialization_id', $request->specializationsId);
+                    })
+                    ->get();
 
                 $consultation->save();
 

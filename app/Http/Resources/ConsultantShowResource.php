@@ -19,10 +19,12 @@ class ConsultantShowResource extends JsonResource
             'userId' => $this->user_id,
             'photo' => $this->photo,
             'description' => $this->description,
-            'specialization' => [
-                'id' => $this->specialization->id,
-                'title' => $this->specialization->title,
-            ],
+            'specializations' => $this->specializations->map(function ($specialization) {
+                return [
+                    'id' => $specialization->id,
+                    'title' => $specialization->title,
+                ];
+            })->toArray(),
             'profession' => [
                 'id' => $this->profession->id,
                 'title' => $this->profession->title,

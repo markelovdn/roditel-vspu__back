@@ -18,7 +18,6 @@ class ConsultationRatingTest extends TestCase
 
         $consultation = Consultation::factory()->create([
             'parented_user_id' => $user->id,
-            'specialization_id' => 1,
             'title' => 'Test Consultation',
             'closed' => false,
         ]);

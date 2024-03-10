@@ -22,7 +22,7 @@ class AuthTest extends TestCase
             'patronymic' => 'Иванович',
             'email' => 'ivan@test.ru',
             'phone' => '+7 (000) 000-00-00',
-            'specializationId' => 1,
+            'specializationId' => [1, 2, 3],
             'professionId' => 1,
             'roleCode' => $role->code,
             'password' => '123123'

@@ -22,9 +22,9 @@ class ConsultantsController extends Controller
     public function index(Request $request, ConsultantFilter $filter)
     {
         if ($request->all) {
-            return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->get());
+            return ConsultantsResource::collection(Consultant::with('user', 'specializations', 'profession')->get());
         } else {
-            return ConsultantsResource::collection(Consultant::with('user', 'specialization', 'profession')->filter($filter)->paginate(9));
+            return ConsultantsResource::collection(Consultant::with('user', 'specializations', 'profession')->filter($filter)->paginate(9));
         }
     }
 
@@ -51,7 +51,7 @@ class ConsultantsController extends Controller
 
     public function show(string $id)
     {
-        return ConsultantShowResource::collection(Consultant::where('user_id', Auth::user()->id)->with('user', 'specialization', 'profession')->get());
+        return ConsultantShowResource::collection(Consultant::where('user_id', Auth::user()->id)->with('user', 'specializations', 'profession')->get());
     }
 
     public function update(UpdateConsultantRequest $request, string $id, FilesHandler $filesHandler)
@@ -59,18 +59,20 @@ class ConsultantsController extends Controller
         $consultant = Consultant::where('id', $id)->first();
 
         try {
-            $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
+            if ($request->photo) {
+                $consultant->photo = $filesHandler->uploadPhoto($consultant->user_id, $request->photo);
+            }
             $consultant->description = $request->description;
-            $consultant->specialization_id = $request->specializationId;
             $consultant->profession_id = $request->professionId;
-
             $consultant->save();
 
-            return ConsultantShowResource::collection(Consultant::where('id', $id)->with('user', 'specialization', 'profession')->get());
+            $consultant->updateSpecializations($request->specializationsId);
+
+            return ConsultantShowResource::collection(Consultant::where('id', $id)->with('user', 'specializations', 'profession')->get());
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
-                'message' => 'Something went wrong in UserController.update'
+                'message' => 'Something went wrong in ConsultantController.update'
             ], 400);
         }
     }

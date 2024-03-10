@@ -58,7 +58,6 @@ class ConsultantTest extends TestCase
 
     public function test_update_consultant(): void
     {
-        //TODO: Сделать загрузка файла через постман в raw формате
         $consultant = Consultant::first();
         $user = User::where('id', $consultant->user_id)->first();
         Auth::login($user);
@@ -66,7 +65,7 @@ class ConsultantTest extends TestCase
         $response = $this->put('api/consultants/' . Consultant::where('user_id', $user->id)->first()->id, [
             'photo' => UploadedFile::fake()->image('photo.jpg'),
             'description' => 'новое описание консультанта',
-            'specializationId' => Specialization::find(1)->id,
+            'specializationsId' => [1, 2, 3],
             'professionId' => Profession::find(1)->id,
         ]);
 

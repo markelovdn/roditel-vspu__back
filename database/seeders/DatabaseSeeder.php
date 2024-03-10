@@ -153,7 +153,15 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(10)->create();
         \App\Models\Contract::factory(10)->create();
         \App\Models\Parented::factory(10)->create();
-        \App\Models\Consultant::factory(10)->create();
+        // \App\Models\Consultant::factory(10)->create();
+        $specializationsIds = Specialization::pluck('id');
+
+        Consultant::factory(10)->create()->each(function ($consultant) use ($specializationsIds) {
+            $consultant->specializations()->attach(
+                $specializationsIds->random(rand(1, $specializationsIds->count()))->toArray()
+            );
+        });
+
         \App\Models\Children::factory(10)->create();
         \App\Models\ConsultantReport::factory(10)->create();
         OptionOther::factory(1)->create();
@@ -163,6 +171,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Lector::factory(10)->create();
         \App\Models\Webinar::factory(10)->has(Lector::factory(2))->has(WebinarQuestion::factory(2), 'questions')->create();
         \App\Models\WebinarPartisipant::factory(10)->create();
+
+
 
         User::insert(
             [
@@ -215,7 +225,6 @@ class DatabaseSeeder extends Seeder
         Consultant::create([
             'user_id' => '94',
             'photo' => 'https://via.placeholder.com/354x472.png/0033aa?text=people+accusantium',
-            'specialization_id' => '1',
             'profession_id' => '1',
         ]);
 
@@ -273,7 +282,6 @@ class DatabaseSeeder extends Seeder
                 "parented_user_id" => 93,
                 "consultant_user_id" => 94,
                 "closed" => false,
-                "specialization_id" => 1,
                 "created_at" => now(),
                 "updated_at" => now()
             ],
@@ -282,7 +290,6 @@ class DatabaseSeeder extends Seeder
                 "parented_user_id" => 93,
                 "consultant_user_id" => 94,
                 "closed" => false,
-                "specialization_id" => 1,
                 "created_at" => now()->addDay(-3),
                 "updated_at" => now()->addDay(-3),
             ],
@@ -291,7 +298,6 @@ class DatabaseSeeder extends Seeder
                 "parented_user_id" => 93,
                 "consultant_user_id" => 94,
                 "closed" => false,
-                "specialization_id" => 1,
                 "created_at" => now()->addDay(-6),
                 "updated_at" => now()->addDay(-6),
             ]

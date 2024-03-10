@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Filters\QueryFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Consultant extends Model
 {
@@ -17,6 +18,9 @@ class Consultant extends Model
 
     protected $fillable = [
         'photo',
+        'user_id',
+        'profession_id',
+
     ];
 
     public function user(): BelongsTo
@@ -34,9 +38,9 @@ class Consultant extends Model
         return $this->hasMany(ConsultantReport::class);
     }
 
-    public function specialization(): BelongsTo
+    public function specializations(): BelongsToMany
     {
-        return $this->belongsTo(Specialization::class);
+        return $this->belongsToMany(Specialization::class);
     }
 
     public function profession(): BelongsTo
@@ -44,19 +48,9 @@ class Consultant extends Model
         return $this->belongsTo(Profession::class);
     }
 
-    public function consultantAnsweres(): HasMany
-    {
-        return $this->hasMany(ConsultantAnswer::class)->with('consultation');
-    }
-
     public function consultations(): HasMany
     {
         return $this->hasMany(Consultation::class);
-    }
-
-    public function consultantAnswers(): HasMany
-    {
-        return $this->hasMany(ConsultantAnswer::class);
     }
 
     public function questionnaires(): HasMany
@@ -67,5 +61,10 @@ class Consultant extends Model
     public function scopeFilter(Builder $builder, QueryFilter $filter)
     {
         return $filter->apply($builder);
+    }
+
+    public function updateSpecializations(array $specializationsId): void
+    {
+        $this->specializations()->sync($specializationsId);
     }
 }

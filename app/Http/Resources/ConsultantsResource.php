@@ -14,46 +14,43 @@ class ConsultantsResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+
     public function toArray(Request $request): array
     {
+        $data = [
+            'userId' => $this->user->id,
+            'consultantId' => $this->id,
+            'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
+            'photo' => $this->photo,
+            'specializations' => $this->specializations->map(function ($specialization) {
+                return [
+                    'id' => $specialization->id,
+                    'title' => $specialization->title,
+                ];
+            })->toArray(),
+        ];
 
         if (auth()->user() && User::where('id', auth()->user()->id)->first()->role->code == Role::ADMIN) {
-            $data = [
-                'userId' => $this->user->id,
-                'consultantId' => $this->id,
-                'photo' => $this->photo,
-                'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
-                'phone' => $this->user->phone,
-                'specializationTitle' => $this->specialization->title,
-                'contractNumber' => $this->contract->number ?? null
-            ];
-            return $data;
+            $data['phone'] = $this->user->phone;
+            $data['contractNumber'] = $this->contract->number ?? null;
         }
 
         if ($request->all) {
+        } else {
             $data = [
-                'userId' => $this->user->id,
-                'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
-                "consultantId" => $this->id,
-                "specialization" => [
-                    "id" => $this->specialization->id,
-                    "title" => $this->specialization->title,
-                ]
+                'user' => [
+                    'id' => $this->user->id,
+                    'firstName' => $this->user->first_name,
+                    'secondName' => $this->user->second_name,
+                    'surName' => $this->user->patronymic,
+                ],
+                'description' => $this->description,
+                'profession' => [
+                    'id' => $this->profession->id,
+                    'title' => $this->profession->title,
+                ],
             ];
-            return $data;
         }
-        $data['user'] = [
-            'id' => $this->user->id,
-            'firstName' => $this->user->first_name,
-            'secondName' => $this->user->second_name,
-            'surName' => $this->user->patronymic,
-        ];
-        $data['photo'] = $this->photo;
-        $data['description'] = $this->description;
-        $data['profession'] = [
-            "id" => $this->profession->id,
-            "title" => $this->profession->title,
-        ];
 
         return $data;
     }

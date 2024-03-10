@@ -36,7 +36,7 @@ class ConsultationTest extends TestCase
 
         $request = [
             'title' => 'Test Consultation',
-            'specializationId' => 1,
+            'specializationsId' => [1, 2, 3],
             'consultantId' => $consultant->id,
             'messageText' => 'Test message',
             'allConsultants' => true
@@ -61,7 +61,6 @@ class ConsultationTest extends TestCase
         // Test case 1: Successful deletion
         $consultation = Consultation::factory()->create([
             'parented_user_id' => $user->id,
-            'specialization_id' => 1,
             'title' => 'Test Consultation',
             'closed' => false,
         ]);
