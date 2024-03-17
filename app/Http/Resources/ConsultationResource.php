@@ -26,16 +26,23 @@ class ConsultationResource extends JsonResource
             $region = Parented::with('region')->where('user_id', $consultationMessages->first()->user_id)->first();
         }
 
+        $consultant = Consultant::where('user_id', $this->consultant_user_id)->first();
+
+        $specializations = $consultant->specializations ? $consultant->specializations->map(function ($specialization) {
+            return [
+                'id' => $specialization->id,
+                'title' => $specialization->title,
+            ];
+        })->toArray() : [];
 
         return [
-
             "id" => $this->id,
             "title" => $this->title . ' ' . $this->id,
             "closed" => $this->closed === 0 ? false : true,
             "createdAt" => Carbon::parse($this->created_at)->getTimestampMs(),
             "createdAt" => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             "updatedAt" => Carbon::parse($this->updated_at)->getTimestampMs(),
-            "specialization" => new SpecializationsResource(Specialization::find($this->specialization_id)),
+            "specialization" => $specializations,
             "region" => $region->region->title ?? null,
             "users" => UserResource::collection($this->whenLoaded('users')),
             "messages" => ConsultationMessagesResource::collection($this->whenLoaded('messages')),

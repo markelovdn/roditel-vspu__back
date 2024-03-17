@@ -99,10 +99,10 @@ class User extends Authenticatable
                 'profession_id' => $request->professionId,
             ]);
 
-            if (is_array($request->specializationId)) {
-                $consultant->specializations()->syncWithoutDetaching($request->specializationId);
+            if (is_array($request->specializationsId)) {
+                $consultant->specializations()->syncWithoutDetaching($request->specializationsId);
             } else {
-                $consultant->specializations()->syncWithoutDetaching([$request->specializationId]);
+                $consultant->specializations()->syncWithoutDetaching([$request->specializationsId]);
             }
         } else {
             Parented::create([
