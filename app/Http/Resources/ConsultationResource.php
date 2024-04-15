@@ -26,7 +26,7 @@ class ConsultationResource extends JsonResource
             $region = Parented::with('region')->where('user_id', $consultationMessages->first()->user_id)->first();
         }
 
-        $consultant = Consultant::where('user_id', $this->consultant_user_id)->first();
+        $consultant = Consultant::with('specializations')->where('user_id', $this->consultant_user_id)->first();
 
         $specializations = $consultant->specializations ? $consultant->specializations->map(function ($specialization) {
             return [

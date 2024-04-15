@@ -54,7 +54,7 @@ class ConsultationsController extends Controller
             $consultation->closed = false;
             $consultation->parented_user_id = $parented->user->id;
 
-            if ($request->allConsultants) {
+            if ($request->allConsultants && count($request->specializationsId)) {
                 $consultation->consultant_user_id = null;
 
                 $consultants = Consultant::with('user')

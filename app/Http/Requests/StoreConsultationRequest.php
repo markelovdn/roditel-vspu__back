@@ -26,7 +26,7 @@ class StoreConsultationRequest extends FormRequest
             'consultantId' => ['numeric', 'nullable'],
             'allConsultants' => ['boolean'],
             'messageText' => ['string'],
-            "specializationId" => ['numeric', 'exists:specializations,id']
+            "specializationsId" => ['array', 'exists:specializations,id']
         ];
     }
 }
