@@ -36,6 +36,18 @@ class ConsultantsResource extends JsonResource
         }
 
         if ($request->all) {
+            $data = [
+                'userId' => $this->user->id,
+                'consultantId' => $this->id,
+                'fullName' => "{$this->user->second_name} {$this->user->first_name} {$this->user->patronymic}",
+                'photo' => $this->photo,
+                'specializations' => $this->specializations->map(function ($specialization) {
+                    return [
+                        'id' => $specialization->id,
+                        'title' => $specialization->title,
+                    ];
+                })->toArray(),
+            ];
         } else {
             $data = [
                 'user' => [
@@ -49,6 +61,7 @@ class ConsultantsResource extends JsonResource
                     'id' => $this->profession->id,
                     'title' => $this->profession->title,
                 ],
+                'photo' => $this->photo,
             ];
         }
 
