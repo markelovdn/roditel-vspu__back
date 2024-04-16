@@ -38,6 +38,12 @@ class UserResource extends JsonResource
                 ]
             ];
         } else if ($consultant) {
+            $specializations = $consultant->specializations ? $consultant->specializations->map(function ($specialization) {
+                return [
+                    'id' => $specialization->id,
+                    'title' => $specialization->title,
+                ];
+            })->toArray() : [];
             return [
                 'id' => $this->id,
                 'firstName' => $this->first_name,
@@ -46,7 +52,7 @@ class UserResource extends JsonResource
                 'fullName' => "$this->second_name $this->first_name $this->patronymic",
                 'email' => $this->email,
                 'phone' => $this->phone,
-                'specializationId' => $consultant->specialization_id,
+                'specializations' => $specializations,
                 'professionId' => $consultant->profession_id,
                 'description' => $consultant->description,
                 'photo' => $consultant->photo,

@@ -35,69 +35,12 @@ class UserTest extends TestCase
             ->assertJson(fn (AssertableJson $json) => $json->has('data'));
     }
 
-    // public function test_store_user_as_consultant(): void
-    // {
-    //     $role = Role::where('code', Role::ADMIN)->first();
-    //     $admin = User::where('role_id', $role->id)->first();
-    //     Auth::login($admin);
-
-    //     $role = Role::where('code', 'consultant')->first();
-    //     //codeception
-    //     $response = $this->postJson('/api/users', [
-    //         'second_name' => 'Иван',
-    //         'first_name' => 'Иванов',
-    //         'patronymic' => 'Иванович',
-    //         'email' => 'ivan@test.ru',
-    //         'phone' => '+7 (000) 000-00-00',
-    //         'role_code' => $role->code,
-    //         'password' => '123123'
-    //     ]);
-
-    //     $this->assertDatabaseHas('users', [
-    //         'second_name' => 'Иван',
-    //         'first_name' => 'Иванов',
-    //         'patronymic' => 'Иванович',
-    //     ]);
-
-    //     $response
-    //     ->assertStatus(200)
-    //     ->assertJson(fn (AssertableJson $json) =>
-    //         $json->has('data'));
-    // }
-
-    // public function test_store_user_as_parented(): void
-    // {
-    //     $role = Role::where('code', Role::ADMIN)->first();
-    //     $admin = User::where('role_id', $role->id)->first();
-    //     Auth::login($admin);
-
-    //     $role = Role::where('code', 'parented')->first();
-    //     //codeception
-    //     $response = $this->post('/api/users', [
-    //         'second_name' => 'Иван',
-    //         'first_name' => 'Иванов',
-    //         'patronymic' => 'Иванович',
-    //         'email' => 'ivan@test.ru',
-    //         'phone' => '+7 (000) 000-00-00',
-    //         'role_code' => $role->code,
-    //         'password' => '123123'
-    //     ]);
-
-    //     $this->assertDatabaseHas('users', [
-    //         'second_name' => 'Иван',
-    //         'first_name' => 'Иванов',
-    //         'patronymic' => 'Иванович',
-    //     ]);
-
-    //     $response->assertStatus(200);
-    // }
-
     public function test_show_user(): void
     {
         $user = User::first();
         Auth::login($user);
 
-        $response = $this->get('/api/users/'.$user->id);
+        $response = $this->get('/api/users/' . $user->id);
 
         $response->assertStatus(200);
     }
@@ -107,7 +50,7 @@ class UserTest extends TestCase
         $user = User::where('email', 'consultant@consultant.ru')->first();
         Auth::login($user);
 
-        $response = $this->put('/api/users/'.$user->id, [
+        $response = $this->put('/api/users/' . $user->id, [
             'secondName' => 'Иван',
             'firstName' => 'Иванов',
             'patronymic' => 'Иванович',
@@ -115,7 +58,7 @@ class UserTest extends TestCase
             'phone' => '+7 (000) 000-00-00',
             'photo' => UploadedFile::fake()->image('photo.jpg'),
             'description' => 'новое описание консультанта',
-            'specializationId' => Specialization::find(1)->id,
+            'specializationsId' => [1, 2, 3],
             'professionId' => Profession::find(1)->id,
         ]);
 
@@ -138,7 +81,7 @@ class UserTest extends TestCase
 
         $user = User::first();
 
-        $response = $this->delete('/api/users/'.$user->id);
+        $response = $this->delete('/api/users/' . $user->id);
 
         $this->assertSoftDeleted($user);
 
@@ -150,23 +93,23 @@ class UserTest extends TestCase
 
     // public function test_getUserByToken(): void
     // {
-        // $user = User::first();
+    // $user = User::first();
 
-        // $this->post('/api/login', [
-        //     'email' => $user->email,
-        //     'password' => $user->password
-        // ]);
+    // $this->post('/api/login', [
+    //     'email' => $user->email,
+    //     'password' => $user->password
+    // ]);
 
-        // $token = DB::table('personal_access_tokens')->where('tokenable_id', $user->id)->first();
+    // $token = DB::table('personal_access_tokens')->where('tokenable_id', $user->id)->first();
 
-        // $response = $this->post('/api/getUserByToken', [
-        //     'token' => $token->token
-        // ]);
+    // $response = $this->post('/api/getUserByToken', [
+    //     'token' => $token->token
+    // ]);
 
-        // $response
-        //     ->assertStatus(200)
-        //     ->assertJson(fn (AssertableJson $json) =>
-        //     $json->has('data'));
+    // $response
+    //     ->assertStatus(200)
+    //     ->assertJson(fn (AssertableJson $json) =>
+    //     $json->has('data'));
     // }
 
 }

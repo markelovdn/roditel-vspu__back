@@ -91,20 +91,25 @@ class User extends Authenticatable
 
         $role = new Role();
 
-        $role->isConsultant($user->id) ?
-            Consultant::insert([
+        if ($role->isConsultant($user->id)) {
+
+            $consultant = Consultant::firstOrCreate([
                 'user_id' => $user->id,
-                'specialization_id' => $request->specializationId,
+            ], [
                 'profession_id' => $request->professionId,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]) :
-            Parented::insert([
+            ]);
+
+            if (is_array($request->specializationsId)) {
+                $consultant->specializations()->syncWithoutDetaching($request->specializationsId);
+            } else {
+                $consultant->specializations()->syncWithoutDetaching([$request->specializationsId]);
+            }
+        } else {
+            Parented::create([
                 'user_id' => $user->id,
                 'region_id' => $request->regionId,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
             ]);
+        }
     }
 
     public function isAdmin(): bool

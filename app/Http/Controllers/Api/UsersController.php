@@ -55,10 +55,11 @@ class UsersController extends Controller
 
             if ($consultant) {
                 $consultant->description = $request->description;
-                $consultant->specialization_id = $request->specializationId;
                 $consultant->profession_id = $request->professionId;
 
                 $consultant->save();
+
+                $consultant->updateSpecializations($request->specializationsId);
             } else {
 
                 $parented->region_id = $request->regionId;

@@ -59,6 +59,7 @@ class AuthController extends Controller
             return response()->json(['userData' => json_decode(json_encode((object) $userData[0]), false), 'token' => $token]);
         } catch (\Exception $e) {
             return response()->json([
+                'error' => $e->getMessage(),
                 'message' => 'Something went wrong in AuthController.register'
             ], 400);
         }

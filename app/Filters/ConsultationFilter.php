@@ -31,10 +31,21 @@ class ConsultationFilter extends QueryFilter
         });
     }
 
+    // public function category($id = null)
+    // {
+    //     //TODO: разобраться с этим фильтром так как изменилась связь с таблицей ConsultationSpecialization
+    //     return $this->builder->when($id, function ($query) use ($id) {
+    //         $query->where('specialization_id', $id);
+    //     });
+    // }
+
     public function category($id = null)
     {
         return $this->builder->when($id, function ($query) use ($id) {
-            $query->where('specialization_id', $id);
+            // Фильтруем консультации по специализации, используя связи между юзерами и консультантами
+            $query->whereHas('users.consultant.specializations', function ($query) use ($id) {
+                $query->where('specializations.id', $id);
+            });
         });
     }
 

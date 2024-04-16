@@ -24,7 +24,7 @@ class UpdateConsultantRequest extends FormRequest
         return [
             'photo' => ['image:jpg,jpeg,png'],
             'description' => ['string'],
-            'specializationId' => ['numeric'],
+            'specializationId' => ['array'],
             'professionId' => ['numeric'],
         ];
     }
