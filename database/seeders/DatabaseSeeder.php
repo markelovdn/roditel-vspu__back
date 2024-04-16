@@ -349,5 +349,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\ConsultationRating::factory(3)->create();
+
+        DB::table('consultant_specialization')->insert([
+            "consultant_id" => 21,
+            "specialization_id" => 1
+        ], [
+            "consultant_id" => 21,
+            "specialization_id" => 2
+        ]);
     }
 }
