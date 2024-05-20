@@ -17,7 +17,8 @@ class Parented extends Model
     public const MAX_QUANTITY_CHILDRENS = 6;
 
     protected $fillable = [
-        'title',
+        'region_id',
+        'user_id',
     ];
 
     public function childrens(): HasMany
